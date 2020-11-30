@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import '../App.css';
+import {Form, Button, FormGroup, Input, Label} from 'reactstrap';
 
-import {Form, Button, FormGroup,Input, Label} from  'reactstrap';
 
 class Login extends Component {
 
@@ -8,60 +9,62 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        username:'',
-        password: '',
+            username: '',
+            password: ''
 
         };
 
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.handlePasswordChange= this.handlePasswordChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleUsernameChange=(event) =>{
+    handleUsernameChange = (event) => {
         this.setState({
             username: event.target.value
         });
     }
-    handlePasswordChange=(event)=>{
+    handlePasswordChange = (event) => {
         this.setState({
             password: event.target.value
         });
     }
 
-    handleSubmit=(event)=> {
+    handleSubmit = (event) => {
 
         event.preventDefault();
         console.log(this.state);
 
-        localStorage.setItem("username",this.state.username);
-        localStorage.setItem("password",this.state.password);
+        localStorage.setItem("username", this.state.username);
+        localStorage.setItem("password", this.state.password);
 
-
-
-            this.props.history.push("/main");
+        this.props.history.push("/main");
 
 
     }
 
     render() {
         return (
-            <Form className="login-form">
 
-                <h2>Login</h2>
-                <FormGroup>
-                    <Label>UserName</Label>
-                    <Input type="text" value={this.state.username} placeholder="username" onChange={this.handleUsernameChange} />
+            <div className="social-box">
+                <div className="login-container">
+                    <div className="login-wrapper">
 
-                </FormGroup>
-                <FormGroup>
-                    <Label>Password</Label>
-                    <Input type="password"  value={this.state.password} placeholder="password" onChange={this.handlePasswordChange} />
+                        <h2>Login</h2>
+                        <div className="ui input login-item">
+                            <Input type="text" value={this.state.username} placeholder="username"
+                                   onChange={this.handleUsernameChange}/>
+                        </div>
+                        <div className="ui input login-item">
+                            <Input type="password" value={this.state.password} placeholder="password"
+                                   onChange={this.handlePasswordChange}/>
+                        </div>
+                        <Button className="btn-lg btn-dark btn-block" onClick={this.handleSubmit}>Login</Button>
+                    </div>
 
-                </FormGroup>
-                <Button className="btn-lg btn-dark btn-block" onClick={this.handleSubmit}>Login</Button>
+                </div>
+            </div>
 
-            </Form>
         );
     }
 }

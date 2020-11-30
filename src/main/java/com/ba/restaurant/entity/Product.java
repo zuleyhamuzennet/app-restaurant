@@ -1,39 +1,27 @@
 package com.ba.restaurant.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 
 @Entity
-public class Product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String productName;
     private String description;
     private double price;
-    private String category;
 
-    public Product(String productName, String description, double price, String category) {
+    public Product(String productName, String description, double price) {
         this.productName = productName;
         this.description = description;
         this.price = price;
-        this.category = category;
-    }
 
+    }
     public Product() {
 
     }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public Long getId() {
         return id;
     }
@@ -66,4 +54,7 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
+
+
+
 }

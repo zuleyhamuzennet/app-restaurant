@@ -1,21 +1,13 @@
 import React, {Component} from 'react';
 import {Card, Table} from "react-bootstrap";
-import ProductService from "./ProductService";
+import ProductService from "../service/ProductService";
+import Header from "../Header";
 
 class ProductSales extends Component {
     constructor(props){
         super(props)
 
         this.state = {
-         /*   orderProduct: {
-                cartId: 0,
-                cartDate:'',
-                productId: 0,
-                piece: 1,
-                productName: '',
-                price: 0,
-                total: 0
-            },*/
             orderProducts :[]
         }
     }
@@ -31,6 +23,9 @@ class ProductSales extends Component {
 
     render() {
         return (
+            <div>
+                <Header/>
+                <br/>
             <Card className={"border border-dark bg-dark text-white"}>
                 <h2 className="text-center">Product Sales Cart</h2>
                 <Card.Body>
@@ -44,6 +39,7 @@ class ProductSales extends Component {
                             <th>Product Piece</th>
                             <th>Product Price</th>
                             <th>Total Price</th>
+                            <th>Table</th>
 
                         </tr>
                         </thead>
@@ -52,13 +48,14 @@ class ProductSales extends Component {
                         {
                             this.state.orderProducts.map(
                                 products =>
-                                    <tr key={products.cartId}>
+                                    <tr key={products.id}>
                                         <td>{products.cartDate}</td>
                                         <td>{products.productName}</td>
                                         <td>{products.productId}</td>
                                         <td>{products.piece}</td>
                                         <td>{products.price}</td>
                                         <td>{products.total}</td>
+                                        <td>{products.tableId}</td>
                                     </tr>
                             )
                         }
@@ -68,6 +65,7 @@ class ProductSales extends Component {
 
 
             </Card>
+            </div>
         );
     }
 }

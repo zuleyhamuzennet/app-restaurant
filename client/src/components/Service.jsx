@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const PRODUCT_API_BASE_URL = "http://localhost:8080/product"
+const CATEGORY_API_BASE_URL = "http://localhost:8080/categories/"
 
 class Service{
 
@@ -9,7 +10,7 @@ class Service{
 
     listAllProduct(){
 
-        return axios.get(PRODUCT_API_BASE_URL+"/list",{
+        return axios.get(PRODUCT_API_BASE_URL+"list",{
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
@@ -18,7 +19,7 @@ class Service{
     }
     listAllCategory(){
 
-        return axios.get(PRODUCT_API_BASE_URL+"/category",{
+        return axios.get(CATEGORY_API_BASE_URL+"list",{
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
@@ -26,12 +27,47 @@ class Service{
         })
 
     }
+    listAllTableCategory(){
 
-    listProductByCategory(categories){
-        return axios.get(PRODUCT_API_BASE_URL+"/category/list",{
-            params: {
-                category: categories
-            },
+        return axios.get("http://localhost:8080/table-category/list",{
+            auth:{
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            }
+        })
+
+    }
+    listAllTables(){
+
+        return axios.get("http://localhost:8080/table/list",{
+            auth:{
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            }
+        })
+
+    }
+    listTableById(id){
+        return axios.get("http://localhost:8080/table/"+id,{
+            auth:{
+
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            }
+        })
+    }
+    listTableByCategory(id){
+        return axios.get("http://localhost:8080/table-category/"+id,{
+            auth:{
+
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            }
+        })
+    }
+
+    listProductByCategory(id){
+        return axios.get(CATEGORY_API_BASE_URL+id,{
             auth:{
 
                 username:localStorage.getItem("username"),

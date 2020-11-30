@@ -8,15 +8,31 @@ import java.util.Date;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  long cartId;
+    private  long id;
     private long productId;
     private long piece;
     private long price;
     private long total;
     private String productName;
+    private long tableCartId;
     @Column
     private Date cartDate= new Timestamp(System.currentTimeMillis());
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getTableCartId() {
+        return tableCartId;
+    }
+
+    public void setTableCartId(long tableCartId) {
+        this.tableCartId = tableCartId;
+    }
 
     public long getProductId() {
         return productId;

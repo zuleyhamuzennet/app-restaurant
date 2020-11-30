@@ -16,6 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http)throws Exception{
+
         http.authorizeRequests().antMatchers("h2-console/**").permitAll();
         http.csrf().disable();
         http.headers().frameOptions().disable();
@@ -25,15 +26,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/users/add").access("hasRole('ADMIN')");
         http.authorizeRequests().antMatchers("/users/delete/{id}").access("hasRole('ADMIN')");
         http.authorizeRequests().antMatchers("/users/update/{id}").access("hasAnyRole('USER','ADMIN')");
-        http.authorizeRequests().antMatchers("/product/add").access("hasRole('ADMIN')");
+        http.authorizeRequests().antMatchers("/product/add").access("hasAnyRole('USER','ADMIN')");
         http.authorizeRequests().antMatchers("/product/update/").access("hasRole('ADMIN')");
         http.authorizeRequests().antMatchers("/product/delete/{id}").access("hasRole('ADMIN')");
-        http.authorizeRequests().antMatchers("/product/category/list").access("hasAnyRole('USER','ADMIN')");
-        http.authorizeRequests().antMatchers("/product/category").access("hasAnyRole('USER','ADMIN')");
         http.authorizeRequests().antMatchers("/product/{id}").access("hasAnyRole('USER','ADMIN')");
         http.authorizeRequests().antMatchers("/product/list").access("hasAnyRole('USER','ADMIN')");
 
         http.authorizeRequests().antMatchers("/carts/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers("/categories/**").hasAnyRole("USER","ADMIN");
+        http.authorizeRequests().antMatchers("/properties/**").hasAnyRole("USER","ADMIN");
+        http.authorizeRequests().antMatchers("/table/**").hasAnyRole("USER","ADMIN");
+        http.authorizeRequests().antMatchers("/table-category/**").hasAnyRole("USER","ADMIN");
 
         http.httpBasic();
         http.cors();

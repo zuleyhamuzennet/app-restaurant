@@ -37,5 +37,78 @@
   }
 }
 #portfolio{
+
   background-color: #f5f5f5;
 }
+
+.my-custom-scrollbar{
+  width: 620px;
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.my-custom-scrollbar::-webkit-scrollbar-track{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+
+
+}
+.my-custom-scrollbar::-webkit-scrollbar{
+  width: 10px;
+  background-color: #E9E9E9;
+  border-left: 1px solid #BBBBBB;
+}
+.my-custom-scrollbar::-webkit-scrollbar-thumb{
+  background-color: #555555;
+
+}
+.my-custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #333333;
+}
+
+.cart-scrollbar{
+  width: 420px;
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.cart-scrollbar::-webkit-scrollbar-track{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;}
+
+.cart-scrollbar::-webkit-scrollbar{
+  width: 10px;
+  background-color: #E9E9E9;
+  border-left: 1px solid #BBBBBB;
+}
+.cart-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #333333;
+}
+
+
+.social-box .box{
+  background: #41d78a;
+  border-radius: 10px;
+  padding: 40px 10px;
+  margin: 20px 0px;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+}
+.login-container{
+  display: flex;
+  justify-content: center;
+
+}
+.login-wrapper{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  padding-top: 30px;
+}
+.login-item{
+  padding: 10px 0;
+}
+
+

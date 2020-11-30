@@ -1,6 +1,9 @@
 import '../../App.css'
-import React, { Component } from 'react';
-import ProductService from "./ProductService";
+import React, {Component} from 'react';
+import ProductService from "../service/ProductService";
+import CategoryService from "../service/CategoryService";
+import Header from "../Header";
+import {Link} from "react-router-dom";
 
 class UpdateProduct extends Component {
     constructor(props) {
@@ -9,7 +12,7 @@ class UpdateProduct extends Component {
         this.state = {
             id: this.props.match.params.id,
             category: '',
-            productName:'',
+            productName: '',
             description: '',
             price: ''
         }
@@ -17,48 +20,44 @@ class UpdateProduct extends Component {
         this.changeProductNameHandler = this.changeProductNameHandler.bind(this);
         this.changeDescriptionHandler = this.changeDescriptionHandler.bind(this);
         this.changePriceHandler = this.changePriceHandler.bind(this);
-        this.updateProduct = this.updateProduct.bind(this);
+
     }
 
     componentDidMount() {
-        ProductService.getProductById(this.state.id).then((res) => {
-            let product = res.data;
+        CategoryService.getCategoryById(this.state.id).then((res) => {
+            let categories = res.data;
             this.setState({
-                id: product.id,
-                category: product.category,
-                productName: product.productName,
-                description: product.description,
-                price: product.price
+                id: categories.categoryId,
+                categoryName: categories.categoryName,
+                catDescription: categories.catDescription,
             });
         });
     }
 
     updateProduct = (e) => {
         e.preventDefault();
-        let Product = {
+        let product = {
             id: this.state.id,
-            category:this.state.category,
+            category: this.state.categoryName,
             productName: this.state.productName,
             description: this.state.description,
             price: this.state.price
         };
-        console.log('Product => ' + JSON.stringify(Product));
-        ProductService.updateProduct(Product, this.state.id).then(res => {
-            this.props.history.push('/')
+        console.log('Product => ' + JSON.stringify(product));
+        ProductService.updateProduct(product, this.state.category).then(res => {
+            this.props.history.push('/list')
         });
 
     }
-    changeCategoryHandler = (event) =>{
+    changeCategoryHandler = (event) => {
         this.setState({category: event.target.value})
     }
-
     changeIdHandler = (event) => {
         this.setState({id: event.target.value})
     }
-    changeProductNameHandler =(event) =>{
+    changeProductNameHandler = (event) => {
         this.setState({productName: event.target.value})
     }
-
     changeDescriptionHandler = (event) => {
         this.setState({description: event.target.value})
     }
@@ -66,13 +65,11 @@ class UpdateProduct extends Component {
         this.setState({price: event.target.value})
     }
 
-    cancel() {
-        this.props.history.push('/');
-    }
-
     render() {
         return (
             <div>
+                <Header/>
+                <br/>
                 <div className="container">
                     <div className="row">
                         <div className="card col-md-6 offset-md-3 offset-md-3">
@@ -81,9 +78,20 @@ class UpdateProduct extends Component {
                                 <form>
                                     <div className="form-group">
                                         <label> Category </label>
-                                        <input placeholder="Product Name" name="productName" className="form-control"
-                                               value={this.state.category} onChange={this.changeCategoryHandler}/>
+                                        <select className="select picker form-control"
+                                                onChange={this.changeCategoryHandler}>
+
+
+
+                                                    <option key={this.state.id} value={this.state.category}
+                                                            onChange={this.changeCategoryHandler}>
+                                                        {
+                                                            this.state.category}</option>
+
+                                        </select>
+
                                     </div>
+
                                     <div className="form-group">
                                         <label> Product Name </label>
                                         <input placeholder="Product Name" name="productName" className="form-control"
@@ -100,10 +108,9 @@ class UpdateProduct extends Component {
                                                value={this.state.price} onChange={this.changePriceHandler}/>
                                     </div>
                                     <button className="btn btn-success" onClick={this.updateProduct}> Update</button>
-                                    <button className="btn btn-danger" onClick={this.cancel.bind(this)}
+                                    <Link to="/list" className="btn btn-danger"
                                             style={{marginLeft: "10px"}}>Cancel
-                                    </button>
-                                    <button className="btn btn-warning" onClick={this.updateProduct}> Detail</button>
+                                    </Link>
                                 </form>
                             </div>
                         </div>
@@ -113,4 +120,5 @@ class UpdateProduct extends Component {
         );
     }
 }
+
 export default UpdateProduct;

@@ -3,12 +3,21 @@ import AddProduct from './components/product/AddProduct';
 import ProductList from "./components/product/ProductList";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Header from "./components/Header";
-import PersonList from "./components/person/PersonList";
-import AddPerson from "./components/person/AddPerson";
-import UpdatePerson from "./components/person/UpdatePerson";
+import UserList from "./components/user/UserList";
+import UserAdd from "./components/user/UserAdd";
+import UserUpdate from "./components/user/UserUpdate";
 import UpdateProduct from "./components/product/UpdateProduct";
 import Login from "./components/Login";
 import ProductSales from "./components/product/ProductSales";
+import AddCategory from "./components/category/AddCategory";
+import CategoryList from "./components/category/CategoryList";
+import Info from "./components/Info";
+import TableCategoryAdd from "./components/tableCategory/TableCategoryAdd";
+import TableAdd from "./components/table/TableAdd";
+import TableList from "./components/table/TableList";
+import TableCategoryList from "./components/tableCategory/TableCategoryList";
+import DetailProduct from "./components/product/DetailProduct";
+import TableDetail from "./components/table/TableDetail";
 
 
 
@@ -20,18 +29,24 @@ function App() {
             <Router>
 
                     <div className="container">
-                        <br/>
-                        <Header/>
-                        <br/> <br/>
                         <Switch>
                             <Route exact path="/" component={Login}></Route>
                             <Route exact path="/list" component={ProductList}></Route>
                             <Route exact path="/add" component={AddProduct}></Route>
                             <Route exact path="/update/:id" component={UpdateProduct}></Route>
-                            <Route exact path="/adduser" component={AddPerson}></Route>
-                            <Route exact path="/updateUser/:id" component={UpdatePerson}></Route>
-                            <Route exact path="/listuser" component={PersonList}></Route>
+                            <Route exact path="/adduser" component={UserAdd}></Route>
+                            <Route exact path="/updateUser/:id" component={UserUpdate}></Route>
+                            <Route exact path="/listuser" component={UserList}></Route>
                             <Route exact path="/sales" component={ProductSales}></Route>
+                            <Route exact path="/add-category" component={AddCategory}></Route>
+                            <Route exact path="/list-category" component={CategoryList}></Route>
+                            <Route exact path="/add-table-category" component={TableCategoryAdd}></Route>
+                            <Route exact path="/info" component={Info}></Route>
+                            <Route exact path="/table-add" component={TableAdd}></Route>
+                            <Route exact path="/tables" component={TableList}></Route>
+                            <Route exact path="/table-categories" component={TableCategoryList}></Route>
+                            <Route exact path="/detail/:id" component={DetailProduct}></Route>
+                            <Route exact path="/table-detail/:id" component={TableDetail}></Route>
 
                         </Switch>
                     </div>

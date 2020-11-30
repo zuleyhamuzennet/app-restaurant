@@ -12,12 +12,16 @@ class Header extends Component {
         return (
             <div>
                 <header>
-                    <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                        <div><a href="/list" className="navbar-brand">List Product</a></div>
-                        <div><a href="/add" className="navbar-brand">Add Product</a></div>
-                        <div><a href="/listuser" className="navbar-brand">List User</a></div>
-                        <div><a href="/adduser" className="navbar-brand">Add User</a></div>
+                    <nav className="navbar navbar-expand-md navbar-dark bg-dark" style={{marginTop:"20px"}}>
+                        <div><h2 className="navbar-brand">Back-Office:</h2></div>
+                        <div><a href="/list" className="navbar-brand">Products</a></div>
+                        <div><a href="/listuser" className="navbar-brand">Users</a></div>
+                        <div><a href="/tables" className="navbar-brand">Tables</a></div>
+                        <div><a href="/list-category" className="navbar-brand">Categories</a></div>
+                        <div><a href="/table-categories" className="navbar-brand">Table Categories</a></div>
                         <div><a href="/sales" className="navbar-brand">Sales</a></div>
+                        <div><a href="/info" className="navbar-brand">Info</a></div>
+                        <div><a href="/" className="navbar-brand"><button className="btn btn-success" style={{position:'absolute',right:'0px'}}>Logout</button></a></div>
                     </nav>
                 </header>
             </div>
