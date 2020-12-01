@@ -69,7 +69,7 @@ class AddCategory extends Component {
                                     </div>
 
                                     <button className="btn btn-success" onClick={this.saveCategory}>Save</button>
-                                    <Link to="/list" className="btn btn-danger" onClick={this.cancel.bind(this)}
+                                    <Link to="/list" className="btn btn-danger"
                                             style={{marginLeft: "10px"}}>Cancel
                                     </Link>
                                 </form>

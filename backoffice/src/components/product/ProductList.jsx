@@ -18,7 +18,7 @@ class ProductList extends Component {
 
     deleteProduct(id) {
         ProductService.deleteProduct(id).then(res => {
-            this.setState({products: this.state.products.filter(products => products.id !== id)});
+            this.setState({products: this.state.products.id.remove()});
         });
     }
 
