@@ -1,5 +1,8 @@
 package com.ba.restaurant.service;
 
+import com.ba.restaurant.converter.DTOConverter;
+import com.ba.restaurant.converter.EntityConverter;
+import com.ba.restaurant.dto.CategoryDTO;
 import com.ba.restaurant.entity.Category;
 import com.ba.restaurant.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,22 +17,34 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public Category addCategory(Category category){
-        return categoryRepository.save(category);
+    public CategoryDTO addCategory(CategoryDTO categoryDTO){
+        Category category= DTOConverter.categoryConverter(categoryDTO);
+        categoryRepository.save(category);
+        return categoryDTO;
     }
 
-    public Category updateCategory(Category category){
+    public CategoryDTO updateCategory(CategoryDTO categoryDTO){
+        Category category= DTOConverter.categoryConverter(categoryDTO);
         categoryRepository.saveAndFlush(category);
-        return category;
+        return categoryDTO;
     }
 
-    public Optional<Category> getCategorytById(Long id){
-        return  categoryRepository.findById(id);
-
+    public CategoryDTO getCategoryById(Long id){
+        Optional<Category>  category= categoryRepository.findById(id);
+        CategoryDTO categoryDTO= new CategoryDTO();
+        categoryDTO= EntityConverter.categoryConverterDTO(category.get());
+        return categoryDTO;
     }
-    public List<Category> listAllCategory(){
-        List<Category> categories= new ArrayList<>();
-        categoryRepository.findAll().forEach(category-> categories.add( category));
-        return categories;
+    public List<CategoryDTO> listAllCategory(){
+        List<CategoryDTO> categoryDTOList=new ArrayList<>();
+        List<Category> categories=categoryRepository.findAll();
+        categories.forEach(category -> categoryDTOList.add(EntityConverter.categoryConverterDTO(category)));
+
+        return categoryDTOList;
+    }
+    public String deleteCategory(long id)
+    {
+        categoryRepository.deleteById(id);
+        return null;
     }
 }

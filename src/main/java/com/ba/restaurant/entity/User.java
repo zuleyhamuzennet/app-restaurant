@@ -1,36 +1,45 @@
 package com.ba.restaurant.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-public class User {
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
-    private String role;
+    private String enabled;
+    //private String authority;
 
-    public User(String username, String password, String role) {
+
+  /*  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )*/
+   // private Set<Role> roles = new HashSet<>();
+    public User(Long id, String username, String password, String enabled) {
+        this.id = id;
         this.username = username;
         this.password = password;
-        this.role=role;
-
+        this.enabled = enabled;
     }
 
     public User() {
 
     }
 
-    public String getRole() {
-        return role;
+    public String getEnabled() {
+        return enabled;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setEnabled(String enabled) {
+        this.enabled = enabled;
     }
 
     public Long getId() {

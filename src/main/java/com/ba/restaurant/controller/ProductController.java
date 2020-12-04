@@ -1,15 +1,10 @@
 package com.ba.restaurant.controller;
-import com.ba.restaurant.entity.Category;
-import com.ba.restaurant.entity.Product;
+import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.service.CategoryService;
 import com.ba.restaurant.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 
 @CrossOrigin(origins = "*")
@@ -23,34 +18,29 @@ public class ProductController {
 
 
     @PostMapping("/add")
-    public void addProduct(@RequestBody Product product, @RequestParam Long id){
+    public ProductDTO addProduct(@RequestBody ProductDTO productDTO, @RequestParam Long id){
 
-        Set<Product> products= new HashSet<>();
-        products.add(product);
-        Category opCategory= categoryService.getCategorytById(id).get();
-        opCategory.getProducts().add(product);
-        productService.addProduct(products);
-
+        productService.addProduct(productDTO,id);
+        return productDTO;
 
     }
     @GetMapping("/list")
-    public List<Product> listAllProduct(){
+    public List<ProductDTO> listAllProduct(){
         return productService.listAllProduct();
     }
 
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id){
+    public ProductDTO getProductById(@PathVariable Long id){
 
         return productService.getProductById(id);
     }
 
     @PutMapping("/update/")
-    public Product updateProduct(@RequestBody Product product, @RequestParam Long id){
-        Optional<Category> optionalCategory = categoryService.getCategorytById(id);
-        optionalCategory.get().getProducts().add(productService.updateProduct(product));
-        categoryService.updateCategory(optionalCategory.get());
-        return product;
+    public ProductDTO updateProduct(@RequestBody ProductDTO productDTO, @RequestParam Long id){
+        productService.updateProduct(productDTO,id);
+        return productDTO;
+
     }
 
     @DeleteMapping("/delete/{id}")

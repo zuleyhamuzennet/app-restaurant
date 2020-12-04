@@ -16,10 +16,9 @@ class CategoryList extends Component {
         this.deleteCategory=this.deleteCategory.bind(this);
     }
 
-    deleteCategory(id){
-        CategoryService.deleteCategory(id).then(res =>{
-            this.setState({categories: this.state.categories.filter(categories => categories.id !== id)});
-        });
+    deleteCategory=(categoryId)=>{
+        CategoryService.deleteCategory(categoryId).then();
+        window.location.reload();
     }
 
     componentDidMount() {
@@ -61,10 +60,9 @@ console.log(this.state.categories[0]);
                                             <button onClick={() => this.editCategory(category.categoryId)}
                                                     className="btn btn-success"> Update
                                             </button>
-                                            <button style={{marginLeft: "6px"}} onClick={() => this.deleteProduct(category.categoryId)}
+                                            <button style={{marginLeft: "6px"}} onClick={() => this.deleteCategory(category.categoryId)}
                                                     className="btn btn-outline-info"> Delete
                                             </button>
-                                            <button style={{marginLeft: "6px"}} className="btn btn-warning" onClick={this.saveCategory}>Detail</button>
                                         </td>
                                     </tr>
                             )

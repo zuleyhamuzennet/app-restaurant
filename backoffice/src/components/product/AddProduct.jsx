@@ -13,6 +13,7 @@ class AddProduct extends Component {
             description: '',
             price: '',
             categories: []
+
         }
         this.changeProductNameHandler = this.changeProductNameHandler.bind(this);
         this.changeDescriptionHandler = this.changeDescriptionHandler.bind(this);
@@ -25,6 +26,7 @@ class AddProduct extends Component {
             productName: this.state.productName,
             description: this.state.description,
             price: this.state.price
+
         };
         console.log('products => ' + JSON.stringify(products,this.state.category));
 

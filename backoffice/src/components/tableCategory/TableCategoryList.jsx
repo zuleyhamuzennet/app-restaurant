@@ -18,9 +18,8 @@ class TableCategoryList extends Component {
     }
 
     deleteTableCategory(id) {
-        TableCategoryService.deleteCategory(id).then(res => {
-            this.setState({categories: this.state.categories.filter(categories => categories.id !== id)});
-        });
+        TableCategoryService.deleteTableCategory(id).then();
+        window.location.reload();
     }
 
     componentDidMount() {
@@ -45,6 +44,7 @@ class TableCategoryList extends Component {
                         <tr>
                             <th>Category Name</th>
                             <th>Category Description</th>
+                            <th>Table Number</th>
                             <th>Actions</th>
 
                         </tr>
@@ -53,20 +53,21 @@ class TableCategoryList extends Component {
                         {
                             this.state.tableCategories.map(
                                 category =>
-                                    <tr key={category.tableId}>
+                                    <tr key={category.id}>
                                         <td>{category.tableCategoryName}</td>
                                         <td>{category.tableCategoryDesc}</td>
+                                        <td>{category.count}</td>
 
                                         <td>
-                                            <button onClick={() => this.updateTableCategory(category.tableId)}
+                                            <button onClick={() => this.updateTableCategory(category.id)}
                                                     className="btn btn-success"> Update
                                             </button>
                                             <button style={{marginLeft: "6px"}}
-                                                    onClick={() => this.deleteTableCategory(category.categoryId)}
+                                                    onClick={() => this.deleteTableCategory(category.id)}
                                                     className="btn btn-outline-info"> Delete
                                             </button>
-                                            <button style={{marginLeft: "6px"}} className="btn btn-warning"
-                                                    onClick={this.saveTableCategory}>Detail
+                                            <button st
+                                                    className="btn btn-warning">Detail
                                             </button>
                                         </td>
                                     </tr>
@@ -75,8 +76,6 @@ class TableCategoryList extends Component {
                         </tbody>
                     </Table>
                 </Card.Body>
-
-
             </Card>
             </div>
         );

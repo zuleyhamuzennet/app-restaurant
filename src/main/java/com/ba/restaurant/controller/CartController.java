@@ -1,5 +1,6 @@
 package com.ba.restaurant.controller;
 
+import com.ba.restaurant.dto.CartDTO;
 import com.ba.restaurant.entity.Cart;
 import com.ba.restaurant.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,13 @@ public class CartController {
     CartService cartService;
 
     @GetMapping("/list")
-    public List<Cart> listAllCarts(){
+    public List<CartDTO> listAllCarts(){
         return cartService.listAllCarts();
     }
 
     @PostMapping("/add")
-    public List<Cart> addCart(@RequestBody List<Cart>carts){
-        return cartService.addCart(carts);
+    public List<CartDTO> addCart(@RequestBody List<CartDTO>cartDTOS){
+        return cartService.addCart(cartDTOS);
     }
 
 }

@@ -11,30 +11,38 @@ class ProductList extends Component {
         super(props)
 
         this.state = {
-            categories: []
+            products: []
         }
         this.deleteProduct = this.deleteProduct.bind(this);
     }
 
-    deleteProduct(id) {
-        ProductService.deleteProduct(id).then(res => {
-            this.setState({products: this.state.products.id.remove()});
-        });
+    deleteProduct=(id)=> {
+        ProductService.deleteProduct(id).then();
+        window.location.reload();
+    }
+    updateProduct=(id,categoryId)=>{
+        this.props.history.push({
+            pathname:`/update/${id}`,
+            state:{
+                id:id,
+                categoryId:categoryId
+            }
+        })
+
     }
 
     componentDidMount() {
-        CategoryService.listAllCategories().then((response) => {
-            this.setState({categories: response.data});
+        ProductService.listAllProduct().then((response) => {
+            this.setState({products: response.data});
         });
     }
 
     fiterCategory = (categoryName) => {
-        const array = this.state.categories.filter(item => item.categoryName == categoryName)
+        const array = this.state.products.filter(item => item.categoryName == categoryName)
         this.setState({categories: array})
         console.log(array);
         this.render();
     }
-
 
     render() {
         return (
@@ -56,25 +64,24 @@ class ProductList extends Component {
                             </tr>
                             </thead>
 
-                            {this.state.categories.map(
-                                category =>
-                                    <tbody key={category.categoryId}>
+                            {this.state.products.map(
+                                product =>
+                                    <tbody key={product.categoryId}>
 
-                                    {
-                                        category.products.map(
-                                            product =>
+
+
                                                 <tr key={product.id}>
                                                     <td>
                                                         <label
-                                                            onClick={() => this.fiterCategory(category.categoryName)}>{category.categoryName}</label>
+                                                            onClick={() => this.fiterCategory(product.categoryName)}>{product.categoryName}</label>
                                                     </td>
                                                     <td>{product.productName}</td>
                                                     <td>{product.description}</td>
                                                     <td>{product.price}</td>
                                                     <td>
-                                                        <Link to={`/update/${product.id}`}
+                                                        <button onClick={()=>this.updateProduct(product.id,product.categoryId)}
                                                               className="btn btn-success"> Update
-                                                        </Link>
+                                                        </button>
                                                         <button style={{marginLeft: "6px"}}
                                                                 onClick={() => this.deleteProduct(product.id)}
                                                                 className="btn btn-outline-info"> Delete
@@ -85,8 +92,6 @@ class ProductList extends Component {
                                                     </td>
 
                                                 </tr>
-                                        )
-                                    }
                                     </tbody>
                             )
                             }

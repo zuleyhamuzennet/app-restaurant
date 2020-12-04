@@ -18,6 +18,7 @@ import TableList from "./components/table/TableList";
 import TableCategoryList from "./components/tableCategory/TableCategoryList";
 import DetailProduct from "./components/product/DetailProduct";
 import TableDetail from "./components/table/TableDetail";
+import TableUpdate from "./components/table/TableUpdate";
 
 
 
@@ -44,6 +45,7 @@ function App() {
                             <Route exact path="/info" component={Info}></Route>
                             <Route exact path="/table-add" component={TableAdd}></Route>
                             <Route exact path="/tables" component={TableList}></Route>
+                            <Route exact path="/table-update" component={TableUpdate}></Route>
                             <Route exact path="/table-categories" component={TableCategoryList}></Route>
                             <Route exact path="/detail/:id" component={DetailProduct}></Route>
                             <Route exact path="/table-detail/:id" component={TableDetail}></Route>

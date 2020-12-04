@@ -36,8 +36,12 @@ class ProductService{
         });
     }
 
-    updateProduct(product){
+    updateProduct(product,categoryId){
         return axios.put(PRODUCT_API_BASE_URL+'update/',product,{
+            params:{
+                id:categoryId
+            },
+
             auth:{
 
                 username:localStorage.getItem("username"),

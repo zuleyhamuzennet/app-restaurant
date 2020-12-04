@@ -11,7 +11,7 @@ class ProductList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            category: [],
+            productList: [],
             products: [],
             cart: {
 
@@ -21,7 +21,9 @@ class ProductList extends Component {
                 productName: '',
                 price: 0,
                 total: 0,
-                tableCartId:0
+                tableCartId:'',
+                tableCategoryId:''
+
             },
             carts: [],
             totalCart: 0
@@ -31,10 +33,8 @@ class ProductList extends Component {
     }
 
     listProductByCategory(id) {
-        Service.listProductByCategory(id).then((res) => {
-
-
-            this.setState({products: res.data.products});
+        Service.listProductById(id).then((res) => {
+            this.setState({productList: res.data});
             console.log(res.data);
         });
         this.render();
@@ -76,24 +76,30 @@ class ProductList extends Component {
         } else {
             this.setState({
                 cart: {
-
                     cartId: nextId(),
                     productId: products.id,
                     productName: products.productName,
                     price: products.price,
                     piece: 1,
-                    total: products.totalCart,
+                    total: products.price,
+                    tableCartId:this.state.tableCartId,
+                    tabCategoryId:this.state.tab
 
                 }
+
             }, () => this.setState({carts: [...this.state.carts, this.state.cart]}))
         }
     }
 
-
     componentDidMount() {
-        Service.listAllCategory().then((res) => {
+        console.log("tableCartId",this.state.tableCartId);
+        this.setState({
+            tableCartId: this.props.history.location.state?.tableCartId,
+            tableCategoryId: this.props.history.location.state?.tableCategoryId
+        })
+        Service.listAllProduct().then((res) => {
             console.log(res.data);
-            this.setState({category: res.data});
+            this.setState({products: res.data});
         });
         this.render();
     }
@@ -101,22 +107,22 @@ class ProductList extends Component {
     render() {
         return (
 
-            <div>
+            <div style={{backgroundColor:"#f6ffff"}}>
                 <Header/>
                 <br/>
                 <div className="col-md-11 mx-auto" style={{padding:'10px 0'}}>
                     <div className="row">
                         <div className="col-md-2 ">
                             <div className="list-group">
-                                <a href="#" className="list-group-item list-group-item-action active" style={{backgroundColor:'#45bc9a'}}>
+                                <a href="#" className="list-group-item list-group-item-action active" style={{backgroundColor:'#258d2f'}}>
                                     Categories
                                 </a>
                                 {
-                                    this.state.category.map(
-                                        categories =>
-                                            <tr key={categories.categoryId}>
+                                    this.state.products.map(
+                                        product =>
+                                            <tr key={product.category.categoryId}>
                                                 <a href="#" className="list-group-item list-group-item-action"
-                                                   onClick={() => this.listProductByCategory(categories.categoryId)}>{categories.categoryName}</a>
+                                                   onClick={() => this.listProductByCategory(product.categoryId)}>{product.categoryName}</a>
                                             </tr>
                                     )
                                 }
@@ -128,10 +134,8 @@ class ProductList extends Component {
                                 <div className="my-custom-scrollbar my-custom-scrollbar-primary">
                                     <div className="force-overflow">
                                     <div className="row">
-
-
                                         {
-                                            this.state.products.map(
+                                            this.state.productList.map(
                                                 product =>
                                                     <div style={{marginBottom: "20px"}} className="col-md-6"
                                                          style={{postion: 'relative', padding: '9px 1px'}}>

@@ -15,13 +15,15 @@ class TableCategory extends Component {
     }
 
 
-    listTableByCategory(id) {
-        Service.listTableByCategory(id).then((res) => {
+    listTableByCategory(id,count) {
 
-            this.setState({tables: res.data.tables});
-            console.log(res.data);
-        });
-        this.render();
+        this.props.history.push({
+            pathname:"/tables",
+            state:{
+                id:id,
+                count:count
+            }
+        })
 
     }
     componentDidMount() {
@@ -48,12 +50,12 @@ class TableCategory extends Component {
                                         <div className="col-lg-4 col-xs-12 text-center">
                                             <div className="box" style={{backgroundColor: "#a5e387"}}>
 
-                                                <div className="box-btn" key={category.tableId}>
+                                                <div className="box-btn" key={category.id}>
                                                     <a href="/tables"><i className="fa fa-behance fa-3x"
                                                                          aria-hidden="true"></i>
                                                         <div className="box-title">
                                                             <h3 className="box-text1"
-                                                                onClick={() => this.listTableByCategory(category.tableId)}>{category.tableCategoryName}</h3>
+                                                                onClick={() => this.listTableByCategory(category.id,category.count)}>{category.tableCategoryName}</h3>
                                                         </div>
                                                         <div className="box-text">
                                                             <span></span>

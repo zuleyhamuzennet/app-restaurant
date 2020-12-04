@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TableCategoryRepository extends JpaRepository<TableCategory, Long> {
+
 }

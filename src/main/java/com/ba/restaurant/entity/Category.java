@@ -1,5 +1,7 @@
 package com.ba.restaurant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -21,8 +23,9 @@ public class Category implements Serializable {
         this.products = products;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "categoryId")
+    @JsonIgnore
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+
     private Set<Product> products;
 
     public Set<Product> getProducts() {

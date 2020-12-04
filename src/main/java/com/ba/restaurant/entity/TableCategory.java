@@ -1,6 +1,7 @@
 package com.ba.restaurant.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -8,26 +9,40 @@ import java.util.Set;
 public class TableCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tableId;
+    private Long id;
     private String tableCategoryDesc;
     private String tableCategoryName;
+    private Long count;
 
-
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tableId")
-    private Set<Tables> tables;
-
-
-    public TableCategory(Long tableId, String tableCategoryDesc, String tableCategoryName, Set<Tables> tables) {
-        this.tableId = tableId;
-        this.tableCategoryDesc = tableCategoryDesc;
-        this.tableCategoryName = tableCategoryName;
-        this.tables = tables;
-    }
 
     public TableCategory() {
 
+    }
+
+    public TableCategory(Long id, String tableCategoryDesc, String tableCategoryName, Long count) {
+        this.id = id;
+        this.tableCategoryDesc = tableCategoryDesc;
+        this.tableCategoryName = tableCategoryName;
+        this.count = count;
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
     }
 
     public String getTableCategoryName() {
@@ -38,21 +53,6 @@ public class TableCategory {
         this.tableCategoryName = tableCategoryName;
     }
 
-    public Set<Tables> getTables() {
-        return tables;
-    }
-
-    public void setTables(Set<Tables> tables) {
-        this.tables = tables;
-    }
-
-    public Long getTableId() {
-        return tableId;
-    }
-
-    public void setTableId(Long tableId) {
-        this.tableId = tableId;
-    }
 
     public String getTableCategoryDesc() {
         return tableCategoryDesc;

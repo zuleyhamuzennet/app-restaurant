@@ -12,8 +12,6 @@ class AddCategory extends Component {
             categoryId:'',
             categoryName:'',
             catDescription: ''
-
-
         }
         this.changeCategoryNameHandler = this.changeCategoryNameHandler.bind(this);
         this.changeCatDescriptionHandler = this.changeCatDescriptionHandler.bind(this);
@@ -69,7 +67,7 @@ class AddCategory extends Component {
                                     </div>
 
                                     <button className="btn btn-success" onClick={this.saveCategory}>Save</button>
-                                    <Link to="/list" className="btn btn-danger"
+                                    <Link to="/list-category" className="btn btn-danger"
                                             style={{marginLeft: "10px"}}>Cancel
                                     </Link>
                                 </form>

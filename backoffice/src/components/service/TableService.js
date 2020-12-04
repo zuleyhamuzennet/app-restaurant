@@ -36,8 +36,11 @@ class TableService{
         });
     }
 
-    updateTable(product){
-        return axios.put(TABLE_API_BASE_URL+'update/',product,{
+    updateTable(table,category){
+        return axios.put(TABLE_API_BASE_URL+'update/',table,{
+            params:{
+                id:category
+            },
             auth:{
 
                 username:localStorage.getItem("username"),
@@ -56,15 +59,6 @@ class TableService{
         });
     }
 
-    getSales(){
-        return axios.get("http://localhost:8080/carts/list",{
-            auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }
-        })
-    }
 
     getTableCategoryById(id){
         return axios.get("http://localhost:8080/table-category/" + id,{

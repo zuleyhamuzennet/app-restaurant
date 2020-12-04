@@ -17,9 +17,18 @@ class TableList extends Component {
     }
 
     deleteTable(id) {
-        TableService.deleteTable(id).then(res => {
-            this.setState({tables: this.state.tables.filter(tables => tables.id !== id)});
-        });
+        TableService.deleteTable(id).then();
+        window.location.reload();
+    }
+    updateTable(id,tableId){
+        this.props.history.push({
+            pathname:"/table-update",
+            state:{
+                id: id,
+                tableId:tableId
+            }
+        })
+
     }
 
     componentDidMount() {
@@ -70,9 +79,9 @@ class TableList extends Component {
                                                     <td>{table.tableNumber}</td>
                                                     <td>{table.tableDescription}</td>
                                                     <td>
-                                                        <Link to={`/update-table/${table.id}`}
+                                                        <button onClick={()=>this.updateTable(table.id,category.id)}
                                                                 className="btn btn-success"> Update
-                                                        </Link>
+                                                        </button>
                                                         <button style={{marginLeft: "6px"}}
                                                                 onClick={() => this.deleteTable(table.id)}
                                                                 className="btn btn-outline-info"> Delete

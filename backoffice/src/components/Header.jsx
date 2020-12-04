@@ -16,12 +16,11 @@ class Header extends Component {
                         <div><h2 className="navbar-brand">Back-Office:</h2></div>
                         <div><a href="/list" className="navbar-brand">Products</a></div>
                         <div><a href="/listuser" className="navbar-brand">Users</a></div>
-                        <div><a href="/tables" className="navbar-brand">Tables</a></div>
                         <div><a href="/list-category" className="navbar-brand">Categories</a></div>
-                        <div><a href="/table-categories" className="navbar-brand">Table Categories</a></div>
+                        <div><a href="/table-categories" className="navbar-brand">Tables</a></div>
                         <div><a href="/sales" className="navbar-brand">Sales</a></div>
                         <div><a href="/info" className="navbar-brand">Info</a></div>
-                        <div><a href="/" className="navbar-brand"><button className="btn btn-success" style={{position:'absolute',right:'0px'}}>Logout</button></a></div>
+                        <div><a href="/" className="navbar-brand"><button className="btn btn-danger" style={{position:'absolute',right:'5px' ,marginTop:'-18px'}}>Logout</button></a></div>
                     </nav>
                 </header>
             </div>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const PRODUCT_API_BASE_URL = "http://localhost:8080/product"
+const PRODUCT_API_BASE_URL = "http://localhost:8080/product/"
 const CATEGORY_API_BASE_URL = "http://localhost:8080/categories/"
 
 class Service{
@@ -11,6 +11,18 @@ class Service{
     listAllProduct(){
 
         return axios.get(PRODUCT_API_BASE_URL+"list",{
+            auth:{
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            }
+        });
+    }
+    listProductById(id){
+
+        return axios.get(PRODUCT_API_BASE_URL+"list",{
+            params:{
+                categoryId:id
+            },
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
@@ -67,7 +79,10 @@ class Service{
     }
 
     listProductByCategory(id){
-        return axios.get(CATEGORY_API_BASE_URL+id,{
+        return axios.get(CATEGORY_API_BASE_URL,{
+            params:{
+                id:id
+            },
             auth:{
 
                 username:localStorage.getItem("username"),

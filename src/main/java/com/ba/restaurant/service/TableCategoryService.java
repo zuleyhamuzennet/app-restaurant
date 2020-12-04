@@ -1,5 +1,8 @@
 package com.ba.restaurant.service;
 
+import com.ba.restaurant.converter.DTOConverter;
+import com.ba.restaurant.converter.EntityConverter;
+import com.ba.restaurant.dto.TableCategoryDTO;
 import com.ba.restaurant.entity.Category;
 import com.ba.restaurant.entity.TableCategory;
 import com.ba.restaurant.repository.TableCategoryRepository;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TableCategoryService {
@@ -15,19 +19,33 @@ public class TableCategoryService {
     @Autowired
     TableCategoryRepository tableCategoryRepository;
 
-    public TableCategory addTableCategory(TableCategory tableCategory){
-        return tableCategoryRepository.save(tableCategory);
-    }
-    public TableCategory updateTableCategory(TableCategory tableCategory){
-        tableCategoryRepository.saveAndFlush(tableCategory);
-        return tableCategory;
+    public TableCategoryDTO addTableCategory(TableCategoryDTO tableCategoryDTO){
+
+        TableCategory tableCategory= DTOConverter.tableCategoryConverter(tableCategoryDTO);
+        tableCategoryRepository.save(tableCategory);
+        return tableCategoryDTO;
     }
 
-    public TableCategory getTableCategorytById( Long id){
-        TableCategory tableCategory=  tableCategoryRepository.findById(id).get();
-        return tableCategory;
+    public TableCategoryDTO updateTableCategory(TableCategoryDTO tableCategoryDTO){
+
+        TableCategory tableCategory= DTOConverter.tableCategoryConverter(tableCategoryDTO);
+        tableCategoryRepository.saveAndFlush(tableCategory);
+        return tableCategoryDTO;
     }
-    public List<TableCategory> listAllTableCategory(){
-        return tableCategoryRepository.findAll();
+
+    public TableCategoryDTO getTableCategorytById(Long id){
+        TableCategory tableCategory=tableCategoryRepository.findById(id).get();
+        TableCategoryDTO tableCategoryDTO= EntityConverter.tableCategoryConverterDTO(tableCategory);
+        return  tableCategoryDTO;
     }
+
+
+    public List<TableCategoryDTO> listAllTableCategory(){
+
+        List<TableCategoryDTO> tableCategoryDTOS=new ArrayList<>();
+        List<TableCategory> tableCategories=tableCategoryRepository.findAll();
+        tableCategories.forEach(tableCategory -> tableCategoryDTOS.add(EntityConverter.tableCategoryConverterDTO(tableCategory)));
+        return tableCategoryDTOS;
+    }
+
 }

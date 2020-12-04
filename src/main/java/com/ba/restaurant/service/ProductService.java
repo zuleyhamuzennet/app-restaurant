@@ -1,16 +1,19 @@
 package com.ba.restaurant.service;
 
+import com.ba.restaurant.converter.DTOConverter;
+import com.ba.restaurant.converter.EntityConverter;
+import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.entity.Category;
 import com.ba.restaurant.entity.Product;
 import com.ba.restaurant.repository.CategoryRepository;
 import com.ba.restaurant.repository.ProductRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+
 
 @Service
 public class ProductService {
@@ -20,31 +23,48 @@ public class ProductService {
 
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    CategoryService categoryService;
 
 
-    public void  addProduct(Set<Product> product){
-        productRepository.saveAll(product);
+    public ProductDTO  addProduct(ProductDTO productDTO, Long id){
+
+        Optional<Category> category=categoryRepository.findById(id);
+        Product product=DTOConverter.productConverter(productDTO);
+        product.setCategory(category.get());
+        category.get().getProducts().add(product);
+        productRepository.save(product);
+        return productDTO;
+
     }
 
-    public Product getProductById( Long id){
+    public ProductDTO getProductById( Long id){
         Product product= productRepository.findById(id).get();
-        return product;
+        ProductDTO productDTO=EntityConverter.productConverterDTO(product);
+        return productDTO;
     }
-    public Product updateProduct(Product product){
-        productRepository.saveAndFlush(product);
-        return product;
+
+    public ProductDTO updateProduct(ProductDTO productDTO, Long id){
+        Optional<Category> category=categoryRepository.findById(id);
+        Product product=DTOConverter.productConverter(productDTO);
+        product.setCategory(category.get());
+        category.get().getProducts().add(product);
+        productRepository.save(product);
+        return productDTO;
+
     }
-    public List<Product> listAllProduct(){
-        List<Product> allProducts= new ArrayList<>();
-        productRepository.findAll().forEach(product-> allProducts.add(product));
-        return allProducts;
+
+    public List<ProductDTO> listAllProduct(){
+        List<ProductDTO> productDTOS= new ArrayList<>();
+        List<Product> products= productRepository.findAll();
+        products.forEach(product -> productDTOS.add(EntityConverter.productConverterDTO(product)));
+        return productDTOS;
     }
 
     public void deleteProduct(long id)
     {
         productRepository.deleteById(id);
     }
-
 
 
 }

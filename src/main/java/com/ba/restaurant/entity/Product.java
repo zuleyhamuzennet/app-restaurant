@@ -1,8 +1,9 @@
 package com.ba.restaurant.entity;
 
+import com.ba.restaurant.dto.CategoryDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 public class Product implements Serializable {
@@ -13,6 +14,7 @@ public class Product implements Serializable {
     private String description;
     private double price;
 
+
     public Product(String productName, String description, double price) {
         this.productName = productName;
         this.description = description;
@@ -22,6 +24,20 @@ public class Product implements Serializable {
     public Product() {
 
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @ManyToOne()
+    @JoinColumn(name="category_id")
+    private Category category;
+
+
     public Long getId() {
         return id;
     }

@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import MainPage from "./components/MainPage";
 import TableCategory from "./components/TableCategory";
 import Tables from "./components/Tables";
+import CategoryTable from "./components/CategoryTable";
 
 
 

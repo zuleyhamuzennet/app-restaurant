@@ -13,15 +13,6 @@ class TableCategoryService{
             }
         })
     }
-    updateTableCategory(tableCategory){
-        return axios.put(TABLE_CATEGORY_API_BASE_URL+'update/',tableCategory,{
-            auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }
-        });
-    }
 
 
     listAllTableCategory(){
@@ -62,19 +53,6 @@ class TableCategoryService{
             }
         });
     }
-
-    getSales(){
-        return axios.get("http://localhost:8080/carts/list",{
-            auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }
-        })
-    }
-
-
-
 
 }
 export default new TableCategoryService()

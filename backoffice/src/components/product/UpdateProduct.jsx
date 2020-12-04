@@ -10,51 +10,60 @@ class UpdateProduct extends Component {
         super(props)
 
         this.state = {
-            id: this.props.match.params.id,
-            category: '',
+            id: this.props.history.location.state?.id,
+            categoryId:this.props.history.location.state?.categoryId,
             productName: '',
             description: '',
-            price: ''
+            price: '',
+            category:'' ,
+            products:[]
         }
         this.changeCategoryHandler = this.changeCategoryHandler.bind(this);
         this.changeProductNameHandler = this.changeProductNameHandler.bind(this);
         this.changeDescriptionHandler = this.changeDescriptionHandler.bind(this);
         this.changePriceHandler = this.changePriceHandler.bind(this);
 
+
     }
 
     componentDidMount() {
-        CategoryService.getCategoryById(this.state.id).then((res) => {
-            let categories = res.data;
+        ProductService.getProductById(this.state.id).then((res) => {
+
             this.setState({
-                id: categories.categoryId,
-                categoryName: categories.categoryName,
-                catDescription: categories.catDescription,
+                id: res.data.id,
+                productName: res.data.productName,
+                description: res.data.description,
+                price:res.data.price,
+                category:res.data.category.categoryName
+
             });
+        });
+        CategoryService.listAllCategories().then((res)=>{
+            this.setState({products:res.data})
         });
     }
 
     updateProduct = (e) => {
-        e.preventDefault();
+
         let product = {
-            id: this.state.id,
-            category: this.state.categoryName,
+            id:this.state.id,
             productName: this.state.productName,
             description: this.state.description,
-            price: this.state.price
+            category:this.state.products.category ,
+            price: this.state.price,
+
         };
         console.log('Product => ' + JSON.stringify(product));
-        ProductService.updateProduct(product, this.state.category).then(res => {
+        ProductService.updateProduct(product, this.state.id).then(res => {
             this.props.history.push('/list')
         });
 
+        e.preventDefault();
     }
     changeCategoryHandler = (event) => {
-        this.setState({category: event.target.value})
+        this.setState({categoryName: event.target.value})
     }
-    changeIdHandler = (event) => {
-        this.setState({id: event.target.value})
-    }
+
     changeProductNameHandler = (event) => {
         this.setState({productName: event.target.value})
     }
@@ -78,16 +87,13 @@ class UpdateProduct extends Component {
                                 <form>
                                     <div className="form-group">
                                         <label> Category </label>
-                                        <select className="select picker form-control"
-                                                onChange={this.changeCategoryHandler}>
+                                       <select className="selectpicker form-control" onChange={this.changeCategoryHandler}>{
 
-
-
-                                                    <option key={this.state.id} value={this.state.category}
-                                                            onChange={this.changeCategoryHandler}>
-                                                        {
-                                                            this.state.category}</option>
-
+                                            this.state.products.map(product =>
+                                                <option key={product.categoryId} value={product.categoryId}
+                                                >{product.categoryName}</option>
+                                            )
+                                        }
                                         </select>
 
                                     </div>

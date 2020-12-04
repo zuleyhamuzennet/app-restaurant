@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Card, Table} from "react-bootstrap";
 import ProductService from "../service/ProductService";
 import Header from "../Header";
-
+import '../../App.css';
 class ProductSales extends Component {
     constructor(props){
         super(props)
@@ -26,10 +26,11 @@ class ProductSales extends Component {
             <div>
                 <Header/>
                 <br/>
-            <Card className={"border border-dark bg-dark text-white"}>
+
+            <Card className={"border border-dark bg-dark text-white "} >
                 <h2 className="text-center">Product Sales Cart</h2>
-                <Card.Body>
-                    <Table bordered hover striped variant ="dark">
+                <Card.Body className="sales-scrollbar">
+                    <Table bordered hover striped variant ="dark" >
                         <thead>
                         <tr>
                             <th>Order Id</th>
@@ -49,13 +50,14 @@ class ProductSales extends Component {
                             this.state.orderProducts.map(
                                 products =>
                                     <tr key={products.id}>
+                                        <td>{products.id}</td>
                                         <td>{products.cartDate}</td>
                                         <td>{products.productName}</td>
                                         <td>{products.productId}</td>
                                         <td>{products.piece}</td>
                                         <td>{products.price}</td>
                                         <td>{products.total}</td>
-                                        <td>{products.tableId}</td>
+                                        <td>{products.tableCartId}</td>
                                     </tr>
                             )
                         }

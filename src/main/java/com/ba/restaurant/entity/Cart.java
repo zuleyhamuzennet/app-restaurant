@@ -15,6 +15,7 @@ public class Cart {
     private long total;
     private String productName;
     private long tableCartId;
+    private long tableCategoryId;
     @Column
     private Date cartDate= new Timestamp(System.currentTimeMillis());
 
@@ -24,6 +25,14 @@ public class Cart {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getTableCategoryId() {
+        return tableCategoryId;
+    }
+
+    public void setTableCategoryId(long tableCategoryId) {
+        this.tableCategoryId = tableCategoryId;
     }
 
     public long getTableCartId() {
