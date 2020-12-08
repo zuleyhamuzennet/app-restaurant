@@ -4,17 +4,17 @@ import './card-style.css';
 import nextId from "react-id-generator";
 import Header from "./Header";
 import '../App.css';
-
-
 class ProductList extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             productList: [],
-            products: [],
+            categories: [],
+            waiterId:this.props.history.location.state?.selectWaiterId,
+            tableCartId: this.props.history.location.state?.tableId,
+            tableCategoryId: this.props.history.location.state?.id,
             cart: {
-
                 cartId: 0,
                 productId: 0,
                 piece: 1,
@@ -22,27 +22,33 @@ class ProductList extends Component {
                 price: 0,
                 total: 0,
                 tableCartId:'',
-                tableCategoryId:''
+                tableCategoryId:'',
 
             },
             carts: [],
             totalCart: 0
         }
         this.listProductByCategory = this.listProductByCategory.bind(this);
+        this.goTables=this.goTables.bind(this);
 
     }
-
     listProductByCategory(id) {
-        Service.listProductById(id).then((res) => {
+
+        Service.listAllProduct().then((res) => {
+            console.log("id=>",id);
             this.setState({productList: res.data});
-            console.log(res.data);
+            console.log("ProductList",res.data);
         });
         this.render();
     }
-
     saleButton(Carts) {
         console.log(Carts);
         Service.saleButton(Carts).then(res => {
+            if(localStorage.getItem(`${this.state.tableCategoryId}+${this.state.tableCartId}`)!==null){
+               localStorage.removeItem(`${this.state.tableCategoryId}+${this.state.tableCartId}`);
+
+            }
+
             window.location.reload();
         });
     }
@@ -66,7 +72,29 @@ class ProductList extends Component {
         }
     }
 
+    addLocalStroge(){
+        localStorage.setItem(`${this.state.tableCategoryId}+${this.state.tableCartId}`,JSON.stringify(this.state.carts));
+    }
+
+    goTables(){
+        this.addLocalStroge();
+        this.props.history.push("/table-category");
+    }
+
+    getLocaleStroge(){
+        console.log("localstroga",this.state.tableCategoryId,this.state.tableCartId);
+
+
+        if(localStorage.getItem(`${this.state.tableCategoryId}+${this.state.tableCartId}`)!==null){
+            let array=JSON.parse(localStorage.getItem(`${this.state.tableCategoryId}+${this.state.tableCartId}`));
+            this.setState({carts:array});
+        }
+
+    }
+
     addCarts(products) {
+
+
         this.state.totalCart += products.price;
         if (this.state.carts.filter(cart => cart.productId == products.id).length > 0) {
             var cart = this.state.carts.filter(cart => cart.productId == products.id)
@@ -75,6 +103,7 @@ class ProductList extends Component {
             this.setState([{...this.state.carts, [cart[0].productId]: cart[0]}])
         } else {
             this.setState({
+
                 cart: {
                     cartId: nextId(),
                     productId: products.id,
@@ -83,30 +112,31 @@ class ProductList extends Component {
                     piece: 1,
                     total: products.price,
                     tableCartId:this.state.tableCartId,
-                    tabCategoryId:this.state.tab
+                    tableCategoryId:this.state.tableCategoryId,
+                    waiterId:this.state.waiterId
 
                 }
 
             }, () => this.setState({carts: [...this.state.carts, this.state.cart]}))
+            console.log(cart);
         }
     }
 
     componentDidMount() {
-        console.log("tableCartId",this.state.tableCartId);
-        this.setState({
-            tableCartId: this.props.history.location.state?.tableCartId,
-            tableCategoryId: this.props.history.location.state?.tableCategoryId
-        })
-        Service.listAllProduct().then((res) => {
+
+this.getLocaleStroge();
+        Service.listAllCategory().then((res) => {
             console.log(res.data);
-            this.setState({products: res.data});
+            this.setState({categories: res.data});
         });
+
         this.render();
+
     }
 
     render() {
-        return (
 
+        return (
             <div style={{backgroundColor:"#f6ffff"}}>
                 <Header/>
                 <br/>
@@ -114,13 +144,17 @@ class ProductList extends Component {
                     <div className="row">
                         <div className="col-md-2 ">
                             <div className="list-group">
+                                <h3>Selected Table :{JSON.parse(localStorage.getItem('tableId'))}</h3>
+                                <button  className="btn btn-warning"  style={{marginBottom:"5px"}} onClick={()=>this.goTables()}>Go Tables</button>
+
                                 <a href="#" className="list-group-item list-group-item-action active" style={{backgroundColor:'#258d2f'}}>
                                     Categories
                                 </a>
+
                                 {
-                                    this.state.products.map(
+                                    this.state.categories.map(
                                         product =>
-                                            <tr key={product.category.categoryId}>
+                                            <tr key={product.categoryId}>
                                                 <a href="#" className="list-group-item list-group-item-action"
                                                    onClick={() => this.listProductByCategory(product.categoryId)}>{product.categoryName}</a>
                                             </tr>
@@ -138,7 +172,7 @@ class ProductList extends Component {
                                             this.state.productList.map(
                                                 product =>
                                                     <div style={{marginBottom: "20px"}} className="col-md-6"
-                                                         style={{postion: 'relative', padding: '9px 1px'}}>
+                                                         style={{postion: 'relative', padding: '9px 1px'}} key={product.id}>
                                                         <div className="card text-center">
                                                             <div className="overflow">
                                                                 <img src="http://placehold.jp/300x150.png" alt="Image1"
@@ -179,8 +213,6 @@ class ProductList extends Component {
                                 </tr>
                                 </thead>
                                 <tbody>
-
-
                                 {
                                     this.state.carts.map(
                                         cart =>

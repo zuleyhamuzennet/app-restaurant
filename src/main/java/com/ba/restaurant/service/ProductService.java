@@ -1,5 +1,4 @@
 package com.ba.restaurant.service;
-
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.converter.EntityConverter;
 import com.ba.restaurant.dto.ProductDTO;
@@ -29,14 +28,13 @@ public class ProductService {
 
     public ProductDTO  addProduct(ProductDTO productDTO, Long id){
 
-        Optional<Category> category=categoryRepository.findById(id);
         Product product=DTOConverter.productConverter(productDTO);
+        Optional<Category> category=categoryRepository.findById(id);
         product.setCategory(category.get());
-        category.get().getProducts().add(product);
         productRepository.save(product);
         return productDTO;
-
     }
+
 
     public ProductDTO getProductById( Long id){
         Product product= productRepository.findById(id).get();
@@ -45,11 +43,10 @@ public class ProductService {
     }
 
     public ProductDTO updateProduct(ProductDTO productDTO, Long id){
-        Optional<Category> category=categoryRepository.findById(id);
         Product product=DTOConverter.productConverter(productDTO);
+        Optional<Category> category=categoryRepository.findById(id);
         product.setCategory(category.get());
-        category.get().getProducts().add(product);
-        productRepository.save(product);
+        productRepository.saveAndFlush(product);
         return productDTO;
 
     }
@@ -61,9 +58,11 @@ public class ProductService {
         return productDTOS;
     }
 
-    public void deleteProduct(long id)
+    public String deleteProduct(long id)
     {
         productRepository.deleteById(id);
+
+        return "product silindi :"+id;
     }
 
 

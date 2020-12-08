@@ -1,8 +1,6 @@
 package com.ba.restaurant.controller;
 
 import com.ba.restaurant.dto.TableCategoryDTO;
-import com.ba.restaurant.entity.Category;
-import com.ba.restaurant.entity.TableCategory;
 
 import com.ba.restaurant.service.TableCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +37,7 @@ public class TableCategoryController {
     public TableCategoryDTO getTableCategoryById(@PathVariable Long id){
         return tableCategoryService.getTableCategorytById(id);
     }
+
+
 
 }

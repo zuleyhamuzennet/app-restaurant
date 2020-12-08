@@ -1,10 +1,7 @@
-package com.ba.restaurant.service;
+package com.ba.restaurant.controller;
 
-import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.CartDTO;
-import com.ba.restaurant.entity.Cart;
-import com.ba.restaurant.repository.CartRepository;
-import com.ba.restaurant.repository.CategoryRepository;
+import com.ba.restaurant.service.CartService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,15 +16,14 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 @RunWith(MockitoJUnitRunner.class)
-public class CartServiceTest {
+public class CartControllerTest {
 
     @InjectMocks
-    private CartService cartService;
+    CartController cartController;
 
     @Mock
-    private CartRepository cartRepository;
+    CartService cartService;
 
     private CartDTO cartDTO= new CartDTO();
     private List<CartDTO> cartDTOS= new ArrayList<>();
@@ -49,20 +45,17 @@ public class CartServiceTest {
 
     }
 
+
     @Test
-    public void shouldAddNewCart1()
-    {
-
-        Mockito.when(cartRepository.saveAll(Mockito.any())).thenReturn(DTOConverter.cartConverter(cartDTOS));
-        List<CartDTO> cartDTOS1= cartService.addCart(cartDTOS);
-
-        Assert.assertNotNull(cartDTOS1);
-        Assert.assertEquals(cartDTOS1.get(0).getId(),cartDTOS.get(0).getId());
+    public void shouldAddCart(){
+        Mockito.when(cartService.addCart(Mockito.any())).thenReturn(cartDTOS);
+        List<CartDTO> res= cartController.addCart(cartDTOS);
+        Assert.assertNotNull(res);
+        Assert.assertEquals(res.get(0).getId(),cartDTOS.get(0).getId());
     }
-
     @Test
-    public void shouldListCart(){
-        List<CartDTO> cartDTOList= cartService.listAllCarts();
+    public void shouldListAllCart(){
+        List<CartDTO> cartDTOList= cartController.listAllCarts();
         Assert.assertNotNull(cartDTOList);
     }
 

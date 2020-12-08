@@ -1,7 +1,6 @@
 package com.ba.restaurant.controller;
 
 import com.ba.restaurant.dto.CartDTO;
-import com.ba.restaurant.entity.Cart;
 import com.ba.restaurant.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +20,12 @@ public class CartController {
         return cartService.listAllCarts();
     }
 
+
     @PostMapping("/add")
     public List<CartDTO> addCart(@RequestBody List<CartDTO>cartDTOS){
         return cartService.addCart(cartDTOS);
     }
+
 
 }
 

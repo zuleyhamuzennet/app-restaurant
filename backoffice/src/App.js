@@ -2,7 +2,6 @@ import './App.css';
 import AddProduct from './components/product/AddProduct';
 import ProductList from "./components/product/ProductList";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Header from "./components/Header";
 import UserList from "./components/user/UserList";
 import UserAdd from "./components/user/UserAdd";
 import UserUpdate from "./components/user/UserUpdate";
@@ -19,8 +18,8 @@ import TableCategoryList from "./components/tableCategory/TableCategoryList";
 import DetailProduct from "./components/product/DetailProduct";
 import TableDetail from "./components/table/TableDetail";
 import TableUpdate from "./components/table/TableUpdate";
-
-
+import WaiterAdd from "./components/waiter/WaiterAdd";
+import WaiterList from "./components/waiter/WaiterList";
 
 function App() {
 
@@ -49,6 +48,8 @@ function App() {
                             <Route exact path="/table-categories" component={TableCategoryList}></Route>
                             <Route exact path="/detail/:id" component={DetailProduct}></Route>
                             <Route exact path="/table-detail/:id" component={TableDetail}></Route>
+                            <Route exact path="/waiter-add" component={WaiterAdd}></Route>
+                            <Route exact path="/waiters" component={WaiterList}></Route>
 
                         </Switch>
                     </div>

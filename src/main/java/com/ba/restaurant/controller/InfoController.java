@@ -31,8 +31,8 @@ public class InfoController {
     @Value("${"+ApplicationPropertiesInfo.jpaHibernateFormatSql+"}")
     private String jpaHibernateFormatSql;
 
-    @Value("${"+ApplicationPropertiesInfo.logLevelHibernateType+"}")
-    private String logLevelHibernateType;
+ /*   @Value("${"+ApplicationPropertiesInfo.logLevelHibernateType+"}")
+    private String logLevelHibernateType;*/
 
     @Value("${"+ApplicationPropertiesInfo.SPRING_PROFILE_ACTIVE+"}")
     private String springProfiles;
@@ -59,10 +59,10 @@ public class InfoController {
         jsonObject2.put("value",jpaHibernateFormatSql);
         jsonArray.add(jsonObject2);
 
-        JSONObject jsonObject3= new JSONObject();
+      /*  JSONObject jsonObject3= new JSONObject();
         jsonObject3.put("key",ApplicationPropertiesInfo.logLevelHibernateType);
         jsonObject3.put("value",logLevelHibernateType);
-        jsonArray.add(jsonObject3);
+        jsonArray.add(jsonObject3);*/
 
         JSONObject jsonObject4= new JSONObject();
         jsonObject4.put("key",ApplicationPropertiesInfo.dataSourceUrl);

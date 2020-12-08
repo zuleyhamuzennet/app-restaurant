@@ -3,6 +3,7 @@ import {Card, Table} from "react-bootstrap";
 import ProductService from "../service/ProductService";
 import Header from "../Header";
 import '../../App.css';
+import WaiterService from "../service/WaiterService";
 class ProductSales extends Component {
     constructor(props){
         super(props)
@@ -19,6 +20,7 @@ class ProductSales extends Component {
             console.log("order-product", response.data);
             this.render();
         });
+
     }
 
     render() {
@@ -40,7 +42,9 @@ class ProductSales extends Component {
                             <th>Product Piece</th>
                             <th>Product Price</th>
                             <th>Total Price</th>
+                            <th>Table-Category</th>
                             <th>Table</th>
+                            <th>Waiter</th>
 
                         </tr>
                         </thead>
@@ -57,7 +61,9 @@ class ProductSales extends Component {
                                         <td>{products.piece}</td>
                                         <td>{products.price}</td>
                                         <td>{products.total}</td>
-                                        <td>{products.tableCartId}</td>
+                                        <td>{products.tableCategoryId}</td>
+                                        <td>Table :{products.tableCartId}</td>
+                                        <td>{products.waiterName}</td>
                                     </tr>
                             )
                         }

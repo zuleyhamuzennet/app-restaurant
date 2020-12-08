@@ -9,21 +9,24 @@ class TableCategory extends Component {
         super(props);
         this.state = {
             tableCategory: [],
-            tables: []
+            tables: [],
+            tableCategoryId:''
+
         }
         this.listTableByCategory = this.listTableByCategory.bind(this);
     }
 
 
     listTableByCategory(id,count) {
-
+        this.setState({tableCategoryId:id})
         this.props.history.push({
             pathname:"/tables",
             state:{
-                id:id,
+            id:id,
                 count:count
             }
         })
+
 
     }
     componentDidMount() {

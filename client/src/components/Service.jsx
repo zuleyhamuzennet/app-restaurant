@@ -17,12 +17,9 @@ class Service{
             }
         });
     }
-    listProductById(id){
+    listProductsByCategoryId(id){
 
-        return axios.get(PRODUCT_API_BASE_URL+"list",{
-            params:{
-                categoryId:id
-            },
+        return axios.get(PRODUCT_API_BASE_URL+"list/"+id,{
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
@@ -49,25 +46,7 @@ class Service{
         })
 
     }
-    listAllTables(){
 
-        return axios.get("http://localhost:8080/table/list",{
-            auth:{
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }
-        })
-
-    }
-    listTableById(id){
-        return axios.get("http://localhost:8080/table/"+id,{
-            auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }
-        })
-    }
     listTableByCategory(id){
         return axios.get("http://localhost:8080/table-category/"+id,{
             auth:{
@@ -79,16 +58,29 @@ class Service{
     }
 
     listProductByCategory(id){
-        return axios.get(CATEGORY_API_BASE_URL,{
-            params:{
-                id:id
-            },
+        return axios.get(PRODUCT_API_BASE_URL+id,{
             auth:{
 
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
             }
         })
+    }
+    listAllWaiters(){
+        return axios.get("http://localhost:8080/waiter/list",{
+            auth:{
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            }
+        })
+    }
+    getWaiterById(id){
+        return axios.get("http://localhost:8080/waiter/"+id,{
+            auth:{
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            }
+        });
     }
 
     saleButton(Carts){

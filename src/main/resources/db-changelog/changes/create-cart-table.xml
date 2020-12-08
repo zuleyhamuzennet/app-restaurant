@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
+  <changeSet id="07-12-2020_15:41" author="zuleyha.muzennet">
+      <createTable tableName="carts">
+
+          <column autoIncrement="true" name="id" type="int(1)">
+              <constraints primaryKey="true"/>
+          </column>
+          <column name="product_id" type="int(1)"/>
+          <column name="piece" type="int(1)"/>
+          <column name="price" type="int(1)"/>
+          <column name="total" type="int(1)"/>
+          <column name="table_cart_id" type="int(1)"/>
+          <column name="table_category_id" type="int(1)"/>
+          <column name="waiter_id" type="int(1)"/>
+          <column name="product_name" type="VARCHAR(255)"/>
+          <column defaultValueComputed="CURRENT_TIMESTAMP" name="cart_date" type="TIMESTAMP"/>
+      </createTable>
+
+      <rollback>
+          <dropTable tableName="carts"/>
+      </rollback>
+
+  </changeSet>
+
+</databaseChangeLog>

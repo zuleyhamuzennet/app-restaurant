@@ -3,6 +3,7 @@ package com.ba.restaurant.service;
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.converter.EntityConverter;
 import com.ba.restaurant.dto.CategoryDTO;
+import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.entity.Category;
 import com.ba.restaurant.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,13 @@ public class CategoryService {
         Category category= DTOConverter.categoryConverter(categoryDTO);
         categoryRepository.saveAndFlush(category);
         return categoryDTO;
+    }
+   public List<ProductDTO> getProductsCategoryById(Long id){
+        Optional<Category> category= categoryRepository.findById(id);
+        List<ProductDTO> productDTOS= new ArrayList<>();
+      category.get().getProducts().forEach(product -> productDTOS.add(EntityConverter.productConverterDTO(product)) );
+        return  productDTOS;
+
     }
 
     public CategoryDTO getCategoryById(Long id){

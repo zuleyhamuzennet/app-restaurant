@@ -1,9 +1,8 @@
 package com.ba.restaurant.service;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
+import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.CategoryDTO;
 import com.ba.restaurant.entity.Category;
 import com.ba.restaurant.repository.CategoryRepository;
@@ -16,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import javax.xml.stream.events.DTD;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,33 +29,24 @@ public class CategoryServiceTest {
     @Mock
     private CategoryRepository categoryRepository;
 
-    private Category category= new Category();
-
     private CategoryDTO categoryDTO= new CategoryDTO();
-    private List<Category> categoryList= new ArrayList<>();
     private List<CategoryDTO>categoryDTOList= new ArrayList<>();
-    private Optional<Category> categoryDTOOptional=Optional.of(category);
-
 
     @Before
     public void setUp() throws Exception{
-        category.setCategoryName("meyve");
-        category.setCategoryId(2L);
-        category.setCatDescription("çalış");
+
         categoryDTO.setCategoryName("meyve2");
-        categoryDTO.setCategoryId(1L);
+        categoryDTO.setCategoryId(2L);
         categoryDTO.setCatDescription("çalışmalısın");
         categoryDTOList.add(categoryDTO);
-        categoryList.add(category);
+
 
     }
 
-
     @Test
     public void shouldAddNewCategory(){
-        Mockito.when(categoryRepository.save(category)).thenReturn(category);
-
-         CategoryDTO categoryDTO2 =categoryService.addCategory(categoryDTO);
+        Mockito.when(categoryRepository.save(Mockito.any())).thenReturn(DTOConverter.categoryConverter(categoryDTO));
+        CategoryDTO categoryDTO2 =categoryService.addCategory(categoryDTO);
 
         Assert.assertNotNull(categoryDTO2);
         Assert.assertEquals(categoryDTO2 , categoryDTO);
@@ -64,8 +55,7 @@ public class CategoryServiceTest {
 
     @Test
     public void shouldUpdateCategory(){
-        Mockito.when(categoryRepository.saveAndFlush(category)).thenReturn(category);
-
+        Mockito.when(categoryRepository.saveAndFlush(Mockito.any())).thenReturn(DTOConverter.categoryConverter(categoryDTO));
         CategoryDTO categoryDTO2 =categoryService.updateCategory(categoryDTO);
 
         Assert.assertNotNull(categoryDTO2);
@@ -85,7 +75,6 @@ public class CategoryServiceTest {
         Long id =2L;
         String response=categoryService.deleteCategory(id);
 
-       // Assert.assertEquals(response,"id :"+id+ " olan icerik silindi");
         verify(categoryRepository,times(1)).deleteById(id);
     }
 
@@ -93,13 +82,11 @@ public class CategoryServiceTest {
     public void shouldFindByCategoryId(){
 
         Long id=2L;
-
-        Mockito.when(categoryRepository.findById(id)).thenReturn(Optional.of(category));
+        Mockito.when(categoryRepository.findById(id)).thenReturn(Optional.of(DTOConverter.categoryConverter(categoryDTO)));
         CategoryDTO categoryDTO1=categoryService.getCategoryById(id);
 
         Assert.assertNotNull(categoryDTO1);
-       // Assert.assertEquals(categoryDTO1,categoryDTO);
-
+        Assert.assertEquals(categoryDTO1.getCategoryId(),categoryDTO.getCategoryId());
 
     }
 

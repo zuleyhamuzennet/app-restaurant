@@ -23,6 +23,11 @@ public class WaiterService {
         waiterRepository.save(waiter);
         return waiterDTO;
     }
+    public WaiterDTO updateWaiter(WaiterDTO waiterDTO){
+        Waiter waiter=DTOConverter.waiterConverter(waiterDTO);
+        waiterRepository.saveAndFlush(waiter);
+        return waiterDTO;
+    }
     public List<WaiterDTO> listAllWaiter(){
         List<WaiterDTO> waiterDTOS=new ArrayList<>();
         List<Waiter> waiters=waiterRepository.findAll();

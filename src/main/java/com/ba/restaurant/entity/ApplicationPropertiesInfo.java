@@ -6,7 +6,7 @@ public class ApplicationPropertiesInfo {
     public final static String  dataSourceUrl="spring.datasource.url";
     public final static String jpaShowSql="spring.jpa.show-sql";
     public final static String jpaHibernateFormatSql="spring.jpa.properties.hibernate.format_sql";
-    public final static String logLevelHibernateType="logging.level.org.hibernate.type";
+  //  public final static String logLevelHibernateType="logging.level.org.hibernate.type";
    // public final static String DATASOURCE_USERNAME="spring.datasource.username";
     //public final static String DATASOURCE_PASSWORD="spring.datasource.password";
     //public final static String JPA_PROPERTIES_HIBERNATE_DIALECT="spring.jpa.properties.hibernate.dialect";

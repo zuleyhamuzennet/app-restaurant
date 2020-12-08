@@ -18,6 +18,7 @@ public class DTOConverter {
         product.setPrice(productDTO.getPrice());
         product.setDescription(productDTO.getDescription());
 
+        product.setCategory(new Category());
         product.getCategory().setCategoryName(productDTO.getCategoryName());
         product.getCategory().setCategoryId(productDTO.getCategoryId());
 
@@ -64,6 +65,7 @@ public class DTOConverter {
             cart.setTotal(cartDTO.get(i).getTotal());
             cart.setProductName(cartDTO.get(i).getProductName());
             cart.setProductId(cartDTO.get(i).getProductId());
+            cart.setWaiterId(cartDTO.get(i).getWaiterId());
             cartList.add(cart);
         }
 

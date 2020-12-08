@@ -47,5 +47,9 @@ public class TableCategoryService {
         tableCategories.forEach(tableCategory -> tableCategoryDTOS.add(EntityConverter.tableCategoryConverterDTO(tableCategory)));
         return tableCategoryDTOS;
     }
+    public String  deleteByTableCategory(Long id){
+        tableCategoryRepository.deleteById(id);
+        return "table silindi :"+id;
+    }
 
 }

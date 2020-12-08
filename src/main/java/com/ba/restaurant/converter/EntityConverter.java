@@ -60,6 +60,7 @@ public class EntityConverter {
         cartDTO.setTableCartId(cart.getTableCartId());
         cartDTO.setTableCategoryId(cart.getTableCategoryId());
         cartDTO.setTotal(cart.getTotal());
+        cartDTO.setWaiterId(cart.getWaiterId());
 
         return cartDTO;
     }

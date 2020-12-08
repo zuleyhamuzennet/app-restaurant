@@ -1,7 +1,7 @@
 package com.ba.restaurant.controller;
 
 import com.ba.restaurant.dto.CategoryDTO;
-import com.ba.restaurant.entity.Category;
+import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +31,10 @@ public class CategoryController {
         categoryService.updateCategory(categoryDTO);
         return categoryDTO;
     }
+    @GetMapping("/list/{id}")
+    public List<ProductDTO> getProductsCategoryById(@PathVariable Long id){
+        return categoryService.getProductsCategoryById(id);
+    }
 
     @GetMapping("/{id}")
     public CategoryDTO getCategoryById(@PathVariable Long id){
@@ -38,9 +42,10 @@ public class CategoryController {
         return categoryService.getCategoryById(id);
     }
     @DeleteMapping("/delete/{id}")
-    public void deleteCategory(@PathVariable long id){
+    public String deleteCategory(@PathVariable long id){
         categoryService.deleteCategory(id);
 
+        return null;
     }
 
 }

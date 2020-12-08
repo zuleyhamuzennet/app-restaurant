@@ -16,6 +16,7 @@ class Header extends Component {
                         <div><h2 className="navbar-brand">Back-Office:</h2></div>
                         <div><a href="/list" className="navbar-brand">Products</a></div>
                         <div><a href="/listuser" className="navbar-brand">Users</a></div>
+                        <div><a href="/waiters" className="navbar-brand">Waiters</a></div>
                         <div><a href="/list-category" className="navbar-brand">Categories</a></div>
                         <div><a href="/table-categories" className="navbar-brand">Tables</a></div>
                         <div><a href="/sales" className="navbar-brand">Sales</a></div>
