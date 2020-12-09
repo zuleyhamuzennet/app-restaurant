@@ -52,6 +52,13 @@ public class DTOConverter {
 
         return waiter;
     }
+    public static Media mediaConverter(MediaDTO mediaDTO){
+        Media media= new Media();
+        media.setMediaName(mediaDTO.getMediaName());
+        media.setFileContent(mediaDTO.getFileContent());
+        media.setMediaId(mediaDTO.getMediaId());
+        return media;
+    }
     public static List<Cart> cartConverter(List<CartDTO> cartDTO){
         List<Cart> cartList= new ArrayList<>();
         for(int i= 0; i<cartDTO.size(); i++){

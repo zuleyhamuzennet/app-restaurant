@@ -1,11 +1,9 @@
 package com.ba.restaurant.service;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.times;
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.CategoryDTO;
 import com.ba.restaurant.dto.ProductDTO;
-import com.ba.restaurant.entity.Category;
-import com.ba.restaurant.entity.Product;
+import com.ba.restaurant.dtoBuilder.ProductDTOBuilder;
 import com.ba.restaurant.repository.CategoryRepository;
 import com.ba.restaurant.repository.ProductRepository;
 import org.junit.Assert;
@@ -41,18 +39,8 @@ public class ProductServiceTest {
     @Before
     public void setUp() throws Exception{
 
-
-        productDTO.setDescription("şerbetli tatlı");
-        productDTO.setPrice(5);
-        productDTO.setProductName("baklava");
-        productDTO.setId(1L);
-        productDTO.setCategoryName("tatlı");
-        productDTO.setCategoryId(1L);
+        productDTO= new ProductDTOBuilder().id(1L).productName("deneme").description("desc").price(5L).categoryId(1L).categoryName("tatlı").build();
         productDTOS.add(productDTO);
-
-
-        categoryDTO.setCategoryId(1L);
-        categoryDTO.setCategoryName("tatlı");
 
         categoryRepository.save(DTOConverter.categoryConverter(categoryDTO));
     }

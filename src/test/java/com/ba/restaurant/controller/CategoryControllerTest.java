@@ -3,6 +3,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 import com.ba.restaurant.dto.CategoryDTO;
+import com.ba.restaurant.dtoBuilder.CategoryDTOBuilder;
 import com.ba.restaurant.service.CategoryService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,9 +32,7 @@ public class CategoryControllerTest {
     @Before
     public void setUp() throws Exception{
 
-        categoryDTO.setCategoryName("meyve2");
-        categoryDTO.setCategoryId(2L);
-        categoryDTO.setCatDescription("çalışmalısın");
+        categoryDTO= new CategoryDTOBuilder().catDescription("deneme").categoryName("deneme").categoryId(2L).build();
         categoryDTOList.add(categoryDTO);
 
 

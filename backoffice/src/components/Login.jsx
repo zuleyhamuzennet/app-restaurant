@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import '../App.css';
 import {Form, Button, FormGroup,Input, Label} from  'reactstrap';
+import {AppContext} from "../App";
 class Login extends Component {
 
     constructor(props) {
@@ -41,6 +42,7 @@ class Login extends Component {
 
     render() {
         return (
+
             <Form className="login-form">
 
                 <h2>Login</h2>
@@ -57,6 +59,7 @@ class Login extends Component {
                 <Button className="btn-lg btn-dark btn-block" onClick={this.handleSubmit}>Login</Button>
 
             </Form>
+
 
         );
     }

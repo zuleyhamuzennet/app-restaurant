@@ -31,6 +31,13 @@ public class EntityConverter {
 
         return tableCategoryDTO;
     }
+    public static MediaDTO mediaConverterDTO(Media media){
+        MediaDTO mediaDTO= new MediaDTO();
+        mediaDTO.setFileContent(media.getFileContent());
+        mediaDTO.setMediaId(media.getMediaId());
+        mediaDTO.setMediaName(media.getMediaName());
+        return mediaDTO;
+    }
 
 
     public static CategoryDTO categoryConverterDTO(Category category){

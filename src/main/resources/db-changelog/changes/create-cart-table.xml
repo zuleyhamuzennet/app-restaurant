@@ -7,7 +7,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
   <changeSet id="07-12-2020_15:41" author="zuleyha.muzennet">
-      <createTable tableName="carts">
+      <createTable tableName="cart">
 
           <column autoIncrement="true" name="id" type="int(1)">
               <constraints primaryKey="true"/>
@@ -24,7 +24,7 @@
       </createTable>
 
       <rollback>
-          <dropTable tableName="carts"/>
+          <dropTable tableName="cart"/>
       </rollback>
 
   </changeSet>

@@ -2,6 +2,7 @@ package com.ba.restaurant.service;
 
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.TableCategoryDTO;
+import com.ba.restaurant.dtoBuilder.TableCategoryDTOBuilder;
 import com.ba.restaurant.entity.TableCategory;
 import com.ba.restaurant.repository.TableCategoryRepository;
 import org.junit.Assert;
@@ -22,7 +23,10 @@ import static org.mockito.Mockito.verify;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class TableCategoryServiceTest {
+public class
+
+
+TableCategoryServiceTest {
 
     @InjectMocks
     private TableCategoryService tableCategoryService;
@@ -36,10 +40,7 @@ public class TableCategoryServiceTest {
     @Before
     public void setUp() throws Exception{
 
-        tableCategoryDTO.setId(1L);
-        tableCategoryDTO.setTableCategoryName("teras");
-        tableCategoryDTO.setTableCategoryDesc("açık hava");
-        tableCategoryDTO.setCount(5L);
+       tableCategoryDTO= new TableCategoryDTOBuilder().id(1L).tableCategoryDesc("deneme").tableCategoryName("name").count(2L).build();
 
         tableCategoryDTOS.add(tableCategoryDTO);
 

@@ -1,6 +1,7 @@
 package com.ba.restaurant.controller;
 
 import com.ba.restaurant.dto.CartDTO;
+import com.ba.restaurant.dtoBuilder.CartDTOBuilder;
 import com.ba.restaurant.service.CartService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,14 +34,7 @@ public class CartControllerTest {
     @Before
     public void setUp() throws Exception{
 
-        cartDTO.setProductId(2L);
-        cartDTO.setCartDate(date);
-        cartDTO.setProductName("elma");
-        cartDTO.setTotal(5L);
-        cartDTO.setPrice(2L);
-        cartDTO.setPiece(2L);
-        cartDTO.setTotal(8L);
-        cartDTO.setTableCategoryId(1L);
+      cartDTO= new CartDTOBuilder().tableCategoryId(1L).productName("deneme").productId(1L).waiterId(1L).total(5L).price(4L).piece(1L).tableCartId(3L).id(1L).cartDate(date).build();
         cartDTOS.add(cartDTO);
 
     }

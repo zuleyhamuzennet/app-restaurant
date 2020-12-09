@@ -19,7 +19,7 @@ class Service{
     }
     listProductsByCategoryId(id){
 
-        return axios.get(PRODUCT_API_BASE_URL+"list/"+id,{
+        return axios.get(CATEGORY_API_BASE_URL+"list/"+id,{
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")

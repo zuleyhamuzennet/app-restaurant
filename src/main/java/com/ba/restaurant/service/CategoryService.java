@@ -32,9 +32,8 @@ public class CategoryService {
    public List<ProductDTO> getProductsCategoryById(Long id){
         Optional<Category> category= categoryRepository.findById(id);
         List<ProductDTO> productDTOS= new ArrayList<>();
-      category.get().getProducts().forEach(product -> productDTOS.add(EntityConverter.productConverterDTO(product)) );
+        category.get().getProducts().forEach(product -> productDTOS.add(EntityConverter.productConverterDTO(product)) );
         return  productDTOS;
-
     }
 
     public CategoryDTO getCategoryById(Long id){

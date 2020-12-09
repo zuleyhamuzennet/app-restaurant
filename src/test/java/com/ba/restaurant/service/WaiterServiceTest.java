@@ -4,6 +4,7 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.WaiterDTO;
+import com.ba.restaurant.dtoBuilder.WaiterDTOBuilder;
 import com.ba.restaurant.repository.WaiterRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,8 +35,7 @@ public class WaiterServiceTest {
     @Before
     public void setUp() throws Exception{
 
-        waiterDTO.setWaiterName("züleyha");
-        waiterDTO.setWaiterId(1L);
+        waiterDTO= new WaiterDTOBuilder().waiterId(1L).waiterName("zuleyha").build();
         waiterDTOS.add(waiterDTO);
 
     }

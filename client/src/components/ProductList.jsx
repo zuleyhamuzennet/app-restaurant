@@ -34,7 +34,7 @@ class ProductList extends Component {
     }
     listProductByCategory(id) {
 
-        Service.listAllProduct().then((res) => {
+        Service.listProductsByCategoryId(id).then((res) => {
             console.log("id=>",id);
             this.setState({productList: res.data});
             console.log("ProductList",res.data);
@@ -140,9 +140,9 @@ this.getLocaleStroge();
             <div style={{backgroundColor:"#f6ffff"}}>
                 <Header/>
                 <br/>
-                <div className="col-md-11 mx-auto" style={{padding:'10px 0'}}>
+                <div className="col-md-12 mx-auto" style={{padding:'10px 0'}}>
                     <div className="row">
-                        <div className="col-md-2 ">
+                        <div className="col-md-2  ml-3" >
                             <div className="list-group">
                                 <h3>Selected Table :{JSON.parse(localStorage.getItem('tableId'))}</h3>
                                 <button  className="btn btn-warning"  style={{marginBottom:"5px"}} onClick={()=>this.goTables()}>Go Tables</button>

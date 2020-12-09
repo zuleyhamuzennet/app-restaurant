@@ -21,6 +21,7 @@ class Header extends Component {
                         <div><a href="/table-categories" className="navbar-brand">Tables</a></div>
                         <div><a href="/sales" className="navbar-brand">Sales</a></div>
                         <div><a href="/info" className="navbar-brand">Info</a></div>
+                        <div><a href="/media" className="navbar-brand">Media</a></div>
                         <div><a href="/" className="navbar-brand"><button className="btn btn-danger" style={{position:'absolute',right:'5px' ,marginTop:'-18px'}}>Logout</button></a></div>
                     </nav>
                 </header>

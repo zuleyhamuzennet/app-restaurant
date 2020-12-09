@@ -20,10 +20,16 @@ import TableDetail from "./components/table/TableDetail";
 import TableUpdate from "./components/table/TableUpdate";
 import WaiterAdd from "./components/waiter/WaiterAdd";
 import WaiterList from "./components/waiter/WaiterList";
+import AddMedia from "./components/media/AddMedia";
+import React, { useState } from 'react';
+
+//export const AppContext=React.createContext();
 
 function App() {
 
+
     return (
+
         <div>
 
             <Router>
@@ -50,12 +56,14 @@ function App() {
                             <Route exact path="/table-detail/:id" component={TableDetail}></Route>
                             <Route exact path="/waiter-add" component={WaiterAdd}></Route>
                             <Route exact path="/waiters" component={WaiterList}></Route>
+                            <Route exact path="/media" component={AddMedia}></Route>
 
                         </Switch>
                     </div>
 
             </Router>
         </div>
+
     );
 }
 

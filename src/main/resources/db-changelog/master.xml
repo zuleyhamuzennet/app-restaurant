@@ -7,6 +7,7 @@
     <include relativeToChangelogFile="true" file="/changes/create-product-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-waiter-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-table-category-table.xml"/>
+    <include relativeToChangelogFile="true" file="/changes/create-media-table.xml"/>
 
 
 </databaseChangeLog>

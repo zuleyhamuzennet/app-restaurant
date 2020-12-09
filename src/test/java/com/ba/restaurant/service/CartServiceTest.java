@@ -2,6 +2,7 @@ package com.ba.restaurant.service;
 
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.CartDTO;
+import com.ba.restaurant.dtoBuilder.CartDTOBuilder;
 import com.ba.restaurant.entity.Cart;
 import com.ba.restaurant.repository.CartRepository;
 import com.ba.restaurant.repository.CategoryRepository;
@@ -37,16 +38,8 @@ public class CartServiceTest {
     @Before
     public void setUp() throws Exception{
 
-        cartDTO.setProductId(2L);
-        cartDTO.setCartDate(date);
-        cartDTO.setProductName("elma");
-        cartDTO.setTotal(5L);
-        cartDTO.setPrice(2L);
-        cartDTO.setPiece(2L);
-        cartDTO.setTotal(8L);
-        cartDTO.setTableCategoryId(1L);
+        cartDTO= new CartDTOBuilder().id(2l).tableCartId(1L).piece(5L).price(2L).total(2L).waiterId(2L).productId(1L).productName("deneme").tableCategoryId(1L).cartDate(date).build();
         cartDTOS.add(cartDTO);
-
     }
 
     @Test

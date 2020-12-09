@@ -45,7 +45,7 @@
   width: 620px;
   height: 500px;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .my-custom-scrollbar::-webkit-scrollbar-track{
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -71,7 +71,7 @@
   width: 420px;
   height: 500px;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .cart-scrollbar::-webkit-scrollbar-track{
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
