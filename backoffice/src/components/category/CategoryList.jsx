@@ -11,19 +11,41 @@ class CategoryList extends Component {
         super(props)
 
         this.state = {
-            categories: []
+            categories: [],
+            categoryId:''
         }
+        this.detailCategory=this.detailCategory.bind(this);
         this.deleteCategory=this.deleteCategory.bind(this);
+        this.updateCategory=this.updateCategory.bind(this);
+    }
+    updateCategory=(categoryId)=>{
+        console.log("categoryId",categoryId);
+        this.props.history.push({
+            pathname: `update-category/{categoryId}`,
+            state:{
+                id:categoryId
+            }
+        })
     }
 
     deleteCategory=(categoryId)=>{
         CategoryService.deleteCategory(categoryId).then();
         window.location.reload();
     }
+    detailCategory=(categoryId)=>{
+        console.log("categoryId",categoryId);
+        this.props.history.push({
+            pathname: `category-detail/{categoryId}`,
+            state:{
+                id:categoryId
+            }
+        })
+    }
 
     componentDidMount() {
         CategoryService.listAllCategories().then((res) => {
             this.setState({categories: res.data});
+
         });
     }
 
@@ -43,6 +65,7 @@ console.log(this.state.categories[0]);
                         <tr>
                             <th>Category Name</th>
                             <th>Category Description</th>
+                            <th>Media </th>
                             <th>Actions</th>
 
                         </tr>
@@ -55,13 +78,19 @@ console.log(this.state.categories[0]);
                                     <tr key={category.categoryId}>
                                         <td>{category.categoryName}</td>
                                         <td>{category.catDescription}</td>
+                                        <td><img src={'data:image/png;base64,' + category.media.fileContent} width="40" style={{margin: 3}}/>
+                                            </td>
+
 
                                         <td>
-                                            <button onClick={() => this.editCategory(category.categoryId)}
+                                            <button onClick={() => this.updateCategory(category.categoryId)}
                                                     className="btn btn-success"> Update
                                             </button>
                                             <button style={{marginLeft: "6px"}} onClick={() => this.deleteCategory(category.categoryId)}
                                                     className="btn btn-outline-info"> Delete
+                                            </button>
+                                            <button onClick={() => this.detailCategory(category.categoryId)} style={{marginLeft: "6px"}}
+                                                  className="btn btn-warning">Detail
                                             </button>
                                         </td>
                                     </tr>

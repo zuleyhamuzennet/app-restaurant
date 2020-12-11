@@ -9,9 +9,8 @@ import com.ba.restaurant.repository.ProductRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 
 @Service
@@ -26,11 +25,14 @@ public class ProductService {
     CategoryService categoryService;
 
 
-    public ProductDTO  addProduct(ProductDTO productDTO, Long id){
+    public ProductDTO  addProduct(ProductDTO productDTO){
 
         Product product=DTOConverter.productConverter(productDTO);
-        Optional<Category> category=categoryRepository.findById(id);
-        product.setCategory(category.get());
+
+        for(int i=0; i<productDTO.getCategoryListId().size();i++){
+            Optional<Category> category=categoryRepository.findById(productDTO.getCategoryListId().get(i));
+            category.get().getProducts().add(product);
+        }
         productRepository.save(product);
         return productDTO;
     }
@@ -45,7 +47,9 @@ public class ProductService {
     public ProductDTO updateProduct(ProductDTO productDTO, Long id){
         Product product=DTOConverter.productConverter(productDTO);
         Optional<Category> category=categoryRepository.findById(id);
-        product.setCategory(category.get());
+        Set<Category> categorySet=new HashSet<>();
+        product.setCategories(categorySet);
+        category.get().getProducts().add(product);
         productRepository.saveAndFlush(product);
         return productDTO;
 
@@ -58,11 +62,17 @@ public class ProductService {
         return productDTOS;
     }
 
-    public String deleteProduct(long id)
+    public void deleteProduct(long id)
     {
+        ProductDTO productDTO= new ProductDTO();
+
+            Optional<Product> product= productRepository.findById(id);
+          //  Optional<Product> category=productRepository.findById(categoryId);
+            product.get().getCategories().forEach(category -> category.getProducts().remove(product.get()));
+
         productRepository.deleteById(id);
 
-        return "product silindi :"+id;
+
     }
 
 

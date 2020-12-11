@@ -42,7 +42,7 @@ public class ProductDTOBuilder extends DTOBuilder {
         productDTO.setId(getId());
         productDTO.setDescription(this.description);
         productDTO.setProductName(this.productName);
-        productDTO.setCategoryId(this.categoryId);
+       // productDTO.setCategoryId(this.categoryId);
         productDTO.setPrice(this.price);
         return productDTO;
 

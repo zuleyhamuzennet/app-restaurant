@@ -6,22 +6,18 @@
         xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
-    <changeSet id="07-02-2020_15:41" author="zuleyha.muzennet">
-        <createTable tableName="waiter">
+    <changeSet id="07-12-2021_15:41" author="zuleyha.muzennet">
+        <createTable tableName="tbl_category_product">
 
-            <column autoIncrement="true" name="waiter_id" type="int(1)">
-                <constraints primaryKey="true"/>
+            <column autoIncrement="true" name="category_id" type="int(1)">
+                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_category" references="categories(category_id)"/>
             </column>
-            <column name="waiter_name" type="VARCHAR(255)"/>
-            <column name="waiter_mail" type="VARCHAR(255)"/>
-            <column name="media_id" type="int(1)">
-                <constraints foreignKeyName="fk_media_waiter" references="media(media_id)"/>
+            <column autoIncrement="true" name="product_id" type="int(1)">
+                <constraints primaryKey="true"  nullable="false" foreignKeyName="fk_product" references="product(product_id)"/>
+            </column>
 
-            </column>
+
         </createTable>
-        <rollback>
-            <dropTable tableName="waiter"/>
-        </rollback>
 
     </changeSet>
 

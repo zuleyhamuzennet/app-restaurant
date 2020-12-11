@@ -22,6 +22,8 @@ import WaiterAdd from "./components/waiter/WaiterAdd";
 import WaiterList from "./components/waiter/WaiterList";
 import AddMedia from "./components/media/AddMedia";
 import React, { useState } from 'react';
+import CategoryDetail from "./components/category/CategoryDetail";
+import UpdateCategory from "./components/category/UpdateCategory";
 
 //export const AppContext=React.createContext();
 
@@ -57,6 +59,9 @@ function App() {
                             <Route exact path="/waiter-add" component={WaiterAdd}></Route>
                             <Route exact path="/waiters" component={WaiterList}></Route>
                             <Route exact path="/media" component={AddMedia}></Route>
+                            <Route exact path="/category-detail/:id" component={CategoryDetail}></Route>
+                            <Route exact path="/update-category/:id" component={UpdateCategory}></Route>
+
 
                         </Switch>
                     </div>

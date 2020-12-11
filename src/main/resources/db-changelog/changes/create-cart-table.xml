@@ -6,13 +6,13 @@
         xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
-  <changeSet id="07-12-2020_15:41" author="zuleyha.muzennet">
+  <changeSet id="07-12-2020_18:41" author="zuleyha.muzennet">
       <createTable tableName="cart">
 
           <column autoIncrement="true" name="id" type="int(1)">
               <constraints primaryKey="true"/>
           </column>
-          <column name="product_id" type="int(1)"/>
+          <column name="prod_id" type="int(1)"/>
           <column name="piece" type="int(1)"/>
           <column name="price" type="int(1)"/>
           <column name="total" type="int(1)"/>

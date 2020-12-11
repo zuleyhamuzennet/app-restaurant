@@ -9,6 +9,7 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  long id;
+    @Column(name = "prod_id")
     private long productId;
     private long piece;
     private long price;

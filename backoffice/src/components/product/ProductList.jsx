@@ -17,6 +17,7 @@ class ProductList extends Component {
     }
 
     deleteProduct=(id)=> {
+        console.log("silId=>",id);
         ProductService.deleteProduct(id).then();
         window.location.reload();
     }
@@ -34,11 +35,12 @@ class ProductList extends Component {
     componentDidMount() {
         ProductService.listAllProduct().then((response) => {
             this.setState({products: response.data});
+            console.log("products =>",response.data);
         });
     }
 
     fiterCategory = (categoryName) => {
-        const array = this.state.products.filter(item => item.categoryName == categoryName)
+        const array = this.state.products.categories.filter(item => item.categoryName == categoryName)
         this.setState({categories: array})
         console.log(array);
         this.render();
@@ -66,33 +68,34 @@ class ProductList extends Component {
 
                             {this.state.products.map(
                                 product =>
-                                    <tbody key={product.categoryId}>
+                                    product.categories.map(
+                                        category=>
+                                            <tbody key={category.categoryId}>
 
+                                            <tr>
+                                                <td>
+                                                    <label
+                                                        onClick={() => this.fiterCategory(category.categoryId)}>{category.categoryName}</label>
+                                                </td>
+                                                <td>{product.productName}</td>
+                                                <td>{product.description}</td>
+                                                <td>{product.price}</td>
+                                                <td>
+                                                    <button onClick={()=>this.updateProduct(product.id)}
+                                                            className="btn btn-success"> Update
+                                                    </button>
+                                                    <button style={{marginLeft: "6px"}}
+                                                            onClick={() => this.deleteProduct(product.id)}
+                                                            className="btn btn-outline-info"> Delete
+                                                    </button>
+                                                    <Link to={`detail/${product.id}`} style={{marginLeft: "6px"}}
+                                                          className="btn btn-warning">Detail
+                                                    </Link>
+                                                </td>
 
-
-                                                <tr key={product.id}>
-                                                    <td>
-                                                        <label
-                                                            onClick={() => this.fiterCategory(product.categoryName)}>{product.categoryName}</label>
-                                                    </td>
-                                                    <td>{product.productName}</td>
-                                                    <td>{product.description}</td>
-                                                    <td>{product.price}</td>
-                                                    <td>
-                                                        <button onClick={()=>this.updateProduct(product.id,product.categoryId)}
-                                                              className="btn btn-success"> Update
-                                                        </button>
-                                                        <button style={{marginLeft: "6px"}}
-                                                                onClick={() => this.deleteProduct(product.id)}
-                                                                className="btn btn-outline-info"> Delete
-                                                        </button>
-                                                        <Link to={`detail/${product.id}`} style={{marginLeft: "6px"}}
-                                                              className="btn btn-warning">Detail
-                                                        </Link>
-                                                    </td>
-
-                                                </tr>
-                                    </tbody>
+                                            </tr>
+                                            </tbody>
+                                    )
                             )
                             }
                         </Table>

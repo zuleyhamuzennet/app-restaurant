@@ -1,5 +1,4 @@
 package com.ba.restaurant.entity;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +11,7 @@ public class Media {
 
     @Column(length = 100000000)
     private byte[] fileContent;
+
 
     public Media(long mediaId, String mediaName, byte[] fileContent) {
         this.mediaId = mediaId;

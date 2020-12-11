@@ -6,7 +6,8 @@
         xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
-    <changeSet id="07-12-2020_15:41" author="zuleyha.muzennet">
+    <changeSet id="07-12-2020_15:21" author="zuleyha.muzennet">
+
         <createTable tableName="categories">
 
             <column autoIncrement="true" name="category_id" type="int(1)">
@@ -14,6 +15,10 @@
             </column>
             <column name="category_name" type="VARCHAR(255)"/>
             <column name="cat_description" type="VARCHAR(255)"/>
+            <column name="media_id" type="int(1)">
+                <constraints foreignKeyName="fk_media" references="media(media_id)"/>
+
+            </column>
         </createTable>
 
         <rollback>

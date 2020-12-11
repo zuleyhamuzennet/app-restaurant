@@ -12,25 +12,29 @@ class AddProduct extends Component {
             productName: '',
             description: '',
             price: '',
-            categories: []
+            categories: [],
+            multiSelect:[]
 
         }
         this.changeProductNameHandler = this.changeProductNameHandler.bind(this);
         this.changeDescriptionHandler = this.changeDescriptionHandler.bind(this);
         this.changePriceHandler = this.changePriceHandler.bind(this);
         this.saveProduct = this.saveProduct.bind(this);
+        this.changeMultiSelect=this.changeMultiSelect.bind(this);
+
     }
+
     saveProduct = (e) => {
         e.preventDefault();
         let products = {
             productName: this.state.productName,
             description: this.state.description,
-            price: this.state.price
-
+            price: this.state.price,
+            categoryListId:this.state.multiSelect
         };
-        console.log('products => ' + JSON.stringify(products,this.state.category));
+        console.log('products => ' + JSON.stringify(products));
 
-        ProductService.addProduct(products,this.state.category).then(res => {
+        ProductService.addProduct(products, this.state.multiSelect).then(res => {
             this.props.history.push('/list');
         });
 
@@ -54,6 +58,20 @@ class AddProduct extends Component {
             this.setState({categories: res.data});
         });
     }
+
+    changeMultiSelect(id){
+        if(this.state.multiSelect.includes(id)!==true){
+            this.state.multiSelect.push(id);
+            console.log("multiselect=> ekle",this.state.multiSelect)
+        }else{
+            for(let i = 0; i<this.state.multiSelect.length;i++){
+                if(id === this.state.multiSelect[i]){
+                    this.state.multiSelect.splice(i,1);
+                    console.log("multiselect= sil",this.state.multiSelect)
+                }
+            }
+    }}
+
     render() {
         console.log(this.state.categories);
         return (
@@ -69,15 +87,17 @@ class AddProduct extends Component {
                                     <div className="form-group">
                                         <label> Category </label>
 
-                                        <select className="selectpicker form-control" onChange={this.changeCategoryHandler}>{
 
-
-                                            this.state.categories.map(category =>
-                                                <option key={category.categoryId} value={category.categoryId}
-                                                        >{category.categoryName}</option>
-                                            )
-                                        }
-                                        </select>
+                                            <div className="checkbox" style={{height:"4rem",overflow:"auto"}}>
+                                                {
+                                                    this.state.categories.map(
+                                                        category=>
+                                                            <div className="row col-md -12">
+                                                                <label><input type="checkbox" value="" onClick={()=>this.changeMultiSelect(category.categoryId)}/>{category.categoryName}</label>
+                                                            </div>
+                                                    )
+                                                }
+                                            </div>
 
                                     </div>
                                     <div className="form-group">
@@ -97,7 +117,7 @@ class AddProduct extends Component {
                                     </div>
                                     <button className="btn btn-success" onClick={this.saveProduct}>Save</button>
                                     <Link to="/list" className="btn btn-danger"
-                                            style={{marginLeft: "10px"}}>Cancel
+                                          style={{marginLeft: "10px"}}>Cancel
                                     </Link>
                                 </form>
                             </div>

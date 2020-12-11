@@ -34,7 +34,7 @@ class UpdateProduct extends Component {
                 productName: res.data.productName,
                 description: res.data.description,
                 price:res.data.price,
-                category:res.data.category.categoryName
+                category:res.data.category
 
             });
         });

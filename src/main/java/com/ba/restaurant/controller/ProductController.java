@@ -18,9 +18,9 @@ public class ProductController {
 
 
     @PostMapping("/add")
-    public ProductDTO addProduct(@RequestBody ProductDTO productDTO, @RequestParam Long id){
+    public ProductDTO addProduct(@RequestBody ProductDTO productDTO){
 
-        productService.addProduct(productDTO,id);
+        productService.addProduct(productDTO);
         return productDTO;
 
     }

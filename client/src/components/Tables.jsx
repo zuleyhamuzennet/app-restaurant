@@ -13,10 +13,10 @@ class Table extends Component {
             id: this.props.history.location.state?.id,
             count: this.props.history.location.state?.count,
             tableId: '',
-            selectWaiterId:'',
+            selectWaiterId: '',
             tableCategories: [],
             waiters: [],
-            getLocale:''
+            getLocale: ''
 
         }
 
@@ -40,27 +40,28 @@ class Table extends Component {
         this.render();
     }
 
-    getWaiterId(id){
-        this.setState({selectWaiterId:id})
+    getWaiterId(id) {
+        this.setState({selectWaiterId: id})
     }
-    getTableId  (i) {
-        this.setState({tableId:i});
+
+    getTableId(i) {
+        this.setState({tableId: i});
     }
 
     goProduct() {
         this.props.history.push({
-            pathname:"/products",
-            state:{
-                selectWaiterId: this.state.selectWaiterId,
-                tableId: this.state.tableId,
-                id: this.state.id
+                pathname: "/products",
+                state: {
+                    selectWaiterId: this.state.selectWaiterId,
+                    tableId: this.state.tableId,
+                    id: this.state.id
+                }
             }
-        }
         );
-        localStorage.setItem('tableId',JSON.stringify(this.state.tableId));
-        localStorage.setItem('tableCategoryId',JSON.stringify(this.state.id));
-        console.log("waiter=>"+this.state.selectWaiterId);
-        console.log("tableId=>"+this.state.tableId);
+        localStorage.setItem('tableId', JSON.stringify(this.state.tableId));
+        localStorage.setItem('tableCategoryId', JSON.stringify(this.state.id));
+        console.log("waiter=>" + this.state.selectWaiterId);
+        console.log("tableId=>" + this.state.tableId);
     }
 
     render() {
@@ -68,13 +69,13 @@ class Table extends Component {
         const counts = [];
 
         for (let i = 1; i <= this.state.count; i++) {
-            const contidion= JSON.parse(localStorage.getItem(`${this.state.id}+${i}`))===null;
+            const contidion = JSON.parse(localStorage.getItem(`${this.state.id}+${i}`)) === null;
             counts.push(
                 // <Waiters content={"içerik buraya gelsin"} trigger={
                 (
 
                     <div className="col-lg-4 col-xs-12 text-center">
-                        <div className="box" style={{backgroundColor:contidion? "#b3ff66":"#e95666"}}>
+                        <div className="box" style={{backgroundColor: contidion ? "#b3ff66" : "#e95666"}}>
 
                             <div className="box-btn" key={i}>
                                 <a data-toggle="modal" data-target="#exampleModalLong"><i
@@ -117,33 +118,43 @@ class Table extends Component {
                                             </button>
                                         </div>
                                         <div className="modal-body">
-                                            <div className="col-md-11 mx-auto" style={{padding:'10px 0'}}>
+                                            <div className="col-md-12 mx-auto">
                                                 <div className="row">
-                                                <div className="col-md-6 ">
-                                                    <div className="list-group">
-                                                        <tbody>
+                                                    <div>
+                                                        <table className="table  table-hover" style={{maxWidth: '100%'}} >
+                                                            <thead>
+                                                            <th>Image</th>
+                                                            <th>Name</th>
+                                                            <th>Mail</th>
 
-                                                        {
+                                                            </thead>
+                                                            <tbody>
 
-                                                            this.state.waiters.map(
-                                                                waiter =>
+                                                            {
+                                                                this.state.waiters.map(
+                                                                    waiter =>
 
-                                                                    <tr key={waiter.waiterId}>
-                                                                        <td>
-                                                                        <a href="#"
-                                                                           className="list-group-item list-group-item-action"
-                                                                           onClick={()=> this.getWaiterId(waiter.waiterId)}>{waiter.waiterName}</a>
-                                                                        </td>
 
-                                                                    </tr>
-                                                            )
+                                                                        <tr key={waiter.waiterId}>
+                                                                            <td><img
+                                                                                src={'data:image/png;base64,' + waiter.media.fileContent}
+                                                                                width="40" height="40"
+                                                                                style={{margin: 3}}/>
+                                                                            </td>
+                                                                            <a href="#"
+                                                                               onClick={() => this.getWaiterId(waiter.waiterId)}>
+                                                                                <td>{waiter.waiterName}</td></a>
+                                                                            <td>{waiter.waiterMail}</td>
 
-                                                        }
-                                                        </tbody>
+                                                                        </tr>
+                                                                )
+
+                                                            }
+                                                            </tbody>
+                                                        </table>
 
                                                     </div>
                                                 </div>
-                                            </div>
                                             </div>
 
                                         </div>

@@ -1,22 +1,14 @@
-package com.ba.restaurant.entity;
+package com.ba.restaurant.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ba.restaurant.entity.User;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "ROLES")
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
+public class RoleDTO {
     private Long id;
     private String name;
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
-    private Set<User> users= new HashSet<>();
+    private Set<User> users=new HashSet<>();
 
     public Set<User> getUsers() {
         return users;

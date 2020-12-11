@@ -2,30 +2,33 @@ package com.ba.restaurant.dto;
 
 import com.ba.restaurant.entity.Category;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class ProductDTO {
 
     private Long id;
     private String productName;
     private String description;
     private double price;
-    private String categoryName;
-    private Long categoryId;
+    private List<Long> categoryListId;
+    private Set<Category> categories= new HashSet<>();
 
-
-    public String getCategoryName() {
-        return categoryName;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public List<Long> getCategoryListId() {
+        return categoryListId;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryListId(List<Long> categoryListId) {
+        this.categoryListId = categoryListId;
     }
 
     public Long getId() {

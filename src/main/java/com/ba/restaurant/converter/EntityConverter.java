@@ -13,11 +13,7 @@ public class EntityConverter {
         productDTO.setPrice(product.getPrice());
         productDTO.setProductName(product.getProductName());
         productDTO.setId(product.getId());
-
-        productDTO.setCategoryName(product.getCategory().getCategoryName());
-        productDTO.setCategoryId(product.getCategory().getCategoryId());
-
-
+        productDTO.setCategories(product.getCategories());
 
         return productDTO;
     }
@@ -45,6 +41,7 @@ public class EntityConverter {
         categoryDTO.setCatDescription(category.getCatDescription());
         categoryDTO.setCategoryId(category.getCategoryId());
         categoryDTO.setCategoryName(category.getCategoryName());
+        categoryDTO.setMedia(category.getMedia());
 
         return categoryDTO;
     }
@@ -53,6 +50,8 @@ public class EntityConverter {
         WaiterDTO waiterDTO= new WaiterDTO();
         waiterDTO.setWaiterId(waiter.getWaiterId());
         waiterDTO.setWaiterName(waiter.getWaiterName());
+        waiterDTO.setWaiterMail(waiter.getWaiterMail());
+        waiterDTO.setMedia(waiter.getMedia());
 
         return waiterDTO;
     }
@@ -70,5 +69,23 @@ public class EntityConverter {
         cartDTO.setWaiterId(cart.getWaiterId());
 
         return cartDTO;
+    }
+    public static UserDTO userConverterDTO(User user){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(user.getEmail());
+        userDTO.setEnabled(user.isEnabled());
+        userDTO.setPassword(user.getPassword());
+        userDTO.setRoles(user.getRoles());
+        userDTO.setId(user.getId());
+        userDTO.setUsername(user.getUsername());
+        return userDTO;
+
+    }
+    public static RoleDTO roleConverterDTO(Role role){
+        RoleDTO roleDTO=new RoleDTO();
+        roleDTO.setId(roleDTO.getId());
+        roleDTO.setName(roleDTO.getName());
+        roleDTO.setUsers(role.getUsers());
+        return roleDTO;
     }
 }

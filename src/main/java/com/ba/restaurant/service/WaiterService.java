@@ -42,8 +42,10 @@ public class WaiterService {
         return waiterDTO;
     }
 
-    public String deleteWaiterById(Long id){
+    public void deleteWaiterById(Long id){
+      //  Optional<Waiter> waiter= waiterRepository.findById(id);
+      //  () -> waiter.get().getMedia()
         waiterRepository.deleteById(id);
-        return "silindi"+id;
+
     }
 }

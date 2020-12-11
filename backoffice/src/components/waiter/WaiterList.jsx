@@ -41,7 +41,8 @@ class WaiterList extends Component {
                             <thead>
                             <tr>
                                 <th>Waiter Name</th>
-                                <th>Waiter Description</th>
+                                <th>Waiter Mail</th>
+                                <th>Media</th>
                                 <th>Actions</th>
 
                             </tr>
@@ -52,7 +53,9 @@ class WaiterList extends Component {
                                     waiter =>
                                         <tr key={waiter.waiterId}>
                                             <td>{waiter.waiterName}</td>
-                                            <td></td>
+                                            <td>{waiter.waiterMail}</td>
+                                            <td><img src={'data:image/png;base64,' + waiter.media.fileContent} width="40" height="40" style={{margin: 3}}/>
+                                            </td>
 
 
                                             <td>

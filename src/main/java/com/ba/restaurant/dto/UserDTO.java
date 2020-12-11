@@ -1,10 +1,39 @@
 package com.ba.restaurant.dto;
 
+import com.ba.restaurant.entity.Role;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class UserDTO {
     private Long id;
     private String username;
     private String password;
-    private String enabled;
+    private boolean enabled;
+    private String email;
+    private List<Long> userListId;
+    private Set<Role> roles= new HashSet<>();
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public List<Long> getUserListId() {
+        return userListId;
+    }
+
+    public void setUserListId(List<Long> userListId) {
+        this.userListId = userListId;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     public Long getId() {
         return id;
@@ -30,11 +59,19 @@ public class UserDTO {
         this.password = password;
     }
 
-    public String getEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(String enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

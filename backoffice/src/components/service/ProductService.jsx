@@ -4,11 +4,8 @@ const PRODUCT_API_BASE_URL = "http://localhost:8080/product/"
 
 class ProductService{
 
-    addProduct(product,category){
+    addProduct(product){
         return axios.post(PRODUCT_API_BASE_URL + 'add', product,{
-            params:{
-                id:category
-            },
             auth:{
 
                 username:localStorage.getItem("username"),
@@ -50,8 +47,11 @@ class ProductService{
         });
     }
 
-    deleteProduct(id){
+    deleteProduct(id,categoryId){
         return axios.delete(PRODUCT_API_BASE_URL+'delete/'+id,{
+            params:{
+                categoryId:categoryId
+            },
             auth:{
 
                 username:localStorage.getItem("username"),

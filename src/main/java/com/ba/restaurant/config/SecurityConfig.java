@@ -1,18 +1,41 @@
 package com.ba.restaurant.config;
 
+import com.ba.restaurant.auth.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private DataSource dataSource;
+    @Bean
+    public UserDetailsService userDetailsService(){
+        return new UserDetailsServiceImpl();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider authenticationProvider=  new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth){
+        auth.authenticationProvider(authenticationProvider());
+    }
 
     @Override
     protected void configure(HttpSecurity http)throws Exception{
@@ -20,12 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("h2-console/**").permitAll();
         http.csrf().disable();
         http.headers().frameOptions().disable();
-        http.authorizeRequests().antMatchers("/users/user").access("hasAnyRole('USER','ADMIN')");
-        http.authorizeRequests().antMatchers("/users/list").access("hasAnyRole('USER','ADMIN')");
-        http.authorizeRequests().antMatchers("/users/{id}").access("hasAnyRole('USER','ADMIN')");
-        http.authorizeRequests().antMatchers("/users/add").access("hasRole('ADMIN')");
-        http.authorizeRequests().antMatchers("/users/delete/{id}").access("hasRole('ADMIN')");
-        http.authorizeRequests().antMatchers("/users/update/{id}").access("hasAnyRole('USER','ADMIN')");
         http.authorizeRequests().antMatchers("/product/add").access("hasAnyRole('USER','ADMIN')");
         http.authorizeRequests().antMatchers("/product/update/").access("hasRole('ADMIN')");
         http.authorizeRequests().antMatchers("/product/delete/{id}").access("hasRole('ADMIN')");
@@ -37,15 +54,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/properties/**").hasAnyRole("USER","ADMIN");
         http.authorizeRequests().antMatchers("/waiter/**").hasAnyRole("USER","ADMIN");
         http.authorizeRequests().antMatchers("/table-category/**").hasAnyRole("USER","ADMIN");
+       // http.authorizeRequests().antMatchers("/users/**").hasAnyRole("USER","ADMIN");
        // http.authorizeRequests().antMatchers("/media/**").hasAnyRole("USER","ADMIN");
 
         http.httpBasic();
         http.cors();
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)throws Exception{
-        auth.jdbcAuthentication().dataSource(dataSource);
     }
 
 }

@@ -38,7 +38,7 @@ class WaiterService{
         });
     }
     deleteWaiter(id){
-        return axios.delete(WAITER_API_URL+'delete/'+id,{
+        return axios.delete(WAITER_API_URL+id,{
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")

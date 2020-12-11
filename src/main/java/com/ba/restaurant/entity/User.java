@@ -1,40 +1,31 @@
 package com.ba.restaurant.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class User  {
+@Table(name = "USERS")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "user_id")
+    @Column(name = "user_id")
     private Long id;
+    private String email;
     private String username;
     private String password;
-    private String enabled;
-    //private String authority;
+    private boolean enabled;
 
-
-    public User(Long id, String username, String password, String enabled) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-    }
 
     public User() {
 
     }
 
-    public String getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(String enabled) {
-        this.enabled = enabled;
-    }
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable( name = "TBL_USER_ROLES",
+            joinColumns= @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    private Set<Role> roles= new HashSet<>();
 
     public Long getId() {
         return id;
@@ -42,6 +33,14 @@ public class User  {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -58,5 +57,21 @@ public class User  {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

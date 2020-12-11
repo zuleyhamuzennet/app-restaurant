@@ -5,13 +5,16 @@ import Login from "./components/Login";
 import MainPage from "./components/MainPage";
 import TableCategory from "./components/TableCategory";
 import Tables from "./components/Tables";
-import CategoryTable from "./components/CategoryTable";
 import Waiters from "./components/Waiters";
-
-
+import React,{useState, useEffect} from "react";
+import axios from 'axios';
+import {UserContext,users} from "./components/Context";
 
 function App() {
+
+
     return (
+        <UserContext.Provider value={users}>
         <Router>
             <div className="main-wrapper">
 
@@ -22,9 +25,11 @@ function App() {
                         <Route exact path="/table-category" component={TableCategory}/>
                         <Route exact path="/tables" component={Tables}/>
                         <Route exact path="/waiters" component={Waiters}/>
+
                     </Switch>
                 </div>
         </Router>
+        </UserContext.Provider>
     );
 }
 

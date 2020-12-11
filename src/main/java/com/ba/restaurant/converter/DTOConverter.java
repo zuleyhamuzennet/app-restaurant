@@ -2,8 +2,6 @@ package com.ba.restaurant.converter;
 
 import com.ba.restaurant.dto.*;
 import com.ba.restaurant.entity.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +14,9 @@ public class DTOConverter {
         product.setId(productDTO.getId());
         product.setProductName(productDTO.getProductName());
         product.setPrice(productDTO.getPrice());
+
         product.setDescription(productDTO.getDescription());
-
-        product.setCategory(new Category());
-        product.getCategory().setCategoryName(productDTO.getCategoryName());
-        product.getCategory().setCategoryId(productDTO.getCategoryId());
-
-
+        product.setCategories(productDTO.getCategories());
         return product;
     }
 
@@ -42,6 +36,7 @@ public class DTOConverter {
         category.setCatDescription(categoryDTO.getCatDescription());
         category.setCategoryId(categoryDTO.getCategoryId());
         category.setCategoryName(categoryDTO.getCategoryName());
+        category.setMedia(categoryDTO.getMedia());
 
         return category;
     }
@@ -49,6 +44,8 @@ public class DTOConverter {
         Waiter waiter= new Waiter();
         waiter.setWaiterId(waiterDTO.getWaiterId());
         waiter.setWaiterName(waiterDTO.getWaiterName());
+        waiter.setWaiterMail(waiterDTO.getWaiterMail());
+        waiter.setMedia(waiterDTO.getMedia());
 
         return waiter;
     }
@@ -78,6 +75,23 @@ public class DTOConverter {
 
 
         return cartList;
+    }
+    public static User userConverter(UserDTO userDTO){
+        User user =new User();
+        user.setPassword(userDTO.getPassword());
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+        user.setEnabled(userDTO.getEnabled());
+        user.setId(userDTO.getId());
+        user.setRoles(userDTO.getRoles());
+        return user;
+    }
+    public static Role roleConverter(RoleDTO roleDTO){
+        Role role= new Role();
+        role.setId(roleDTO.getId());
+        role.setName(roleDTO.getName());
+        role.setUsers(roleDTO.getUsers());
+        return role;
     }
 
 }
