@@ -31,20 +31,21 @@ public class UserController {
         userService.addUser(userDTO);
         return userDTO;
     }
-
-   /* @GetMapping("/{id}")
-    public Optional<User> getUserById(@PathVariable Long id){
-
-        return userService.getUserById(id);
+    @PutMapping("/update/")
+    public UserDTO updateUser(@RequestBody UserDTO userDTO){
+        userService.updateUser(userDTO);
+        return userDTO;
     }
+    @GetMapping("/{id}")
+    public UserDTO getUserById(@PathVariable Long id){
+       return userService.getUserById(id);
 
-    @PutMapping("/update/{id}")
-    public User updateUsers(@RequestBody User user){
-        return userService.updateUsers(user);
     }
-
     @DeleteMapping("/delete/{id}")
-    public void deleteUsers(@PathVariable long id) {
-        userService.deleteUsers(id);
-    }*/
+    public Long deleteUserById(@PathVariable Long id){
+        userService.deleteUser(id);
+        return id;
+    }
+
+
 }

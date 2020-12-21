@@ -23,6 +23,21 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.loadingCSS{
+  position: fixed;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f8f8f8ad;
+}
+.innerLoader{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1000;
+
+}
 
 .App-link {
   color: #61dafb;

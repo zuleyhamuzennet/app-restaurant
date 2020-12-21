@@ -1,6 +1,7 @@
 package com.ba.restaurant.dto;
 
 import com.ba.restaurant.entity.Category;
+import com.ba.restaurant.entity.Media;
 
 import java.util.HashSet;
 import java.util.List;
@@ -12,14 +13,23 @@ public class ProductDTO {
     private String productName;
     private String description;
     private double price;
+    private MediaDTO media;
     private List<Long> categoryListId;
-    private Set<Category> categories= new HashSet<>();
+    private List<Category> categories;
 
-    public Set<Category> getCategories() {
+    public MediaDTO getMedia() {
+        return media;
+    }
+
+    public void setMedia(MediaDTO media) {
+        this.media = media;
+    }
+
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 

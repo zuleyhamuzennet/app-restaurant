@@ -1,14 +1,10 @@
 package com.ba.restaurant.service;
 
 import com.ba.restaurant.builder.MediaBuilder;
-import com.ba.restaurant.converter.DTOConverter;
-import com.ba.restaurant.converter.EntityConverter;
 import com.ba.restaurant.dto.MediaDTO;
-import com.ba.restaurant.dtoBuilder.MediaDTOBuilder;
 import com.ba.restaurant.entity.Media;
 import com.ba.restaurant.repository.MediaRepository;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -22,7 +18,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @RunWith(MockitoJUnitRunner.class)
 public class MediaServiceTest {
 
@@ -32,7 +27,6 @@ public class MediaServiceTest {
     @Mock
     MediaRepository mediaRepository;
 
-   // private Media media = new Media();
     private MediaDTO mediaDTO= new MediaDTO();
     private List<Media> mediaList= new ArrayList<>();
     private List<MediaDTO> mediaDTOList= new ArrayList<>();
@@ -44,9 +38,6 @@ public class MediaServiceTest {
         byte[] json =" {\"name\":\"deneme\"}".getBytes(StandardCharsets.UTF_8);
         MockMultipartFile file = new MockMultipartFile("json", "json", "application/json", json);
         private Media media=new MediaBuilder().id(1L).mediaName("deneme").fileContent(b).build();
-        //mediaDTO= new MediaDTOBuilder().id(1L).mediaName("denemeDTO").fileContent(b).build();
-
-        //mediaDTOList.add(mediaDTO);
 
 
     @Test

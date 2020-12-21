@@ -1,71 +1,71 @@
 import React, {Component} from 'react';
-import ProductService from "../service/ProductService";
 import CategoryService from "../service/CategoryService";
 import MediaService from "../service/MediaService";
 import Header from "../Header";
 import {Link} from "react-router-dom";
+import ContextUser from "../ContextUser";
 
 class UpdateCategory extends Component {
+    static contextType=ContextUser;
     constructor(props) {
         super(props);
 
         this.state = {
-            id: this.props.history.location.state?.id,
+            categoryId: this.props.history.location.state?.id,
             categoryName: '',
             catDescription: '',
-            fileContent:'',
-            mediaList:[]
+            mediaList: [],
+            mediaId: '',
+            media: {}
         }
-        this.editCategory=this.editCategory.bind(this);
-        this.changeCategoryNameHandler=this.changeCategoryNameHandler.bind(this);
-        this.changeDescriptionHandler=this.changeDescriptionHandler.bind(this);
-        this.changeFileContentHandler=this.changeFileContentHandler.bind(this);
+        this.editCategory = this.editCategory.bind(this);
+        this.changeMediaHandler = this.changeMediaHandler.bind(this);
     }
 
     componentDidMount() {
-        CategoryService.getCategoryById(this.state.id).then((res) => {
+        const {username, password} = this.context;
+        CategoryService.getCategoryById(this.state.categoryId, username, password).then((res) => {
 
             this.setState({
-                id: res.data.id,
-              categoryName: res.data.categoryName,
+                categoryId: res.data.categoryId,
+                categoryName: res.data.categoryName,
                 catDescription: res.data.catDescription,
-                //fileContent:res.data.data.fileContent,
 
             });
         });
-       MediaService.listAllMedia().then((res)=>{
-            this.setState({mediaList:res.data})
+        MediaService.listAllMedia(username,password).then((res) => {
+            this.setState({mediaList: res.data})
         });
     }
 
     editCategory = (e) => {
 
+        const {username, password} = this.context;
         let category = {
-            id:this.state.id,
+            categoryId: this.state.categoryId,
             categoryName: this.state.categoryName,
-            catDescription: this.state.catDescription,
-            fileContent:this.state.fileContent ,
+            catDescription :this.state.catDescription,
+            media:this.state.media
 
 
         };
         console.log('category => ' + JSON.stringify(category));
-        CategoryService.updateCategory(category, this.state.id).then(res => {
+        CategoryService.updateCategory(category, username, password).then(res => {
             this.props.history.push('/list-category')
         });
 
         e.preventDefault();
     }
 
-    changeFileContentHandler = (event) => {
-        this.setState({fileContent: event.target.value})
+    changeMediaHandler = (event) => {
+        this.setState({mediaId:event.target.value});
+        console.log(this.state.mediaId);
+
+        const valueMedia = this.state.mediaList.filter(item => item.mediaId == this.state.mediaId)
+        this.setState({media: valueMedia[0]})
+
     }
 
-    changeCategoryNameHandler = (event) => {
-        this.setState({categoryName: event.target.value})
-    }
-    changeDescriptionHandler = (event) => {
-        this.setState({catDescription: event.target.value})
-    }
     render() {
         return (
             <div>
@@ -79,13 +79,13 @@ class UpdateCategory extends Component {
                                 <form>
                                     <div className="form-group">
                                         <label> Category </label>
-                                        <select className="selectpicker form-control" onChange={this.changeFileContentHandler}>{
+                                        <select className="selectpicker form-control"
+                                                onChange={this.changeMediaHandler}>{
 
                                             this.state.mediaList.map(
-
-                                                media=>
-                                                        <option   key={media.mediaId}  value ={media.mediaId}>{media.mediaName}</option>
-
+                                                media =>
+                                                    <option key={media.mediaId}
+                                                            value={media.mediaId}>{media.mediaName}</option>
                                             )
                                         }
                                         </select>
@@ -95,15 +95,19 @@ class UpdateCategory extends Component {
                                     <div className="form-group">
                                         <label> Category Name </label>
                                         <input placeholder="Category Name" name="categoryName" className="form-control"
-                                               value={this.state.categoryName} onChange={this.changeCategoryNameHandler}/>
+                                               value={this.state.categoryName} onChange={(e) => {
+                                            this.setState({categoryName: e.target.value})
+                                        }}/>
                                     </div>
                                     <div className="form-group">
                                         <label> Description </label>
                                         <input placeholder="Description" name="description" className="form-control"
-                                               value={this.state.catDescription} onChange={this.changeDescriptionHandler}/>
+                                               value={this.state.catDescription} onChange={(e) => {
+                                            this.setState({catDescription: e.target.value})
+                                        }}/>
                                     </div>
                                     <button className="btn btn-success" onClick={this.editCategory}> Update</button>
-                                    <Link to="/list" className="btn btn-danger"
+                                    <Link to="/list-category" className="btn btn-danger"
                                           style={{marginLeft: "10px"}}>Cancel
                                     </Link>
                                 </form>
@@ -112,7 +116,7 @@ class UpdateCategory extends Component {
                     </div>
                 </div>
 
-                
+
             </div>
         );
     }

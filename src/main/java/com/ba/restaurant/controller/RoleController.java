@@ -25,5 +25,11 @@ public class RoleController {
         roleService.addRole(roleDTO);
         return roleDTO;
     }
+    @PutMapping("/update/")
+    public RoleDTO updateRole(@RequestBody RoleDTO roleDTO){
+        roleService.updateRole(roleDTO);
+        return roleDTO;
+    }
+
 
 }

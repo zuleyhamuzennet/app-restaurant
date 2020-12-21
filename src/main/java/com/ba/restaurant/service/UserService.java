@@ -8,37 +8,61 @@ import com.ba.restaurant.entity.*;
 import com.ba.restaurant.repository.RoleRepository;
 import com.ba.restaurant.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
+
     @Autowired
     UsersRepository usersRepository;
     @Autowired
     RoleRepository roleRepository;
 
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public UserDTO addUser(UserDTO userDTO){
+    public UserDTO addUser(UserDTO userDTO) {
 
-        User user=DTOConverter.userConverter(userDTO);
+        User user = DTOConverter.userConverter(userDTO);
 
-        for(int i=0; i<userDTO.getUserListId().size();i++){
-            Optional<Role> role=roleRepository.findById(userDTO.getUserListId().get(i));
-            role.get().getUsers().add(user);
-        }
-       usersRepository.save(user);
+        List<Role> roles = roleRepository.findAllById(userDTO.getUserListId());
+        user.setPassword(encoder.encode(userDTO.getPassword()));
+        user.setRoles(roles);
+        usersRepository.save(user);
         return userDTO;
     }
 
-    public List<UserDTO> listAllUser(){
-        List<UserDTO> userDTOS= new ArrayList<>();
-        List<User> users= usersRepository.findAll();
+    public UserDTO updateUser(UserDTO userDTO) {
+        User user = DTOConverter.userConverter(userDTO);
+        List<Role> roles = roleRepository.findAllById(userDTO.getUserListId());
+        user.setPassword(encoder.encode(userDTO.getPassword()));
+        user.setRoles(roles);
+        usersRepository.saveAndFlush(user);
+        return userDTO;
+    }
+    public UserDTO getUserById(Long id){
+        User user= usersRepository.findById(id).get();
+        UserDTO userDTO=EntityConverter.userConverterDTO(user);
+        return userDTO;
+    }
+
+    public List<UserDTO> listAllUser() {
+        List<UserDTO> userDTOS = new ArrayList<>();
+        List<User> users = usersRepository.findAll();
         users.forEach(user -> userDTOS.add(EntityConverter.userConverterDTO(user)));
         return userDTOS;
+    }
+
+    public String deleteUser(Long id) {
+        Optional<User> user = usersRepository.findById(id);
+        user.get().getRoles().forEach(role -> role.getUsers().remove(user.get()));
+        usersRepository.deleteById(id);
+        return null;
     }
 
 }

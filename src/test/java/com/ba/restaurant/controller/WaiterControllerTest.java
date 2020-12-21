@@ -1,5 +1,6 @@
 package com.ba.restaurant.controller;
 
+import com.ba.restaurant.builder.WaiterDTOBuilder;
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.WaiterDTO;
 import com.ba.restaurant.service.WaiterService;
@@ -33,8 +34,7 @@ public class WaiterControllerTest {
     @Before
     public void setUp() throws Exception{
 
-        waiterDTO.setWaiterName("züleyha");
-        waiterDTO.setWaiterId(1L);
+        waiterDTO= new WaiterDTOBuilder().waiterId(1L).waiterMail("aa").waiterName("zuleyha").address("aa").phone(2L).media(null).build();
         waiterDTOS.add(waiterDTO);
 
     }
@@ -44,7 +44,7 @@ public class WaiterControllerTest {
         WaiterDTO res= waiterController.addWaiter(waiterDTO);
 
         Assert.assertNotNull(res);
-        Assert.assertEquals(res.getWaiterId(),waiterDTO.getWaiterId());
+        Assert.assertEquals(res.getId(),waiterDTO.getId());
     }
     @Test
     public void shouldUpdateWaiter(){
@@ -53,7 +53,7 @@ public class WaiterControllerTest {
         WaiterDTO res= waiterController.updateWaiter(waiterDTO);
 
         Assert.assertNotNull(res);
-        Assert.assertEquals(res.getWaiterId(),waiterDTO.getWaiterId());
+        Assert.assertEquals(res.getId(),waiterDTO.getId());
     }
 
     @Test
@@ -70,13 +70,14 @@ public class WaiterControllerTest {
         Mockito.when(waiterService.getWaiterById(id)).thenReturn(waiterDTO);
         WaiterDTO res= waiterController.getWaiterByID(id);
         Assert.assertNotNull(res);
-        Assert.assertEquals(res.getWaiterId(),waiterDTO.getWaiterId());
+        Assert.assertEquals(res.getId(),waiterDTO.getId());
     }
 
     @Test
     public void shoouldDeleteWaiterById(){
         Long id= 1L;
-        verify(waiterService).deleteWaiterById(id);
+        Long response=waiterController.deleteWaiterById(id);
+        Assert.assertNull(response);
     }
 
 

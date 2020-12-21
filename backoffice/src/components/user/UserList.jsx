@@ -3,8 +3,12 @@ import PersonService from "../service/UserService";
 import {Card, Table} from "react-bootstrap";
 import Header from "../Header";
 import {Link} from "react-router-dom";
+import Loading from "../Loading";
+import UserService from "../service/UserService";
+import ContextUser from "../ContextUser";
 
 class UserList extends Component {
+    static contextType=ContextUser;
     constructor(props) {
         super(props);
         this.state = {
@@ -14,14 +18,39 @@ class UserList extends Component {
     }
 
     componentDidMount() {
-        PersonService.getPersons().then((res) => {
+        const {username,password}=this.context;
+        console.log(this.context);
+        PersonService.getPersons(username,password).then((res) => {
             this.setState({persons: res.data});
+            console.log("users:",res.data);
         });
+
+    }
+    updateUser=(id)=>{
+        console.log("user id:", id)
+        this.props.history.push({
+            pathname:`/updateUser/${id}`,
+            state:{
+                id:id
+            }
+        })
+
+    }
+    detailUser=(id)=>{
+        this.props.history.push({
+            pathname:`/user-detail/${id}`,
+            state:{
+                id:id
+            }
+        })
     }
 
-    deletePerson(id){
-        PersonService.deletePerson(id).then(res =>{
-            this.setState({person: this.state.persons.filter(person => person.id !== id)});
+    deletePerson=(id)=>{
+        const {username,password}=this.context;
+
+        this.setState({loadingVisible:true})
+        UserService.deletePerson(id,username,password).then(res =>{
+            this.setState({persons: this.state.persons.filter(pers => pers.id !== id),loadingVisible:false});
         });
     }
 
@@ -37,7 +66,9 @@ class UserList extends Component {
                     <Table bordered hover striped variant ="dark">
                         <thead>
                         <tr>
+                            <th>Role</th>
                             <th>User Name</th>
+                            <th>E-Mail</th>
                             <th>Password</th>
                             <th>Actions</th>
 
@@ -47,21 +78,31 @@ class UserList extends Component {
                         {
                             this.state.persons.map(
 
-                                person =>
-                                    <tr key={person.id}>
-                                        <td>{person.username}</td>
-                                        <td>{person.password}</td>
+                                user=>
 
-                                        <td>
-                                            <Link to={`/updateUser/${person.id}`}
-                                                    className="btn btn-success"> Update
-                                            </Link>
-                                            <button style={{marginLeft: "6px"}} onClick={() => this.deletePerson(person.id)}
-                                                    className="btn btn-outline-info"> Delete
-                                            </button>
-                                            <button style={{marginLeft: "6px"}} className="btn btn-warning" onClick={this.saveUser}>Detail</button>
-                                        </td>
-                                    </tr>
+                                            <tr >
+                                                <td><a href="#">
+                                                    {user.roles.map(
+                                                        role=>
+                                                        role.name+" ")}
+                                                </a>
+                                                </td>
+                                                <td>{user.username}</td>
+                                                <td>{user.email}</td>
+                                                <td>{user.password}</td>
+
+
+
+                                                <td>
+                                                    <button onClick={()=>this.updateUser(user.id)}
+                                                            className="btn btn-success"> Update
+                                                    </button>
+                                                    <button style={{marginLeft: "6px"}} onClick={() => this.deletePerson(user.id)}
+                                                            className="btn btn-outline-info"> Delete
+                                                    </button>
+                                                    <button style={{marginLeft: "6px"}} className="btn btn-warning" onClick={() => this.detailUser(user.id)}>Detail</button>
+                                                </td>
+                                            </tr>
                             )
                         }
                         </tbody>
@@ -70,6 +111,10 @@ class UserList extends Component {
 
 
             </Card>
+                {
+                    this.state.loadingVisible?
+                        <Loading/>:null
+                }
             </div>
         );
     }

@@ -4,78 +4,106 @@ const PRODUCT_API_BASE_URL = "http://localhost:8080/product/"
 
 class ProductService{
 
-    addProduct(product){
+    addProduct(product,username,password){
         return axios.post(PRODUCT_API_BASE_URL + 'add', product,{
             auth:{
 
+                username:username,
+                password:password
+            }
+            /*auth:{
+
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
-            }
+            }*/
         })
     }
 
-    listAllProduct(){
+    listAllProduct(username,password){
         return axios.get(PRODUCT_API_BASE_URL+ 'list',{
-            auth:{
+              auth:{
+                username:username,
+                password:password
+            }
+            /*auth:{
+
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
-            }
+            }*/
         });
     }
 
-    getProductById(id){
+    getProductById(id,username,password){
         return axios.get(PRODUCT_API_BASE_URL + id,{
-            auth:{
+     auth:{
+           username:username,
+           password:password
+       }
+            /*auth:{
 
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
-            }
+            }*/
         });
     }
 
-    updateProduct(product,categoryId){
+    updateProduct(product,username,password){
         return axios.put(PRODUCT_API_BASE_URL+'update/',product,{
-            params:{
-                id:categoryId
-            },
 
-            auth:{
+           /* auth:{
 
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
-            }
+            }*/
+              auth:{
+           username:username,
+           password:password
+       }
         });
     }
 
-    deleteProduct(id,categoryId){
+    deleteProduct(id,username,password){
         return axios.delete(PRODUCT_API_BASE_URL+'delete/'+id,{
-            params:{
-                categoryId:categoryId
-            },
-            auth:{
+           /* auth:{
 
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
+            }*/
+            auth:{
+
+                username:username,
+                password:password
             }
         });
     }
 
-    getSales(){
+    getSales(username,password){
         return axios.get("http://localhost:8080/carts/list",{
-            auth:{
+           /* auth:{
 
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
+            }*/
+                   auth:{
+
+                username:username,
+                password:password
             }
+
         })
     }
 
-    getCategoryById(id){
+    getCategoryById(id,username,password){
         return axios.get("http://localhost:8080/categories/" + id,{
-            auth:{
+           /* auth:{
 
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
+            }*/
+            auth:{
+
+                username:username,
+                password:password
             }
         });
     }

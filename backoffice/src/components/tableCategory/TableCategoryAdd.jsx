@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import TableCategoryService from "../service/TableCategoryService";
 import Header from "../Header";
 import {Link} from "react-router-dom";
+import ContextUser from "../ContextUser";
 
 
 class TableCategoryAdd extends Component {
+    static contextType=ContextUser;
     constructor(props) {
         super(props)
 
@@ -16,14 +18,11 @@ class TableCategoryAdd extends Component {
 
 
         }
-        this.changeTableCategoryNameHandler = this.changeTableCategoryNameHandler.bind(this);
-        this.changeTableCategoryDescHandler = this.changeTableCategoryDescHandler.bind(this);
         this.saveTableCategory = this.saveTableCategory.bind(this);
-        this.changeCountHandler=this.changeCountHandler.bind(this);
-
     }
 
     saveTableCategory = (e) => {
+        const{username,password}=this.context;
         e.preventDefault();
 
         let tableCategories = {
@@ -34,20 +33,10 @@ class TableCategoryAdd extends Component {
 
         };
         console.log('tableCategories => ' + JSON.stringify(tableCategories));
-        TableCategoryService.addTableCategory(tableCategories).then(res => {
+        TableCategoryService.addTableCategory(tableCategories,username,password).then(res => {
             this.props.history.push('/table-categories');
         });
 
-    }
-    changeTableCategoryNameHandler = (event) => {
-        this.setState({tableCategoryName: event.target.value})
-    }
-
-    changeTableCategoryDescHandler = (event) => {
-        this.setState({tableCategoryDesc: event.target.value})
-    }
-    changeCountHandler=(event)=>{
-        this.setState({count: event.target.value})
     }
 
     render() {
@@ -66,18 +55,18 @@ class TableCategoryAdd extends Component {
                                         <label> Category Name </label>
                                         <input placeholder="Product Name" name="productName" className="form-control"
                                                value={this.state.tableCategoryName}
-                                               onChange={this.changeTableCategoryNameHandler}/>
+                                               onChange={(e)=>{this.setState({tableCategoryName:e.target.value})}}/>
                                     </div>
                                     <div className="form-group">
                                         <label> Description </label>
                                         <input placeholder="Description" name="description" className="form-control"
                                                value={this.state.tableCategoryDesc}
-                                               onChange={this.changeTableCategoryDescHandler}/>
+                                               onChange={(e)=>{this.setState({tableCategoryDesc:e.target.value})}}/>
                                     </div>
                                     <div className="form-group">
                                         <label>Table Number</label>
                                         <input placeholder="Table Number" name="table number" className="form-control"
-                                               value={this.state.count} onChange={this.changeCountHandler}/>
+                                               value={this.state.count} onChange={(e)=>{this.setState({count:e.target.value})}}/>
 
                                     </div>
 

@@ -1,19 +1,19 @@
 package com.ba.restaurant.dto;
 
-import com.ba.restaurant.entity.Category;
 import com.ba.restaurant.entity.Media;
 
 public class CategoryDTO {
     private Long categoryId;
     private String categoryName;
     private String catDescription;
-    private Media media;
+    private MediaDTO media;
 
-    public Media getMedia() {
+
+    public MediaDTO getMedia() {
         return media;
     }
 
-    public void setMedia(Media media) {
+    public void setMedia(MediaDTO media) {
         this.media = media;
     }
 

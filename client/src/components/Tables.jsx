@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import Service from "./Service";
 import Header from "./Header";
-import Waiters from "./Waiters";
-import {Button} from "semantic-ui-react";
-import {Link} from "react-router-dom";
-
+import Loading from "./Loading";
+import ContextUser from "./ContextUser";
 
 class Table extends Component {
+    static contextType=ContextUser;
     constructor(props) {
         super(props);
         this.state = {
@@ -26,18 +25,18 @@ class Table extends Component {
 
     }
 
-    componentDidMount() {
-        Service.listTableByCategory(this.state.id).then((res) => {
+    async componentDidMount() {
+        this.setState({loadingVisible:true})
+        const {username,password}=this.context;
+       Service.listTableByCategory(this.state.id,username,password).then((res) => {
             console.log(res.data);
-            this.setState({tableCategories: res.data});
+            this.setState({tableCategories: res.data,loadingVisible:false});
         });
 
-        Service.listAllWaiters().then((res) => {
+        await Service.listAllWaiters(username,password).then((res) => {
             console.log("waiters=>" + res.data);
-            this.setState({waiters: res.data});
+            this.setState({waiters: res.data,loadingVisible:false});
         });
-
-        this.render();
     }
 
     getWaiterId(id) {
@@ -60,8 +59,6 @@ class Table extends Component {
         );
         localStorage.setItem('tableId', JSON.stringify(this.state.tableId));
         localStorage.setItem('tableCategoryId', JSON.stringify(this.state.id));
-        console.log("waiter=>" + this.state.selectWaiterId);
-        console.log("tableId=>" + this.state.tableId);
     }
 
     render() {
@@ -71,7 +68,6 @@ class Table extends Component {
         for (let i = 1; i <= this.state.count; i++) {
             const contidion = JSON.parse(localStorage.getItem(`${this.state.id}+${i}`)) === null;
             counts.push(
-                // <Waiters content={"içerik buraya gelsin"} trigger={
                 (
 
                     <div className="col-lg-4 col-xs-12 text-center">
@@ -101,8 +97,6 @@ class Table extends Component {
         return (
             <div>
                 <Header/>
-
-
                 <div className="social-box">
                     <div className="container">
                         <div className='row'>
@@ -125,7 +119,7 @@ class Table extends Component {
                                                             <thead>
                                                             <th>Image</th>
                                                             <th>Name</th>
-                                                            <th>Mail</th>
+
 
                                                             </thead>
                                                             <tbody>
@@ -141,10 +135,9 @@ class Table extends Component {
                                                                                 width="40" height="40"
                                                                                 style={{margin: 3}}/>
                                                                             </td>
-                                                                            <a href="#"
+                                                                            <a
                                                                                onClick={() => this.getWaiterId(waiter.waiterId)}>
                                                                                 <td>{waiter.waiterName}</td></a>
-                                                                            <td>{waiter.waiterMail}</td>
 
                                                                         </tr>
                                                                 )
@@ -162,7 +155,6 @@ class Table extends Component {
                                             <button type="button" className="btn btn-secondary"
                                                     data-dismiss="modal">Close
                                             </button>
-
                                             <button data-dismiss="modal" onClick={() => this.goProduct()} type="button"
                                                     className="btn btn-primary ">Save changes
                                             </button>
@@ -180,6 +172,10 @@ class Table extends Component {
 
                     </div>
                 </div>
+                {
+                    this.state.loadingVisible?
+                        <Loading/>:null
+                }
 
             </div>
         );

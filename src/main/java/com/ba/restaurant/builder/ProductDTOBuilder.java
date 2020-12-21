@@ -1,30 +1,39 @@
-package com.ba.restaurant.dtoBuilder;
+package com.ba.restaurant.builder;
 
 import com.ba.restaurant.dto.MediaDTO;
 import com.ba.restaurant.dto.ProductDTO;
+import com.ba.restaurant.entity.Category;
+import com.ba.restaurant.entity.Media;
+
+import java.util.List;
 
 public class ProductDTOBuilder extends DTOBuilder {
     private Long id;
     private String productName;
     private String description;
     private double price;
-    private String categoryName;
-    private Long categoryId;
+    private MediaDTO media;
+    private List<Long> categoryListId;
+    private List<Category> categories;
 
     public ProductDTOBuilder id(Long id){
         this.setId(id);
+        return this;
+    }
+    public ProductDTOBuilder media(MediaDTO media){
+        this.media=media;
         return this;
     }
     public ProductDTOBuilder productName(String productName){
         this.productName=productName;
         return this;
     }
-    public ProductDTOBuilder categoryName(String categoryName){
-        this.categoryName=categoryName;
+    public ProductDTOBuilder categoryListId(List<Long> categoryListId){
+        this.categoryListId=categoryListId;
         return this;
     }
-    public ProductDTOBuilder categoryId(Long categoryId){
-        this.categoryId=categoryId;
+    public ProductDTOBuilder categories(List<Category> categories){
+        this.categories=categories;
         return this;
     }
     public ProductDTOBuilder description(String description){
@@ -42,9 +51,13 @@ public class ProductDTOBuilder extends DTOBuilder {
         productDTO.setId(getId());
         productDTO.setDescription(this.description);
         productDTO.setProductName(this.productName);
-       // productDTO.setCategoryId(this.categoryId);
+        productDTO.setMedia(this.media);
+        productDTO.setCategoryListId(this.categoryListId);
+        productDTO.setCategories(this.categories);
         productDTO.setPrice(this.price);
         return productDTO;
 
     }
+
+
 }

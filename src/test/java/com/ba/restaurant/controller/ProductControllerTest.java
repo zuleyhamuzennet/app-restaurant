@@ -1,6 +1,6 @@
 package com.ba.restaurant.controller;
 
-import com.ba.restaurant.converter.DTOConverter;
+import com.ba.restaurant.builder.ProductDTOBuilder;
 import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.service.ProductService;
 import org.junit.Assert;
@@ -10,15 +10,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductControllerTest {
@@ -34,13 +30,8 @@ public class ProductControllerTest {
     @Before
     public void setUp() throws Exception{
 
-
-        productDTO.setDescription("şerbetli tatlı");
-        productDTO.setPrice(5);
-        productDTO.setProductName("baklava");
-        productDTO.setId(1L);
-        //productDTO.setCategoryName("tatlı");
-        //productDTO.setCategoryId(1L);
+        productDTO= new ProductDTOBuilder().id(1L).media(null).categoryListId(Collections.singletonList(2L)).productName("deneme")
+                .description("desc").price(5L).build();
         productDTOS.add(productDTO);
 
     }
@@ -49,17 +40,17 @@ public class ProductControllerTest {
     public void shouldAddProduct() {
 
         Long id= 1L;
-     //   Mockito.when(productService.addProduct(productDTO,id)).thenReturn(productDTO);
-       // ProductDTO res =productController.addProduct(productDTO,id);
-      //  Assert.assertNotNull(res);
-      //  Assert.assertEquals(res.getId() , productDTO.getId());
+        Mockito.when(productService.addProduct(Mockito.any())).thenReturn(productDTO);
+        ProductDTO res =productController.addProduct(productDTO);
+        Assert.assertNotNull(res);
+        Assert.assertEquals(res.getId() , productDTO.getId());
     }
     @Test
     public void shoulUpdateProduct() {
 
         Long id= 1L;
-        Mockito.when(productService.updateProduct(productDTO,id)).thenReturn(productDTO);
-        ProductDTO res =productController.updateProduct(productDTO,id);
+        Mockito.when(productService.updateProduct(Mockito.any())).thenReturn(productDTO);
+        ProductDTO res =productController.updateProduct(productDTO);
         Assert.assertNotNull(res);
         Assert.assertEquals(res.getId() , productDTO.getId());
     }
@@ -82,8 +73,8 @@ public class ProductControllerTest {
     @Test
     public void shouldDeleteProductId(){
         Long id =1L;
-      //  Long response=productController.deleteProduct(id);
-        //Assert.assertNotNull(response);
+       Long response=productController.deleteProduct(id);
+        Assert.assertNotNull(response);
     }
 
 

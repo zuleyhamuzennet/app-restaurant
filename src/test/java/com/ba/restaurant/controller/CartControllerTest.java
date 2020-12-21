@@ -1,7 +1,7 @@
 package com.ba.restaurant.controller;
 
 import com.ba.restaurant.dto.CartDTO;
-import com.ba.restaurant.dtoBuilder.CartDTOBuilder;
+import com.ba.restaurant.builder.CartDTOBuilder;
 import com.ba.restaurant.service.CartService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @RunWith(MockitoJUnitRunner.class)
 public class CartControllerTest {
 

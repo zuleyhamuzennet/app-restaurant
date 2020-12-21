@@ -2,6 +2,7 @@ package com.ba.restaurant.dto;
 
 import com.ba.restaurant.entity.Role;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,10 +11,10 @@ public class UserDTO {
     private Long id;
     private String username;
     private String password;
-    private boolean enabled;
+    private boolean enabled=true;
     private String email;
     private List<Long> userListId;
-    private Set<Role> roles= new HashSet<>();
+    private List<Role> roles= new ArrayList<>();
 
     public boolean isEnabled() {
         return enabled;
@@ -27,11 +28,11 @@ public class UserDTO {
         this.userListId = userListId;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 

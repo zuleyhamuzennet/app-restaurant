@@ -1,5 +1,7 @@
 package com.ba.restaurant.entity;
 
+import com.ba.restaurant.dto.CategoryDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -7,7 +9,8 @@ import java.util.Set;
 
 @Entity()
 @Table(name = "categories")
-public class Category implements Serializable {
+public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
@@ -22,7 +25,6 @@ public class Category implements Serializable {
     private Set<Product> products = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "media_id")
     private Media media;
 
     public Category(Long categoryId, String categoryName, String catDescription, Set<Product> products) {

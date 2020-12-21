@@ -4,8 +4,11 @@ import CategoryService from "../service/CategoryService";
 import {Card, Table} from 'react-bootstrap';
 import Header from "../Header";
 import {Link} from "react-router-dom";
+import Loading from "../Loading";
+import ContextUser from "../ContextUser";
 
 class CategoryList extends Component {
+    static contextType=ContextUser;
 
     constructor(props){
         super(props)
@@ -29,22 +32,28 @@ class CategoryList extends Component {
     }
 
     deleteCategory=(categoryId)=>{
-        CategoryService.deleteCategory(categoryId).then();
-        window.location.reload();
+        const {username,password}=this.context;
+        CategoryService.deleteCategory(categoryId,username,password).then(res=>{
+            this.setState({categories:this.state.categories.filter(category=>category.categoryId!==categoryId)})
+        });
     }
-    detailCategory=(categoryId)=>{
+
+    detailCategory=(categoryId,media)=>{
         console.log("categoryId",categoryId);
         this.props.history.push({
             pathname: `category-detail/{categoryId}`,
             state:{
-                id:categoryId
+                id:categoryId,
+                media:media
             }
         })
     }
 
     componentDidMount() {
-        CategoryService.listAllCategories().then((res) => {
-            this.setState({categories: res.data});
+        const {username,password}=this.context
+        this.setState({loadingVisible:true})
+        CategoryService.listAllCategories(username,password).then((res) => {
+            this.setState({categories: res.data,loadingVisible:false});
 
         });
     }
@@ -89,7 +98,7 @@ console.log(this.state.categories[0]);
                                             <button style={{marginLeft: "6px"}} onClick={() => this.deleteCategory(category.categoryId)}
                                                     className="btn btn-outline-info"> Delete
                                             </button>
-                                            <button onClick={() => this.detailCategory(category.categoryId)} style={{marginLeft: "6px"}}
+                                            <button onClick={() => this.detailCategory(category.categoryId,category.media.fileContent)} style={{marginLeft: "6px"}}
                                                   className="btn btn-warning">Detail
                                             </button>
                                         </td>
@@ -102,6 +111,10 @@ console.log(this.state.categories[0]);
 
 
             </Card>
+                {
+                    this.state.loadingVisible?
+                        <Loading/>:null
+                }
             </div>
         );
     }

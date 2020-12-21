@@ -1,9 +1,8 @@
 package com.ba.restaurant.controller;
 import static org.mockito.Mockito.verify;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 import com.ba.restaurant.dto.CategoryDTO;
-import com.ba.restaurant.dtoBuilder.CategoryDTOBuilder;
+import com.ba.restaurant.builder.CategoryDTOBuilder;
 import com.ba.restaurant.service.CategoryService;
 import org.junit.Assert;
 import org.junit.Before;

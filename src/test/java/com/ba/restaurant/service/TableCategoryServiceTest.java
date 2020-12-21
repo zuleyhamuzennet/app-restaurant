@@ -2,8 +2,7 @@ package com.ba.restaurant.service;
 
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.TableCategoryDTO;
-import com.ba.restaurant.dtoBuilder.TableCategoryDTOBuilder;
-import com.ba.restaurant.entity.TableCategory;
+import com.ba.restaurant.builder.TableCategoryDTOBuilder;
 import com.ba.restaurant.repository.TableCategoryRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,21 +11,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.verify;
-
-
 @RunWith(MockitoJUnitRunner.class)
-public class
-
-
-TableCategoryServiceTest {
+public class TableCategoryServiceTest {
 
     @InjectMocks
     private TableCategoryService tableCategoryService;
@@ -41,11 +33,9 @@ TableCategoryServiceTest {
     public void setUp() throws Exception{
 
        tableCategoryDTO= new TableCategoryDTOBuilder().id(1L).tableCategoryDesc("deneme").tableCategoryName("name").count(2L).build();
-
         tableCategoryDTOS.add(tableCategoryDTO);
 
     }
-
 
     @Test
     public void shouldAddNewTableCategory(){
@@ -79,8 +69,9 @@ TableCategoryServiceTest {
     @Test
     public void shouldDeleteTableCategory(){
         Long id =1L;
-        String res= tableCategoryService.deleteByTableCategory(id);
-        verify(tableCategoryRepository, VerificationModeFactory.times(1)).deleteById(id);
+        Mockito.when(tableCategoryRepository.findById(Mockito.any())).thenReturn(Optional.of(DTOConverter.tableCategoryConverter(tableCategoryDTO)));
+        Long res = tableCategoryService.deleteByTableCategory(id);
+        Assert.assertNotNull(res);
 
     }
     @Test

@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity()
@@ -20,6 +22,12 @@ public class Product implements Serializable {
     private String description;
     private double price;
 
+    @ManyToMany(mappedBy = "products")
+    @JsonIgnore
+    private List<Category> categories= new ArrayList<>();
+
+    @ManyToOne
+    private Media media;
 
     public Product(String productName, String description, double price) {
         this.productName = productName;
@@ -27,18 +35,21 @@ public class Product implements Serializable {
         this.price = price;
 
     }
-    public Product() {
+    public Product() { }
 
+    public Media getMedia() {
+        return media;
     }
-    @ManyToMany(mappedBy = "products")
-    @JsonIgnore
-    private Set<Category> categories= new HashSet<>();
 
-    public Set<Category> getCategories() {
+    public void setMedia(Media media) {
+        this.media = media;
+    }
+
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
@@ -49,7 +60,6 @@ public class Product implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public String getDescription() {
         return description;
@@ -74,7 +84,6 @@ public class Product implements Serializable {
     public void setPrice(double price) {
         this.price = price;
     }
-
 
 
 }

@@ -4,7 +4,7 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.WaiterDTO;
-import com.ba.restaurant.dtoBuilder.WaiterDTOBuilder;
+import com.ba.restaurant.builder.WaiterDTOBuilder;
 import com.ba.restaurant.repository.WaiterRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,7 +35,7 @@ public class WaiterServiceTest {
     @Before
     public void setUp() throws Exception{
 
-        waiterDTO= new WaiterDTOBuilder().waiterId(1L).waiterName("zuleyha").build();
+        waiterDTO= new WaiterDTOBuilder().waiterId(1L).waiterMail("aa").waiterName("zuleyha").address("aa").phone(2L).media(null).build();
         waiterDTOS.add(waiterDTO);
 
     }
@@ -45,7 +45,7 @@ public class WaiterServiceTest {
         WaiterDTO waiterDTO1= waiterService.addWaiter(waiterDTO);
 
         Assert.assertNotNull(waiterDTO1);
-        Assert.assertEquals(waiterDTO1,waiterDTO);
+        Assert.assertEquals(waiterDTO1.getId(),waiterDTO.getId());
     }
     @Test
     public void shouldUpdateWaiter(){
@@ -54,7 +54,7 @@ public class WaiterServiceTest {
         WaiterDTO waiterDTO1= waiterService.addWaiter(waiterDTO);
 
         Assert.assertNotNull(waiterDTO1);
-        Assert.assertEquals(waiterDTO1.getWaiterId(),waiterDTO.getWaiterId());
+        Assert.assertEquals(waiterDTO1.getId(),waiterDTO.getId());
     }
 
     @Test
@@ -71,14 +71,14 @@ public class WaiterServiceTest {
         Mockito.when(waiterRepository.findById(id)).thenReturn(Optional.of(DTOConverter.waiterConverter(waiterDTO)));
         WaiterDTO waiterDTO1= waiterService.getWaiterById(id);
         Assert.assertNotNull(waiterDTO1);
-        Assert.assertEquals(waiterDTO1.getWaiterId(),waiterDTO.getWaiterId());
+        Assert.assertEquals(waiterDTO1.getId(),waiterDTO.getId());
     }
 
     @Test
     public void shoouldDeleteWaiterById(){
         Long id= 1L;
-       // String delete=waiterService.deleteWaiterById(id);
-       // verify(waiterRepository,times(1)).deleteById(id);
+        String delete=waiterService.deleteWaiterById(id);
+        verify(waiterRepository,times(1)).deleteById(id);
     }
 
 }

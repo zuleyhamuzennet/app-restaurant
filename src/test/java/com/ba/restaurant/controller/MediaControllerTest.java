@@ -2,7 +2,7 @@ package com.ba.restaurant.controller;
 
 import com.ba.restaurant.builder.MediaBuilder;
 import com.ba.restaurant.dto.MediaDTO;
-import com.ba.restaurant.dtoBuilder.MediaDTOBuilder;
+import com.ba.restaurant.builder.MediaDTOBuilder;
 import com.ba.restaurant.entity.Media;
 import com.ba.restaurant.service.MediaService;
 import org.junit.Assert;

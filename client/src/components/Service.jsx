@@ -6,94 +6,126 @@ const CATEGORY_API_BASE_URL = "http://localhost:8080/categories/"
 class Service{
 
 
-
-
-    listAllProduct(){
-
-        return axios.get(PRODUCT_API_BASE_URL+"list",{
-            auth:{
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }
-        });
-    }
-    listProductsByCategoryId(id){
+    listProductsByCategoryId(id,username,password){
 
         return axios.get(CATEGORY_API_BASE_URL+"list/"+id,{
-            auth:{
+         /*   auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
-            }
+            }*/
+
+             auth:{
+              username:password,
+              password:username
+          }
+
         });
     }
-    listAllCategory(){
+    listAllCategory(username,password){
 
         return axios.get(CATEGORY_API_BASE_URL+"list",{
-            auth:{
+           /* auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
-            }
+            }*/
+
+             auth:{
+              username:password,
+              password:username
+          }
+
         })
 
     }
-    listAllTableCategory(){
+    listAllTableCategory(username,password){
 
         return axios.get("http://localhost:8080/table-category/list",{
             auth:{
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
+                username:password,
+                password:username
             }
         })
 
+
+
+
     }
 
-    listTableByCategory(id){
+    listTableByCategory(id,username,password){
         return axios.get("http://localhost:8080/table-category/"+id,{
-            auth:{
+            /*auth:{
 
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
-            }
+            }*/
+
+             auth:{
+              username:password,
+              password:username
+          }
+
         })
     }
 
-    listProductByCategory(id){
+    listProductByCategory(id,username,password){
         return axios.get(PRODUCT_API_BASE_URL+id,{
-            auth:{
+          /*  auth:{
 
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
-            }
+            }*/
+
+             auth:{
+              username:password,
+              password:username
+          }
+
         })
     }
-    listAllWaiters(){
+    listAllWaiters(username,password){
         return axios.get("http://localhost:8080/waiter/list",{
-            auth:{
+           /* auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
             }
+          */
+             auth:{
+              username:password,
+              password:username
+          }
+
         })
     }
-    getWaiterById(id){
+    getWaiterById(id,username,password){
         return axios.get("http://localhost:8080/waiter/"+id,{
-            auth:{
+         /*   auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
-            }
+            }*/
+
+             auth:{
+              username:password,
+              password:username
+          }
+
         });
     }
 
-    saleButton(Carts){
+    saleButton(Carts,username,password){
         return axios.post("http://localhost:8080/carts/add",Carts,{
-            auth:{
+           /* auth:{
 
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
-            }
+            }*/
+
+             auth:{
+              username:password,
+              password:username
+          }
+
         })
     }
-
-
 
 }
 export default new Service()

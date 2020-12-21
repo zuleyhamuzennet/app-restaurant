@@ -21,7 +21,7 @@
         <insert tableName="users">
             <column name="email" value="aa@bb.cc"></column>
             <column name="username" value="admin"></column>
-            <column name="password" value="$2a$10$/3Qe9J9UV.SvjNkI0NAh3OBXSPS.OAIa1y0vKJX7kz965j4FO.WSi"></column>
+            <column name="password" value="$2a$10$wRqOUsM/klU8jCiWyFtOg.Enoj1cWEbGY2ljS2Mt4RS/uKA7sdmfm"></column>
             <column name="enabled" value="1"></column>
         </insert>
         <rollback>

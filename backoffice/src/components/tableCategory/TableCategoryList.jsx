@@ -4,8 +4,11 @@ import TableCategoryService from "../service/TableCategoryService";
 import {Card, Table} from 'react-bootstrap';
 import Header from "../Header";
 import {Link} from "react-router-dom";
+import Loading from "../Loading";
+import ContextUser from "../ContextUser";
 
 class TableCategoryList extends Component {
+    static contextType=ContextUser;
 
     constructor(props) {
         super(props)
@@ -18,13 +21,25 @@ class TableCategoryList extends Component {
     }
 
     deleteTableCategory(id) {
-        TableCategoryService.deleteTableCategory(id).then();
-        window.location.reload();
+        const {username,password}=this.context;
+        TableCategoryService.deleteTableCategory(id,username,password).then(res=>{
+            this.setState({tableCategories:this.state.tableCategories.filter(table=>table.id!==id)})
+        });
+    }
+    updateTableCategory(id){
+        this.props.history.push({
+            pathname:`/update-table-category/${id}`,
+            state:{
+                id:id
+            }
+        })
     }
 
     componentDidMount() {
-        TableCategoryService.listAllTableCategory().then((res) => {
-            this.setState({tableCategories: res.data});
+        const {username,password}=this.context;
+        this.setState({loadingVisible:true})
+        TableCategoryService.listAllTableCategory(username,password).then((res) => {
+            this.setState({tableCategories: res.data,loadingVisible:false});
         });
     }
 
@@ -77,6 +92,10 @@ class TableCategoryList extends Component {
                     </Table>
                 </Card.Body>
             </Card>
+                {
+                    this.state.loadingVisible?
+                        <Loading/>:null
+                }
             </div>
         );
     }

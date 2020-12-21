@@ -5,16 +5,15 @@ import javax.persistence.*;
 public class Media {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long mediaId;
+    private long id;
+
 
     private String mediaName;
 
     @Column(length = 100000000)
     private byte[] fileContent;
 
-
     public Media(long mediaId, String mediaName, byte[] fileContent) {
-        this.mediaId = mediaId;
         this.mediaName = mediaName;
         this.fileContent = fileContent;
     }
@@ -23,12 +22,12 @@ public class Media {
 
     }
 
-    public long getMediaId() {
-        return mediaId;
+    public long getId() {
+        return id;
     }
 
-    public void setMediaId(long mediaId) {
-        this.mediaId = mediaId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getMediaName() {

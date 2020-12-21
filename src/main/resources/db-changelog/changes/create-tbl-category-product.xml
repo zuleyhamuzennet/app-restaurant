@@ -15,8 +15,6 @@
             <column autoIncrement="true" name="product_id" type="int(1)">
                 <constraints primaryKey="true"  nullable="false" foreignKeyName="fk_product" references="product(product_id)"/>
             </column>
-
-
         </createTable>
 
     </changeSet>

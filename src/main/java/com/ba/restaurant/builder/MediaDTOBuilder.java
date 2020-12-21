@@ -1,8 +1,6 @@
-package com.ba.restaurant.dtoBuilder;
+package com.ba.restaurant.builder;
 
-import com.ba.restaurant.builder.MediaBuilder;
 import com.ba.restaurant.dto.MediaDTO;
-import com.ba.restaurant.entity.Media;
 
 public class MediaDTOBuilder extends DTOBuilder {
     private long mediaId;

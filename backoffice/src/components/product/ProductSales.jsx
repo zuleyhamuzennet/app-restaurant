@@ -3,8 +3,10 @@ import {Card, Table} from "react-bootstrap";
 import ProductService from "../service/ProductService";
 import Header from "../Header";
 import '../../App.css';
-import WaiterService from "../service/WaiterService";
+import Loading from "../Loading";
+import ContextUser from "../ContextUser";
 class ProductSales extends Component {
+    static contextType=ContextUser;
     constructor(props){
         super(props)
 
@@ -12,10 +14,13 @@ class ProductSales extends Component {
             orderProducts :[]
         }
     }
+
     componentDidMount() {
-        ProductService.getSales().then(response=>{
+        this.setState({loadingVisible:true})
+        const {username,password}=this.context;
+        ProductService.getSales(username,password).then(response=>{
             this.setState({
-                orderProducts: response.data
+                orderProducts: response.data,loadingVisible:false
             });
             console.log("order-product", response.data);
             this.render();
@@ -73,6 +78,10 @@ class ProductSales extends Component {
 
 
             </Card>
+                {
+                    this.state.loadingVisible?
+                        <Loading/>:null
+                }
             </div>
         );
     }

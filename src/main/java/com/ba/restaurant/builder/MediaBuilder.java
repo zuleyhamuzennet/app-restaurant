@@ -21,7 +21,7 @@ public class MediaBuilder extends Builder {
     @Override
     public Media build(){
         Media media = new Media();
-        media.setMediaId(getId());
+        media.setId(getId());
         media.setFileContent(this.fileContent);
         media.setMediaName(this.mediaName);
         return media;

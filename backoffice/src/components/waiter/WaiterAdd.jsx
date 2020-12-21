@@ -3,46 +3,53 @@ import {Link} from "react-router-dom";
 import WaiterService from "../service/WaiterService";
 import Header from "../Header";
 import axios from "axios";
+import Loading from "../Loading";
+import ContextUser from "../ContextUser";
 
 class WaiterAdd extends Component {
+    static contextType=ContextUser;
     constructor(props) {
         super(props);
         this.state={
             waiterId:'',
             waiterName:'',
             waiterMail:'',
+            address:'',
+            phone:'',
             mediaList: [],
             mediaId:'',
             media:{}
         }
-        this.changeWaiterNameHandler=this.changeWaiterNameHandler.bind(this);
-        this.changeWaiterMailHandler=this.changeWaiterMailHandler.bind(this);
         this.changeMediaHandler=this.changeMediaHandler.bind(this);
         this.getFiles=this.getFiles.bind(this);
 
     }
+
     saveWaiter=(e)=>{
-        e.preventDefault();
 
-        let waiters={
-            id: this.state.id,
-            waiterName: this.state.waiterName,
-            waiterMail: this.state.waiterMail,
-            media: this.state.media
+        console.log(this.state.media);
+        if(this.state.media===''){
+            console.log("medya giriniz")
+        }else {
+            const {username,password}=this.context;
+            e.preventDefault();
 
-        };
-        console.log('waiters => ' + JSON.stringify(waiters));
-        WaiterService.addWaiter(waiters).then(res=>{
-            this.props.history.push('/waiters');
-        });
+            let waiters={
+                id: this.state.waiterId,
+                waiterName: this.state.waiterName,
+                waiterMail: this.state.waiterMail,
+                media: this.state.media,
+                address:this.state.address,
+                phone:this.state.phone,
 
-    }
+            };
+            console.log('waiters => ' + JSON.stringify(waiters));
+            WaiterService.addWaiter(waiters,username,password).then(res=>{
+                this.props.history.push('/waiters');
+            });
+        }
 
-    changeWaiterNameHandler=(event)=>{
-        this.setState({waiterName: event.target.value})
-    }
-    changeWaiterMailHandler=(event)=>{
-        this.setState({waiterMail: event.target.value})
+
     }
     changeMediaHandler=(event)=>{
         this.setState({mediaId:event.target.value});
@@ -54,11 +61,16 @@ class WaiterAdd extends Component {
     }
 
     componentDidMount() {
+        this.setState({loadingVisible:true})
         axios.get("http://localhost:8080/media/list").then((res) => {
-            this.setState({mediaList: res.data})
+
+
+            this.setState({mediaList: res.data, loadingVisible:false})
             console.log("res data", res.data);
         })
+
     }
+
    getFiles = () => {
         if (!this.state.mediaList) {
             return null;
@@ -94,13 +106,25 @@ class WaiterAdd extends Component {
                                         <label> Waiter Name </label>
                                         <input placeholder="Waiter Name" name="waiter" className="form-control"
                                                value={this.state.waiterName}
-                                               onChange={this.changeWaiterNameHandler}/>
+                                               onChange={(e)=>{this.setState({waiterName:e.target.value})}}/>
                                     </div>
                                     <div className="form-group">
                                         <label> Waiter Mail </label>
                                         <input placeholder="Waiter Name" name="waiter" className="form-control"
                                                value={this.state.waiterMail}
-                                               onChange={this.changeWaiterMailHandler}/>
+                                               onChange={(e)=>{this.setState({waiterMail:e.target.value})}}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label> Waiter Address </label>
+                                        <input placeholder="Waiter Address" name="address" className="form-control"
+                                               value={this.state.address}
+                                               onChange={(e)=>{this.setState({address:e.target.value})}}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label> Phone Number </label>
+                                        <input placeholder="Phone Number" name="phone" className="form-control"
+                                               value={this.state.phone}
+                                               onChange={(e)=>{this.setState({phone:e.target.value})}}/>
                                     </div>
                                     <div className="form-group">
                                         <label> Media </label>
@@ -124,6 +148,10 @@ class WaiterAdd extends Component {
                         </div>
                     </div>
                 </div>
+                {
+                    this.state.loadingVisible?
+                        <Loading/>:null
+                }
             </div>
         );
     }

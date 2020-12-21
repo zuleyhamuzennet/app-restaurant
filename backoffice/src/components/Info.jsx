@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import ServiceInfo from './service/ServiceInfo';
 import Header from "./Header";
+import ContextUser from "./ContextUser";
 
 class Info extends Component {
+    static contextType=ContextUser;
     constructor(props) {
         super(props);
         this.state={
@@ -11,7 +13,8 @@ class Info extends Component {
         }
     }
     componentDidMount() {
-        ServiceInfo.infoProperties().then((res)=>{
+        const {username,password}=this.context;
+        ServiceInfo.infoProperties(username,password).then((res)=>{
                 this.setState({info:res.data})
             });
     }

@@ -37,6 +37,10 @@ public class TableCategoryController {
     public TableCategoryDTO getTableCategoryById(@PathVariable Long id){
         return tableCategoryService.getTableCategorytById(id);
     }
+    @DeleteMapping("/delete/{id}")
+    public Long deleteByTableCategoryId(@PathVariable Long id){
+        return tableCategoryService.deleteByTableCategory(id);
+    }
 
 
 

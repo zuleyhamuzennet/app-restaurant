@@ -4,8 +4,7 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.CategoryDTO;
-import com.ba.restaurant.dtoBuilder.CategoryDTOBuilder;
-import com.ba.restaurant.entity.Category;
+import com.ba.restaurant.builder.CategoryDTOBuilder;
 import com.ba.restaurant.repository.CategoryRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.xml.stream.events.DTD;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +34,7 @@ public class CategoryServiceTest {
     @Before
     public void setUp() throws Exception{
 
-       categoryDTO= new CategoryDTOBuilder().categoryId(1L).categoryName("meyve").catDescription("deneme").build();
+       categoryDTO= new CategoryDTOBuilder().categoryId(1L).categoryName("meyve").media(null).catDescription("deneme").build();
         categoryDTOList.add(categoryDTO);
 
 

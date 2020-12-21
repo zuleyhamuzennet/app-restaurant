@@ -1,14 +1,11 @@
 package com.ba.restaurant.controller;
 
 import com.ba.restaurant.dto.WaiterDTO;
-import com.ba.restaurant.entity.Waiter;
 import com.ba.restaurant.service.WaiterService;
-import liquibase.pro.packaged.W;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -39,8 +36,9 @@ public class WaiterController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteWaiterById(@PathVariable Long id){
+    public Long deleteWaiterById(@PathVariable Long id){
         waiterService.deleteWaiterById(id);
+        return null;
     }
 
 

@@ -3,10 +3,28 @@ package com.ba.restaurant.dto;
 import com.ba.restaurant.entity.Media;
 
 public class WaiterDTO {
-    private Long waiterId;
+    private Long id;
     private String waiterName;
     private String waiterMail;
-    private Media media;
+    private MediaDTO media;
+    private String address;
+    private Long phone;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Long phone) {
+        this.phone = phone;
+    }
 
     public String getWaiterMail() {
         return waiterMail;
@@ -16,20 +34,20 @@ public class WaiterDTO {
         this.waiterMail = waiterMail;
     }
 
-    public Media getMedia() {
+    public MediaDTO getMedia() {
         return media;
     }
 
-    public void setMedia(Media media) {
+    public void setMedia(MediaDTO media) {
         this.media = media;
     }
 
-    public Long getWaiterId() {
-        return waiterId;
+    public Long getId() {
+        return id;
     }
 
-    public void setWaiterId(Long waiterId) {
-        this.waiterId = waiterId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getWaiterName() {

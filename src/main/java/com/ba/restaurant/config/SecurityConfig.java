@@ -1,11 +1,9 @@
 package com.ba.restaurant.config;
 
 import com.ba.restaurant.auth.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,13 +30,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
-    @Override
+ /*   @Override
     protected void configure(AuthenticationManagerBuilder auth){
         auth.authenticationProvider(authenticationProvider());
-    }
+    }*/
 
     @Override
     protected void configure(HttpSecurity http)throws Exception{
+        http.authorizeRequests().antMatchers("login/**").permitAll();
 
         http.authorizeRequests().antMatchers("h2-console/**").permitAll();
         http.csrf().disable();
@@ -54,7 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/properties/**").hasAnyRole("USER","ADMIN");
         http.authorizeRequests().antMatchers("/waiter/**").hasAnyRole("USER","ADMIN");
         http.authorizeRequests().antMatchers("/table-category/**").hasAnyRole("USER","ADMIN");
-       // http.authorizeRequests().antMatchers("/users/**").hasAnyRole("USER","ADMIN");
+        http.authorizeRequests().antMatchers("/users/**").hasAnyRole("USER","ADMIN");
+
+
+       // http.authorizeRequests().antMatchers("/login//**").hasAnyRole("USER","ADMIN");
        // http.authorizeRequests().antMatchers("/media/**").hasAnyRole("USER","ADMIN");
 
         http.httpBasic();

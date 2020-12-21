@@ -12,30 +12,32 @@ import AddCategory from "./components/category/AddCategory";
 import CategoryList from "./components/category/CategoryList";
 import Info from "./components/Info";
 import TableCategoryAdd from "./components/tableCategory/TableCategoryAdd";
-import TableAdd from "./components/table/TableAdd";
-import TableList from "./components/table/TableList";
 import TableCategoryList from "./components/tableCategory/TableCategoryList";
 import DetailProduct from "./components/product/DetailProduct";
-import TableDetail from "./components/table/TableDetail";
-import TableUpdate from "./components/table/TableUpdate";
 import WaiterAdd from "./components/waiter/WaiterAdd";
 import WaiterList from "./components/waiter/WaiterList";
 import AddMedia from "./components/media/AddMedia";
-import React, { useState } from 'react';
+import React, { } from 'react';
 import CategoryDetail from "./components/category/CategoryDetail";
 import UpdateCategory from "./components/category/UpdateCategory";
 
-//export const AppContext=React.createContext();
 
+import {ContextUserProvider} from "./components/ContextUser";
+import AddRole from "./components/role/AddRole";
+import ListRole from "./components/role/ListRole";
+import UserDetail from "./components/user/UserDetail";
+import TableCategoryUpdate from "./components/tableCategory/TableCategoryUpdate";
+import WaiterUpdate from "./components/waiter/WaiterUpdate";
+import WaiterDetail from "./components/waiter/WaiterDetail";
+const valueProvider={username:'', password:''}
 function App() {
 
 
     return (
 
         <div>
-
+        <ContextUserProvider value={valueProvider}>
             <Router>
-
                     <div className="container">
                         <Switch>
                             <Route exact path="/" component={Login}></Route>
@@ -50,23 +52,26 @@ function App() {
                             <Route exact path="/list-category" component={CategoryList}></Route>
                             <Route exact path="/add-table-category" component={TableCategoryAdd}></Route>
                             <Route exact path="/info" component={Info}></Route>
-                            <Route exact path="/table-add" component={TableAdd}></Route>
-                            <Route exact path="/tables" component={TableList}></Route>
-                            <Route exact path="/table-update" component={TableUpdate}></Route>
                             <Route exact path="/table-categories" component={TableCategoryList}></Route>
                             <Route exact path="/detail/:id" component={DetailProduct}></Route>
-                            <Route exact path="/table-detail/:id" component={TableDetail}></Route>
                             <Route exact path="/waiter-add" component={WaiterAdd}></Route>
                             <Route exact path="/waiters" component={WaiterList}></Route>
                             <Route exact path="/media" component={AddMedia}></Route>
                             <Route exact path="/category-detail/:id" component={CategoryDetail}></Route>
                             <Route exact path="/update-category/:id" component={UpdateCategory}></Route>
-
+                            <Route exact path="/add-role" component={AddRole}></Route>
+                            <Route exact path="/list-role" component={ListRole}></Route>
+                            <Route exact path="/user-detail/:id" component={UserDetail}></Route>
+                            <Route exact path="/update-table-category/:id" component={TableCategoryUpdate}></Route>
+                            <Route exact path="/update-waiter/:id" component={WaiterUpdate}></Route>
+                            <Route exact path="/detail-waiter/:id" component={WaiterDetail}></Route>
 
                         </Switch>
                     </div>
 
             </Router>
+        </ContextUserProvider>
+
         </div>
 
     );

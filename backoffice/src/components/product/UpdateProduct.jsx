@@ -1,77 +1,99 @@
 import '../../App.css'
 import React, {Component} from 'react';
 import ProductService from "../service/ProductService";
-import CategoryService from "../service/CategoryService";
 import Header from "../Header";
 import {Link} from "react-router-dom";
+import Loading from "../Loading";
+import CategoryService from "../service/CategoryService";
+import axios from "axios";
+import ContextUser from "../ContextUser";
+import MediaService from "../service/MediaService";
 
 class UpdateProduct extends Component {
+    static contextType=ContextUser;
     constructor(props) {
         super(props)
 
         this.state = {
             id: this.props.history.location.state?.id,
-            categoryId:this.props.history.location.state?.categoryId,
             productName: '',
             description: '',
             price: '',
-            category:'' ,
-            products:[]
+            categories:[] ,
+            multiSelect:[],
+            mediaList: [],
+            mediaId:'',
+            media:{}
         }
-        this.changeCategoryHandler = this.changeCategoryHandler.bind(this);
-        this.changeProductNameHandler = this.changeProductNameHandler.bind(this);
-        this.changeDescriptionHandler = this.changeDescriptionHandler.bind(this);
-        this.changePriceHandler = this.changePriceHandler.bind(this);
-
 
     }
+    changeMultiSelect(id){
+        if(this.state.multiSelect.includes(id)!==true){
+            this.state.multiSelect.push(id);
+            console.log("multiselect=> ekle",this.state.multiSelect)
+        }else{
+            for(let i = 0; i<this.state.multiSelect.length;i++){
+                if(id === this.state.multiSelect[i]){
+                    this.state.multiSelect.splice(i,1);
+                    console.log("multiselect= sil",this.state.multiSelect)
+                }
+            }
+        }}
+
 
     componentDidMount() {
-        ProductService.getProductById(this.state.id).then((res) => {
+        const {username,password}=this.context;
+        this.setState({loadingVisible:true});
+        ProductService.getProductById(this.state.id,username,password).then((res) => {
 
             this.setState({
                 id: res.data.id,
                 productName: res.data.productName,
                 description: res.data.description,
                 price:res.data.price,
-                category:res.data.category
+                categoryListId:this.state.multiSelect,
+                media:this.state.media,
+                loadingVisible:false
 
             });
         });
-        CategoryService.listAllCategories().then((res)=>{
-            this.setState({products:res.data})
+
+        CategoryService.listAllCategories(username,password).then((res) => {
+            this.setState({categories: res.data});
         });
+
+        MediaService.listAllMedia(username,password).then((res) => {
+            this.setState({mediaList: res.data,loadingVisible:false})
+            console.log("res data", res.data);
+        })
+    }
+
+    changeMediaHandler=(event)=>{
+        this.setState({mediaId:event.target.value});
+        console.log(this.state.mediaId);
+
+        const valueMedia = this.state.mediaList.filter(item => item.mediaId == this.state.mediaId)
+        this.setState({media: valueMedia[0]})
+
+
     }
 
     updateProduct = (e) => {
+        e.preventDefault();
 
+        const {username,password}=this.context;
         let product = {
             id:this.state.id,
             productName: this.state.productName,
             description: this.state.description,
-            category:this.state.products.category ,
             price: this.state.price,
-
+            categoryListId:this.state.multiSelect,
+            media:this.state.media
         };
         console.log('Product => ' + JSON.stringify(product));
-        ProductService.updateProduct(product, this.state.id).then(res => {
+        ProductService.updateProduct(product,username,password).then(res => {
             this.props.history.push('/list')
         });
-
-        e.preventDefault();
-    }
-    changeCategoryHandler = (event) => {
-        this.setState({categoryName: event.target.value})
-    }
-
-    changeProductNameHandler = (event) => {
-        this.setState({productName: event.target.value})
-    }
-    changeDescriptionHandler = (event) => {
-        this.setState({description: event.target.value})
-    }
-    changePriceHandler = (event) => {
-        this.setState({price: event.target.value})
     }
 
     render() {
@@ -87,31 +109,50 @@ class UpdateProduct extends Component {
                                 <form>
                                     <div className="form-group">
                                         <label> Category </label>
-                                       <select className="selectpicker form-control" onChange={this.changeCategoryHandler}>{
 
-                                            this.state.products.map(product =>
-                                                <option key={product.categoryId} value={product.categoryId}
-                                                >{product.categoryName}</option>
-                                            )
-                                        }
-                                        </select>
+
+                                        <div className="checkbox" style={{height:"4rem",overflow:"auto"}}>
+                                            {
+                                                this.state.categories.map(
+                                                    category=>
+                                                        <div className="row col-md -12" key={category.categoryId}>
+                                                            <label><input type="checkbox" value="" onClick={()=>this.changeMultiSelect(category.categoryId)}/>{category.categoryName}</label>
+                                                        </div>
+                                                )
+                                            }
+                                        </div>
 
                                     </div>
 
                                     <div className="form-group">
                                         <label> Product Name </label>
                                         <input placeholder="Product Name" name="productName" className="form-control"
-                                               value={this.state.productName} onChange={this.changeProductNameHandler}/>
+                                               value={this.state.productName} onChange={(e)=>{this.setState({productName:e.target.value})}}/>
                                     </div>
                                     <div className="form-group">
                                         <label> Description </label>
                                         <input placeholder="Description" name="description" className="form-control"
-                                               value={this.state.description} onChange={this.changeDescriptionHandler}/>
+                                               value={this.state.description} onChange={(e)=>{this.setState({description:e.target.value})}}/>
                                     </div>
                                     <div className="form-group">
                                         <label> Price </label>
                                         <input placeholder="Product Price" name="price" className="form-control"
-                                               value={this.state.price} onChange={this.changePriceHandler}/>
+                                               value={this.state.price} onChange={(e)=>{this.setState({price:e.target.value})}}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label> Media </label>
+                                        <select className="selectpicker form-control" onChange={this.changeMediaHandler}>
+                                            {
+
+                                                this.state.mediaList.map(
+
+                                                    media=>
+
+                                                        <option   key={media.mediaId}  value ={media.mediaId}>{media.mediaName}</option>
+                                                )
+                                            }
+                                        </select>
+
                                     </div>
                                     <button className="btn btn-success" onClick={this.updateProduct}> Update</button>
                                     <Link to="/list" className="btn btn-danger"
@@ -122,6 +163,10 @@ class UpdateProduct extends Component {
                         </div>
                     </div>
                 </div>
+                {
+                    this.state.loadingVisible?
+                        <Loading/>:null
+                }
             </div>
         );
     }

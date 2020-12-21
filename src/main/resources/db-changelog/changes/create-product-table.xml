@@ -15,8 +15,9 @@
             <column name="product_name" type="VARCHAR(255)"/>
             <column name="description" type="VARCHAR(255)"/>
             <column name="price" type="int(1)"/>
+            <column name="media_id" type="int(1)">
+                <constraints foreignKeyName="fk_media" references="media(id)"/>
 
-            <column name="category_id" type="int">
             </column>
         </createTable>
 

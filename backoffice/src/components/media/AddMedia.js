@@ -52,7 +52,7 @@ console.log("imageList",imageList);
         let list = [];
         imageList.map(y => {
             list.push(
-                <img src={'data:image/png;base64,' + y.fileContent} width="150" style={{margin: 10}}/>
+                <img src={'data:image/png;base64,' + y.fileContent} key={y.mediaId} width="150" style={{margin: 10}}/>
             )
         });
         return (

@@ -1,12 +1,17 @@
 package com.ba.restaurant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "USERS")
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -16,16 +21,15 @@ public class User {
     private String password;
     private boolean enabled;
 
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "TBL_USER_ROLES",
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID")
+    )
+    private List<Role> roles = new ArrayList<>();
 
-    public User() {
-
-    }
-
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable( name = "TBL_USER_ROLES",
-            joinColumns= @JoinColumn(name = "USER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-    private Set<Role> roles= new HashSet<>();
+    public User() { }
 
     public Long getId() {
         return id;
@@ -67,11 +71,11 @@ public class User {
         this.enabled = enabled;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 }

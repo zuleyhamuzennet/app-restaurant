@@ -5,24 +5,16 @@ const INFO_ACTIVE_API_BASE_URL = "http://localhost:8080/properties/active";
 
 class ServiceInfo{
 
-    infoProperties(){
+    infoProperties(username,password){
         return axios.get(INFO_API_BASE_URL ,{
             auth:{
 
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
+                username:username,
+                password:password
             }
         })
     }
-    infoActiveProperties(){
-        return axios.get(INFO_ACTIVE_API_BASE_URL ,{
-            auth:{
 
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }
-        })
-    }
 
 }
 export default new ServiceInfo();

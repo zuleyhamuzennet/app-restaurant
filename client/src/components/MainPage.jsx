@@ -1,11 +1,34 @@
 import React, {Component} from 'react';
 import {Card} from 'semantic-ui-react';
 import Header from "./Header";
+import ContextUser from "./ContextUser";
 
 
 class MainPage extends Component {
+    static contextType=ContextUser;
 
+    goTables=()=>{
+        this.props.history.push({
+                pathname: "/table-category"
+            }
+        );
+    }
+    goProduct=()=>{
+        this.props.history.push({
+                pathname: "/products"
+            }
+        );
+    }
+    logout=()=>{
+        if (localStorage.getItem('username') !== null) {
+            localStorage.removeItem('username');
+        }
+        if (localStorage.getItem('password') !== null) {
+            localStorage.removeItem('password');
+        }
 
+        this.props.history.push("/");
+    }
 
     render() {
         return (
@@ -16,50 +39,50 @@ class MainPage extends Component {
                 <div className="container">
                     <div className='row'>
                         <div style={{marginBottom: "15px"}} className="col-md-4 ">
-                            <a href="/products">
+                            <div onClick={()=>this.goProduct()}>
                             <Card style={{height:'150px',
                             width:'300px', textAlign:'center'}}>
 
                             <h2 style={{textAlign :"center"}}>Products</h2>
                             </Card>
-                            </a>
+                            </div>
                         </div>
                         <div style={{marginBottom: "10px"}} className="col-md-4 ">
-                            <a href="/table-category">
+                            <div onClick={()=>this.goTables()}>
                             <Card style={{height:'150px',
                                 width:'300px'}}
                             >
                                 <h2 style={{textAlign :"center"}}>Tables</h2>
                             </Card>
-                            </a>
+                            </div>
                         </div>
                         <div style={{marginBottom: "10px"}} className="col-md-4 ">
-                            <a>
+                            <div>
                             <Card style={{height:'150px',
                                 width:'300px'}}
 
                             >
                                 <h2 style={{textAlign :"center"}}>Rapors</h2>
                             </Card>
-                            </a>
+                            </div>
                         </div>
                         <div style={{marginBottom: "10px"}} className="col-md-4 ">
-                            <a>
+                            <div>
                             <Card style={{height:'150px',
                                 width:'300px'}}
 
                             >
                                 <h2 style={{textAlign :"center"}}>Cart</h2>
-                            </Card></a>
+                            </Card></div>
                         </div>
                         <div style={{marginBottom: "15px"}} className="col-md-4 ">
-                            <a>
+                            <div>
                             <Card style={{height:'150px',
                                 width:'300px'}}
 
                             >
                                 <h2 style={{textAlign :"center"}}>Users</h2>
-                            </Card></a>
+                            </Card></div>
                         </div>
                         <div style={{marginBottom: "10px"}} className="col-md-4 ">
                             <Card style={{height:'150px',
@@ -74,24 +97,24 @@ class MainPage extends Component {
                             />
                         </div>
                         <div style={{marginBottom: "10px"}} className="col-md-4 ">
-                            <a>
+                            <div >
                             <Card style={{height:'150px',
                                 width:'300px'}}
                                   description='Tables'
                             >
                                 <h2 style={{textAlign :"center"}}></h2>
                             </Card>
-                            </a>
+                            </div>
                         </div>
                         <div style={{marginBottom: "15px"}} className="col-md-4 ">
-                            <a href="/">
+                            <div onClick={()=>this.logout()}>
                             <Card style={{height:'150px',
                                 width:'300px'}}
                                   description='Tables'
                             >
                                 <h2 style={{textAlign :"center"}}>Logout</h2>
                             </Card>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </div>

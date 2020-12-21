@@ -1,9 +1,7 @@
-package com.ba.restaurant.dtoBuilder;
+package com.ba.restaurant.builder;
 
 import com.ba.restaurant.dto.CartDTO;
-import com.ba.restaurant.dto.ProductDTO;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class CartDTOBuilder extends DTOBuilder {

@@ -6,15 +6,17 @@ import MainPage from "./components/MainPage";
 import TableCategory from "./components/TableCategory";
 import Tables from "./components/Tables";
 import Waiters from "./components/Waiters";
-import React,{useState, useEffect} from "react";
-import axios from 'axios';
-import {UserContext,users} from "./components/Context";
+import React,{} from "react";
 
+import {ContextUserProvider} from "./components/ContextUser";
+
+
+const valueProvider={username:'', password:''}
 function App() {
 
 
     return (
-        <UserContext.Provider value={users}>
+        <ContextUserProvider value={valueProvider}>
         <Router>
             <div className="main-wrapper">
 
@@ -29,7 +31,7 @@ function App() {
                     </Switch>
                 </div>
         </Router>
-        </UserContext.Provider>
+        </ContextUserProvider>
     );
 }
 

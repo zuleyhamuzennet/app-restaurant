@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import {Route} from "react-router-dom";
-
 
 class Header extends Component {
     constructor(props) {
@@ -19,7 +17,7 @@ class Header extends Component {
                         <button className="navbar-toggler" type="button" data-toggle="collapse" style={{ display: 'flex', marginLeft: "auto"}}
                                 data-target="#navbarToggleExternalContent"
                                 aria-controls="navbarToggleExternalContent" aria-expanded="false"
-                                aria-label="Toggle navigation"  onClick={() => this.goTables()}>
+                                aria-label="Toggle navigation"  >
                             <span className="navbar-toggler-icon"></span>
                         </button>
                     </nav>

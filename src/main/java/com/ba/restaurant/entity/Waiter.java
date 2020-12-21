@@ -1,18 +1,49 @@
 package com.ba.restaurant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 public class Waiter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long waiterId;
+    private Long id;
     private String waiterName;
     private String waiterMail;
+    private String address;
+    private Long phone;
 
-    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @PrimaryKeyJoinColumn(name="media_id")
+    @JsonIgnore
+    @OneToOne
     private Media media;
+
+    public Waiter() {
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Long phone) {
+        this.phone = phone;
+    }
 
     public Media getMedia() {
         return media;
@@ -30,13 +61,6 @@ public class Waiter {
         this.waiterMail = waiterMail;
     }
 
-    public Long getWaiterId() {
-        return waiterId;
-    }
-
-    public void setWaiterId(Long waiterId) {
-        this.waiterId = waiterId;
-    }
 
     public String getWaiterName() {
         return waiterName;

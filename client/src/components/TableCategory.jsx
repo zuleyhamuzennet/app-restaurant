@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import Service from "./Service";
 import Header from "./Header";
-import {Card} from 'semantic-ui-react';
 import '../App.css';
+import Loading from "./Loading";
+import ContextUser from "./ContextUser";
 
 class TableCategory extends Component {
+    static contextType=ContextUser;
     constructor(props) {
         super(props);
         this.state = {
@@ -18,6 +20,7 @@ class TableCategory extends Component {
 
 
     listTableByCategory(id,count) {
+
         this.setState({tableCategoryId:id})
         this.props.history.push({
             pathname:"/tables",
@@ -30,12 +33,12 @@ class TableCategory extends Component {
 
     }
     componentDidMount() {
-        Service.listAllTableCategory().then((res) => {
+        this.setState({loadingVisible:true})
+        const {username,password}=this.context;
+        Service.listAllTableCategory(username,password).then((res) => {
             console.log(res.data);
-            this.setState({tableCategory: res.data});
+            this.setState({tableCategory: res.data,loadingVisible:false});
         });
-
-        this.render();
     }
     render() {
         return (
@@ -54,7 +57,7 @@ class TableCategory extends Component {
                                             <div className="box" style={{backgroundColor: "#a5e387"}}>
 
                                                 <div className="box-btn" key={category.id}>
-                                                    <a href="/tables"><i className="fa fa-behance fa-3x"
+                                                    <div><i className="fa fa-behance fa-3x"
                                                                          aria-hidden="true"></i>
                                                         <div className="box-title">
                                                             <h3 className="box-text1"
@@ -63,7 +66,7 @@ class TableCategory extends Component {
                                                         <div className="box-text">
                                                             <span></span>
                                                         </div>
-                                                    </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -73,6 +76,10 @@ class TableCategory extends Component {
                         </div>
                     </div>
                 </div>
+                {
+                    this.state.loadingVisible?
+                        <Loading/>:null
+                }
             </div>
         );
     }

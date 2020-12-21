@@ -2,10 +2,8 @@ package com.ba.restaurant.service;
 
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.CartDTO;
-import com.ba.restaurant.dtoBuilder.CartDTOBuilder;
-import com.ba.restaurant.entity.Cart;
+import com.ba.restaurant.builder.CartDTOBuilder;
 import com.ba.restaurant.repository.CartRepository;
-import com.ba.restaurant.repository.CategoryRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +16,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CartServiceTest {

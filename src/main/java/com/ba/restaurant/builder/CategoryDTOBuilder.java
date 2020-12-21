@@ -1,18 +1,24 @@
-package com.ba.restaurant.dtoBuilder;
+package com.ba.restaurant.builder;
 
-import com.ba.restaurant.dto.CartDTO;
 import com.ba.restaurant.dto.CategoryDTO;
-
-import java.util.Date;
+import com.ba.restaurant.dto.MediaDTO;
+import com.ba.restaurant.entity.Media;
 
 public class CategoryDTOBuilder extends DTOBuilder {
 
     private Long categoryId;
     private String categoryName;
     private String catDescription;
+    private MediaDTO media;
+
 
     public CategoryDTOBuilder catDescription(String catDescription){
         this.catDescription=catDescription;
+        return this;
+
+    }
+    public CategoryDTOBuilder media(MediaDTO media){
+        this.media=media;
         return this;
 
     }
@@ -35,6 +41,7 @@ public class CategoryDTOBuilder extends DTOBuilder {
         categoryDTO.setCatDescription(this.catDescription);
         categoryDTO.setCategoryId(getId());
         categoryDTO.setCategoryName(this.categoryName);
+        categoryDTO.setMedia(this.media);
 
         return categoryDTO;
 

@@ -1,5 +1,6 @@
 package com.ba.restaurant.controller;
 
+import com.ba.restaurant.builder.TableCategoryDTOBuilder;
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.TableCategoryDTO;
 import com.ba.restaurant.service.TableCategoryService;
@@ -36,11 +37,7 @@ public class TableCategoryControllerTest {
     @Before
     public void setUp() throws Exception{
 
-        tableCategoryDTO.setId(1L);
-        tableCategoryDTO.setTableCategoryName("teras");
-        tableCategoryDTO.setTableCategoryDesc("açık hava");
-        tableCategoryDTO.setCount(5L);
-
+        tableCategoryDTO= new TableCategoryDTOBuilder().id(1L).tableCategoryDesc("deneme").tableCategoryName("name").count(2L).build();
         tableCategoryDTOS.add(tableCategoryDTO);
 
     }
@@ -77,14 +74,14 @@ public class TableCategoryControllerTest {
     @Test
     public void shouldDeleteTableCategory(){
         Long id =1L;
-        verify(tableCategoryService).deleteByTableCategory(id);
+        Long response=tableCategoryController.deleteByTableCategoryId(id);
+        Assert.assertNotNull(response);
 
     }
     @Test
     public void shouldGetTableCategoryById(){
         Long id=1L;
         Mockito.when(tableCategoryService.getTableCategorytById(id)).thenReturn(tableCategoryDTO);
-
         TableCategoryDTO res=tableCategoryController.getTableCategoryById(id);
         Assert.assertNotNull(res);
         Assert.assertEquals(res.getId(),tableCategoryDTO.getId());

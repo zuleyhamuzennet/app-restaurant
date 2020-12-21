@@ -3,7 +3,9 @@ package com.ba.restaurant.converter;
 import com.ba.restaurant.dto.*;
 import com.ba.restaurant.entity.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class DTOConverter {
 
@@ -14,11 +16,16 @@ public class DTOConverter {
         product.setId(productDTO.getId());
         product.setProductName(productDTO.getProductName());
         product.setPrice(productDTO.getPrice());
-
         product.setDescription(productDTO.getDescription());
         product.setCategories(productDTO.getCategories());
+        product.setMedia(DTOConverter.mediaConverter(productDTO.getMedia()));
+
+
+
         return product;
     }
+
+
 
     public static TableCategory tableCategoryConverter(TableCategoryDTO tableCategoryDTO){
         TableCategory tableCategory= new TableCategory();
@@ -36,16 +43,18 @@ public class DTOConverter {
         category.setCatDescription(categoryDTO.getCatDescription());
         category.setCategoryId(categoryDTO.getCategoryId());
         category.setCategoryName(categoryDTO.getCategoryName());
-        category.setMedia(categoryDTO.getMedia());
+        category.setMedia(DTOConverter.mediaConverter(categoryDTO.getMedia()));
 
         return category;
     }
     public static Waiter waiterConverter(WaiterDTO waiterDTO){
         Waiter waiter= new Waiter();
-        waiter.setWaiterId(waiterDTO.getWaiterId());
+        waiter.setId(waiterDTO.getId());
         waiter.setWaiterName(waiterDTO.getWaiterName());
         waiter.setWaiterMail(waiterDTO.getWaiterMail());
-        waiter.setMedia(waiterDTO.getMedia());
+        waiter.setAddress(waiterDTO.getAddress());
+        waiter.setPhone(waiterDTO.getPhone());
+        //waiter.setImage(waiterDTO.getMedia());
 
         return waiter;
     }
@@ -53,7 +62,7 @@ public class DTOConverter {
         Media media= new Media();
         media.setMediaName(mediaDTO.getMediaName());
         media.setFileContent(mediaDTO.getFileContent());
-        media.setMediaId(mediaDTO.getMediaId());
+        media.setId(mediaDTO.getMediaId());
         return media;
     }
     public static List<Cart> cartConverter(List<CartDTO> cartDTO){
@@ -84,13 +93,13 @@ public class DTOConverter {
         user.setEnabled(userDTO.getEnabled());
         user.setId(userDTO.getId());
         user.setRoles(userDTO.getRoles());
+
         return user;
     }
     public static Role roleConverter(RoleDTO roleDTO){
         Role role= new Role();
         role.setId(roleDTO.getId());
         role.setName(roleDTO.getName());
-        role.setUsers(roleDTO.getUsers());
         return role;
     }
 

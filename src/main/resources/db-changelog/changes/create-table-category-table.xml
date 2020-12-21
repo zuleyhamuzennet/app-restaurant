@@ -6,7 +6,7 @@
         xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
-    <changeSet id="07-11-2020_15:41" author="zuleyha.muzennet">
+    <changeSet id="17-11-2020_15:41" author="zuleyha.muzennet">
         <createTable tableName="table_category">
 
             <column autoIncrement="true" name="id" type="int(1)">
@@ -16,6 +16,22 @@
             <column name="table_category_name" type="VARCHAR(255)"/>
             <column name="count" type="int(1)"/>
         </createTable>
+
+        <insert tableName="table_category">
+            <column name="table_category_desc" value="açık hava"></column>
+            <column name="table_category_name" value="Teras"></column>
+            <column name="count" valueNumeric='5'></column>
+        </insert>
+        <insert tableName="table_category">
+            <column name="table_category_desc" value="kapalı alan"></column>
+            <column name="table_category_name" value="Salon"></column>
+            <column name="count" valueNumeric='8'></column>
+        </insert>
+        <insert tableName="table_category">
+            <column name="table_category_desc" value="arka taraf"></column>
+            <column name="table_category_name" value="Bahçe"></column>
+            <column name="count" valueNumeric='6'></column>
+        </insert>
 
         <rollback>
             <dropTable tableName="table_category"/>

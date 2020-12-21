@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import Service from "./Service";
 import './card-style.css';
 import nextId from "react-id-generator";
-import Header from "./Header";
 import '../App.css';
+import Loading from "./Loading";
+import ContextUser from "./ContextUser";
 
 class ProductList extends Component {
+    static contextType = ContextUser;
 
     constructor(props) {
         super(props)
@@ -35,24 +37,25 @@ class ProductList extends Component {
     }
 
     listProductByCategory(id) {
+        this.setState({loadingVisible: true});
+        const {username, password} = this.context;
 
-        Service.listProductsByCategoryId(id).then((res) => {
+        Service.listProductsByCategoryId(id, username, password).then((res) => {
             console.log("id=>", id);
-            this.setState({productList: res.data});
+            this.setState({productList: res.data, loadingVisible: false});
             console.log("ProductList", res.data);
         });
-        this.render();
+
     }
 
     saleButton(Carts) {
-        console.log(Carts);
-        Service.saleButton(Carts).then(res => {
-            window.location.reload();
+        const {username, password} = this.context;
+        Service.saleButton(Carts, username, password).then(res => {
+            this.props.history.push('/products');
         });
         if (localStorage.getItem(`${this.state.tableCategoryId}+${this.state.tableCartId}`) !== null) {
             localStorage.removeItem(`${this.state.tableCategoryId}+${this.state.tableCartId}`);
         }
-
     }
 
     increasePiece(cart) {
@@ -91,6 +94,7 @@ class ProductList extends Component {
     }
 
     addCarts(products) {
+        this.setState({loadingVisible: true})
 
         this.state.totalCart += products.price;
         if (this.state.carts.filter(cart => cart.productId == products.id).length > 0) {
@@ -100,6 +104,7 @@ class ProductList extends Component {
             this.setState([{...this.state.carts, [cart[0].productId]: cart[0]}])
         } else {
             this.setState({
+                loadingVisible: false,
 
                 cart: {
                     cartId: nextId(),
@@ -110,8 +115,7 @@ class ProductList extends Component {
                     total: products.price,
                     tableCartId: this.state.tableCartId,
                     tableCategoryId: this.state.tableCategoryId,
-                    waiterId: this.state.waiterId
-
+                    waiterId: this.state.waiterId,
                 }
 
             }, () => this.setState({carts: [...this.state.carts, this.state.cart]}))
@@ -119,157 +123,181 @@ class ProductList extends Component {
         }
     }
 
-    componentDidMount() {
-
-        this.getLocaleStroge();
-        Service.listAllCategory().then((res) => {
+    async loadPage() {
+        const {username, password} = this.context;
+        await Service.listAllCategory(username, password).then((res) => {
             console.log(res.data);
             this.setState({categories: res.data});
         });
+        this.listProductByCategory(this.state.categories[0].categoryId);
+    }
 
-        this.render();
+    componentDidMount() {
+        this.loadPage();
 
+        this.getLocaleStroge();
     }
 
     render() {
 
         return (
-            <div style={{backgroundColor: "#f6ffff"}}>
+            <div card>
                 <header>
-                    <nav className="navbar navbar-dark bg-dark" >
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" style={{ display: 'flex', marginLeft: "auto", marginRight:'20px'}}
-                                aria-label="Toggle navigation"  onClick={() => this.goTables()}>
+                    <nav className="navbar navbar-dark bg-dark">
+                        <button className="navbar-toggler" type="button" data-toggle="collapse"
+                                style={{display: 'flex', marginLeft: "auto", marginRight: '20px'}}
+                                aria-label="Toggle navigation" onClick={() => this.goTables()}>
                             <span className="navbar-toggler-icon"></span>
                         </button>
                     </nav>
                 </header>
                 <br/>
-                <div className="col-md-12 mx-auto" style={{padding: '10px 0'}}>
-                    <div className="row">
-                        <div className="col-md-2  ml-5">
-                            <div className="list-group">
-                                <h3>Selected Table :{JSON.parse(localStorage.getItem('tableId'))}</h3>
 
-                                <a href="#" className="list-group-item list-group-item-action active"
-                                   style={{backgroundColor: '#258d2f'}}>
-                                    Categories
-                                </a>
-                                <table className="table table-hover" style={{border :"1px solid grey"}}>
-                                    <tbody>
+                    <div className="col-md-12 mx-auto">
+                        <div className="row">
+                            <div className="col-md-2 mt-1 ml-4">
+                                <div className="list-group">
+                                    <h3>Selected Table :{JSON.parse(localStorage.getItem('tableId'))}</h3>
 
-                                {
-                                    this.state.categories.map(
-                                        product =>
+                                    <a  className="list-group-item list-group-item-action active"
+                                       style={{backgroundColor: '#258d2f'}}>
+                                        Categories
+                                    </a>
+                                    <table className="table table-hover" style={{border: "1px solid grey"}}>
+                                        <tbody>
 
-                                            <tr key={product.categoryId}>
-                                                <td><img src={'data:image/png;base64,' + product.media.fileContent} width="40" style={{margin: 3}}/></td>
-                                               <td
-                                                   onClick={() => this.listProductByCategory(product.categoryId)}>
-                                                    {product.categoryName}</td>
+                                        {
+                                            this.state.categories.map(
+                                                product =>
 
+                                                    <tr key={product.categoryId}>
+                                                        <td><img
+                                                            src={'data:image/png;base64,' + product.media.fileContent}
+                                                            width="40" style={{margin: 3}}/></td>
+                                                        <td
+                                                            onClick={() => this.listProductByCategory(product.categoryId)}>
+                                                            {product.categoryName}</td>
 
-                                            </tr>
-
-                                    )
-                                }</tbody>
+                                                    </tr>
+                                            )
+                                        }</tbody>
                                     </table>
+                                </div>
                             </div>
-                        </div>
-                        <div className='col-md-6'>
-                            <div className="col-md-12">
+                            <div className=' col-md-6 mt-5'>
+                                <div className="col-md-12">
 
-                                <div className="my-custom-scrollbar my-custom-scrollbar-primary">
-                                    <div className="force-overflow">
-                                        <div className="row">
-                                            {
-                                                this.state.productList.map(
-                                                    product =>
-                                                        <div style={{marginBottom: "20px"}} className="col-md-6"
-                                                             style={{postion: 'relative', padding: '9px 1px'}}
-                                                             key={product.id}>
-                                                            <div className="card text-center">
-                                                                <div className="overflow">
-                                                                    <img src="http://placehold.jp/300x150.png"
-                                                                         className="card-img-top"></img>
-                                                                </div>
-                                                                <div className="mt-2 p-2 text-dark text-white" style={{
-                                                                    position: 'absolute',
-                                                                    width: '100%',
-                                                                    backgroundColor: 'rgb(100,165,60)'
-                                                                }}>
-                                                                    <h5 className=" text-white">{product.productName}</h5>
-                                                                    <p className=" text-white">{product.description} {product.price} ₺</p>
-                                                                    <button className="btn btn-warning"
-                                                                            onClick={() => this.addCarts(product)}>Add
-                                                                        to
-                                                                        Cart
-                                                                    </button>
+                                    <div className="my-custom-scrollbar my-custom-scrollbar-primary">
+                                        <div className="force-overflow">
+                                            <div className="row">
+                                                {
+                                                    this.state.productList.map(
+                                                        product =>
+                                                            <div style={{marginBottom: "20px"}} className="col-md-5"
+
+                                                                 key={product.id}>
+                                                                <div className="ui card" key={product.id}>
+                                                                    <div className="ui overflow">
+                                                                        <img style={{height: "150px", width: "200px"}}
+                                                                             className="card-img-top"
+                                                                             src={'data:image/png;base64,' + product.media.fileContent}/>
+                                                                    </div>
+                                                                    <div className="content">
+                                                                        <a className="header">{product.productName}</a>
+                                                                        <div className="meta">
+                                                                            <span
+                                                                                className="date">{product.description}</span>
+                                                                        </div>
+                                                                        <a>
+                                                                            <i className="users icon"></i>
+                                                                            {product.price} ₺
+                                                                        </a>
+                                                                    </div>
+                                                                    <div className="extra content">
+                                                                        <div class="ui bottom attached button"
+                                                                             onClick={() => this.addCarts(product)}>Add
+                                                                            to
+                                                                            Cart
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                )
-                                            }
+                                                    )
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="cart-scrollbar">
-                            <div className="col-md-4 ">
+                            <div className="cart-scrollbar">
+                                <div className=" col-md-3 mt-4 ">
 
-                                <table className="table table-striped table-hover" style={{maxWidth: '100%'}}>
-                                    <thead>
-                                    <tr>
-                                        <th>Increase</th>
-                                        <th>Piece</th>
-                                        <th>Name</th>
-                                        <th>T.Price</th>
-                                        <th>Decrease</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {
-                                        this.state.carts.map(
-                                            cart =>
-                                                <tr key={cart.cartId}>
-                                                    <td>
-                                                        <button className="btn btn-success"
-                                                                onClick={() => this.increasePiece(cart)}>+
-                                                        </button>
-                                                    </td>
-                                                    <td>{cart.piece}</td>
-                                                    <td>{cart.productName}</td>
-                                                    <td>{cart.total} </td>
-                                                    <td>
-                                                        <button className="btn btn-danger"
-                                                                onClick={() => this.decreasePiece(cart)}>-
-                                                        </button>
-                                                    </td>
+                                    <table className="table table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Increase</th>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th>T.Price</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {
+                                            this.state.carts.map(
+                                                cart =>
+                                                    <tr key={cart.cartId}>
+                                                        <td>
+                                                            <button className="btn btn-success"
+                                                                    onClick={() => this.increasePiece(cart)}>+
+                                                            </button>
+                                                        </td>
+                                                        <td>{cart.piece}</td>
+                                                        <td>{cart.productName}</td>
+                                                        <td>{cart.total} </td>
+                                                        <td>
+                                                            <button className="btn btn-danger"
+                                                                    onClick={() => this.decreasePiece(cart)}>-
+                                                            </button>
+                                                        </td>
 
-                                                </tr>
-                                        )
-                                    }
+                                                    </tr>
+                                            )
+                                        }
 
+                                        </tbody>
+                                        <thead>
+                                        <tr>
 
-                                    </tbody>
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th>Total</th>
-                                        <th>{this.state.totalCart} ₺</th>
-                                        <th>
-                                            <button className="btn btn-outline-danger"
-                                                    onClick={() => this.saleButton(this.state.carts)}>Payment
-                                            </button>
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                </table>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                         </div>
+                        <div className="row">
+                            <div className="col-md-2 "></div>
+                            <div className="col-md-6"></div>
+                            <div className="col-md-3">
+                                <tr style={{position: "absolute", right: "10px"}}>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Total</th>
+                                    <th>{this.state.totalCart} ₺</th>
+                                    <th>
+                                        <button className="btn btn-outline-danger"
+                                                onClick={() => this.saleButton(this.state.carts)}>Payment
+                                        </button>
+                                    </th>
+                                </tr>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+                {
+                    this.state.loadingVisible ?
+                        <Loading/> : null
+                }
             </div>
         );
     }

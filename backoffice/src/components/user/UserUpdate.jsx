@@ -1,62 +1,83 @@
 import React, {Component} from 'react';
-import PersonService from "../service/UserService";
 import Header from "../Header";
+import RoleService from "../service/RoleService";
+import UserService from "../service/UserService";
+import {Link} from "react-router-dom";
+import ContextUser from "../ContextUser";
 
 class UserUpdate extends Component {
+    static contextType=ContextUser;
     constructor(props) {
         super(props);
-        this.state={
-            id: this.props.match.params.id,
+        this.state = {
+            id: this.props.history.location.state?.id,
             username: '',
             password: '',
-            role: ''
+            email: '',
+            roles: [],
+            multiRole:[],
 
         }
-        this.changeUserNameHandler= this.changeUserNameHandler.bind(this);
-        this.changePasswordHandler=this.changePasswordHandler.bind(this);
-        this.changeRoleHandler=this.changeRoleHandler.bind(this);
-        this.updatePerson=this.updatePerson.bind(this);
+
+        this.changeMultiSelect= this.changeMultiSelect.bind(this);
+        this.updateUser = this.updateUser.bind(this);
     }
+
+    changeMultiSelect(id){
+        console.log("role id:",id);
+       if(this.state.multiRole.includes(id)!==true){
+
+            this.state.multiRole.push(id);
+
+        }
+        else{
+            for(let i=0; i <this.state.multiRole.length; i++){
+                if(id === this.state.multiRole[i]){
+                    this.state.multiRole.splice(i,1);
+                }
+            }
+        }
+    }
+
     componentDidMount() {
-        PersonService.getPersonById(this.state.id)
-            .then((response)=>{
-                let person= response.data;
-                this.setState({username:person.username,
-                password:person.password,
-                    role:person.role
-                } )
+        const {username, password} = this.context;
+
+        UserService.getPersonById(this.state.id, username, password)
+            .then((res) => {
+                this.setState({
+                    id:res.data.id,
+                    username: res.data.username,
+                    password: res.data.password,
+                    email: res.data.email,
+                    multiSelect:res.data.userListId
+                });
+                console.log("user:",res.data)
             });
+        RoleService.listAllRole().then((res)=>{
+            this.setState({roles:res.data});
+        })
     }
 
-    updatePerson=(e)=>{
+    updateUser = (e) => {
+
+        const {username, password} = this.context;
         e.preventDefault();
-        let person={username: this.state.username, password:this.state.password, role: this.state.role};
-        console.log('person =>'+ JSON.stringify(person));
-        PersonService.updatePerson(person,this.state.id)
-            .then(response=>{
-                this.props.history.push('/list');
+        let person = {
+            id:this.state.id,
+            username: this.state.username,
+            password: this.state.password,
+            email: this.state.email,
+            userListId:this.state.multiRole
+        };
+
+        console.log('person =>' + JSON.stringify(person));
+        UserService.updatePerson(person, username, password)
+            .then(response => {
+                this.props.history.push('/listuser');
             })
-        PersonService.updatePerson(person, this.state.id)
-            .then(res=>{
-                this.props.history.push('/list');
-            });
 
     }
 
-
-    changeUserNameHandler=(event)=>{
-        this.setState({username: event.target.value});
-    }
-    changePasswordHandler=(event)=>{
-        this.setState({password: event.target.value});
-    }
-    changeRoleHandler=(event)=>{
-        this.setState({role: event.target.value});
-    }
-
-    cancel(){
-        this.props.history.push('/list');
-    }
 
     render() {
         return (
@@ -72,26 +93,50 @@ class UserUpdate extends Component {
                                     <div className="form-group">
                                         <label>User Name</label>
                                         <input placeholder="User Name" name="username" className="form-control"
-                                               value={this.state.username} onChange={this.changeUserNameHandler}/>
+                                               value={this.state.username} onChange={(e) => {
+                                            this.setState({username: e.target.value})
+                                        }}/>
 
                                     </div>
                                     <div className="form-group">
                                         <label>Password</label>
                                         <input placeholder="Password" name="password" className="form-control"
-                                               value={this.state.password} onChange={this.changePasswordHandler}/>
+                                               value={this.state.password} onChange={(e) => {
+                                            this.setState({password: e.target.value})
+                                        }}/>
 
                                     </div>
                                     <div className="form-group">
-                                        <label>Role</label>
+                                        <label>E-Mail</label>
                                         <input placeholder="User Name" name="username" className="form-control"
-                                               value={this.state.role} onChange={this.changeRoleHandler}/>
+                                               value={this.state.email} onChange={(e) => {
+                                            this.setState({email: e.target.value})
+                                        }}/>
+
+                                    </div>
+                                    <div className="form-group">
+                                        <label> Role </label>
+
+
+                                        <div className="checkbox" style={{height: "4rem", overflow: "auto"}}>
+                                            {
+                                                this.state.roles.map(
+                                                    role =>
+                                                        <div className="row col-md -12" key={role.id}>
+                                                            <label><input type="checkbox" value=""
+                                                                          onClick={() => this.changeMultiSelect(role.id)}/>{role.name}
+                                                            </label>
+                                                        </div>
+                                                )
+                                            }
+                                        </div>
 
                                     </div>
 
-                                    <button className="btn btn-success" onClick={this.updatePerson}>Save</button>
-                                    <button className="btn btn-danger" onClick={this.cancel.bind(this)}
+                                    <button className="btn btn-success" onClick={this.updateUser}>Save</button>
+                                    <Link to="/list" className="btn btn-danger"
                                             style={{marginLeft: "10px"}}>Cancel
-                                    </button>
+                                    </Link>
                                 </form>
                             </div>
                         </div>

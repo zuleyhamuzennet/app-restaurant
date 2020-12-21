@@ -3,6 +3,8 @@ package com.ba.restaurant.converter;
 import com.ba.restaurant.dto.*;
 import com.ba.restaurant.entity.*;
 
+import java.util.Set;
+
 
 public class EntityConverter {
 
@@ -14,6 +16,7 @@ public class EntityConverter {
         productDTO.setProductName(product.getProductName());
         productDTO.setId(product.getId());
         productDTO.setCategories(product.getCategories());
+        productDTO.setMedia(EntityConverter.mediaConverterDTO(product.getMedia()));
 
         return productDTO;
     }
@@ -30,7 +33,7 @@ public class EntityConverter {
     public static MediaDTO mediaConverterDTO(Media media){
         MediaDTO mediaDTO= new MediaDTO();
         mediaDTO.setFileContent(media.getFileContent());
-        mediaDTO.setMediaId(media.getMediaId());
+        mediaDTO.setMediaId(media.getId());
         mediaDTO.setMediaName(media.getMediaName());
         return mediaDTO;
     }
@@ -41,17 +44,19 @@ public class EntityConverter {
         categoryDTO.setCatDescription(category.getCatDescription());
         categoryDTO.setCategoryId(category.getCategoryId());
         categoryDTO.setCategoryName(category.getCategoryName());
-        categoryDTO.setMedia(category.getMedia());
+        categoryDTO.setMedia(EntityConverter.mediaConverterDTO(category.getMedia()));
 
         return categoryDTO;
     }
 
     public static WaiterDTO waiterConverterDTO(Waiter waiter){
         WaiterDTO waiterDTO= new WaiterDTO();
-        waiterDTO.setWaiterId(waiter.getWaiterId());
+        waiterDTO.setId(waiter.getId());
         waiterDTO.setWaiterName(waiter.getWaiterName());
         waiterDTO.setWaiterMail(waiter.getWaiterMail());
-        waiterDTO.setMedia(waiter.getMedia());
+        waiterDTO.setAddress(waiter.getAddress());
+        waiterDTO.setPhone(waiter.getPhone());
+        waiterDTO.setMedia(EntityConverter.mediaConverterDTO(waiter.getMedia()));
 
         return waiterDTO;
     }
@@ -83,9 +88,8 @@ public class EntityConverter {
     }
     public static RoleDTO roleConverterDTO(Role role){
         RoleDTO roleDTO=new RoleDTO();
-        roleDTO.setId(roleDTO.getId());
-        roleDTO.setName(roleDTO.getName());
-        roleDTO.setUsers(role.getUsers());
+        roleDTO.setId(role.getId());
+        roleDTO.setName(role.getName());
         return roleDTO;
     }
 }

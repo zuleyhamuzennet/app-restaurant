@@ -1,4 +1,4 @@
-package com.ba.restaurant.dtoBuilder;
+package com.ba.restaurant.builder;
 
 public abstract class DTOBuilder<T> {
     public abstract T build();

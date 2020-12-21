@@ -8,15 +8,6 @@ import java.util.Set;
 public class RoleDTO {
     private Long id;
     private String name;
-    private Set<User> users=new HashSet<>();
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
 
     public Long getId() {
         return id;
