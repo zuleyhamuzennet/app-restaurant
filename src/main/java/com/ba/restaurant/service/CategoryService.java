@@ -7,6 +7,7 @@ import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.entity.Category;
 import com.ba.restaurant.entity.Media;
 import com.ba.restaurant.entity.Product;
+import com.ba.restaurant.mapper.CategoryMapper;
 import com.ba.restaurant.repository.CategoryRepository;
 import com.ba.restaurant.repository.MediaRepository;
 import com.ba.restaurant.repository.ProductRepository;
@@ -25,13 +26,13 @@ public class CategoryService {
     ProductRepository productRepository;
 
     public CategoryDTO addCategory(CategoryDTO categoryDTO){
-        Category category= DTOConverter.categoryConverter(categoryDTO);
+        Category category= CategoryMapper.INSTANCE.toEntity(categoryDTO);
         categoryRepository.save(category);
         return categoryDTO;
     }
 
     public CategoryDTO updateCategory(CategoryDTO categoryDTO){
-        Category category= DTOConverter.categoryConverter(categoryDTO);
+        Category category= CategoryMapper.INSTANCE.toEntity(categoryDTO);
         categoryRepository.saveAndFlush(category);
 
         return categoryDTO;
@@ -40,6 +41,7 @@ public class CategoryService {
    public List<ProductDTO> getProductsCategoryById(Long id){
         Optional<Category> category= categoryRepository.findById(id);
         List<ProductDTO> productDTOS= new ArrayList<>();
+      // category.get().getProducts().forEach(product -> productDTOS.add(CategoryMapper.INSTANCE.);
         category.get().getProducts().forEach(product -> productDTOS.add(EntityConverter.productConverterDTO(product)) );
         return  productDTOS;
     }
@@ -47,13 +49,14 @@ public class CategoryService {
     public CategoryDTO getCategoryById(Long id){
         Optional<Category>  category= categoryRepository.findById(id);
         CategoryDTO categoryDTO= new CategoryDTO();
-        categoryDTO= EntityConverter.categoryConverterDTO(category.get());
+        categoryDTO= CategoryMapper.INSTANCE.toDTO(category.get());
+       // categoryDTO= EntityConverter.categoryConverterDTO(category.get());
         return categoryDTO;
     }
     public List<CategoryDTO> listAllCategory(){
         List<CategoryDTO> categoryDTOList=new ArrayList<>();
         List<Category> categories=categoryRepository.findAll();
-        categories.forEach(category -> categoryDTOList.add(EntityConverter.categoryConverterDTO(category)));
+        categories.forEach(category -> categoryDTOList.add(CategoryMapper.INSTANCE.toDTO(category)));
 
         return categoryDTOList;
     }

@@ -1,13 +1,17 @@
 package com.ba.restaurant.entity;
 
-import com.ba.restaurant.dto.CategoryDTO;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity()
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "categories")
 public class Category {
 
@@ -27,55 +31,4 @@ public class Category {
     @ManyToOne
     private Media media;
 
-    public Category(Long categoryId, String categoryName, String catDescription, Set<Product> products) {
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.catDescription = catDescription;
-        this.products = products;
-
-    }
-
-    public Category() {
-
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public String getCatDescription() {
-        return catDescription;
-    }
-
-    public void setCatDescription(String catDescription) {
-        this.catDescription = catDescription;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
-    }
-
-    public Media getMedia() {
-        return media;
-    }
-
-    public void setMedia(Media media) {
-        this.media = media;
-    }
 }

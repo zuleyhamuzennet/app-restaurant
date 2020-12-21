@@ -8,6 +8,7 @@ import com.ba.restaurant.dto.WaiterDTO;
 import com.ba.restaurant.entity.Role;
 import com.ba.restaurant.entity.User;
 import com.ba.restaurant.entity.Waiter;
+import com.ba.restaurant.mapper.RoleMapper;
 import com.ba.restaurant.repository.RoleRepository;
 import com.ba.restaurant.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +26,18 @@ public class RoleService {
 
     List<RoleDTO> roleDTOS= new ArrayList<>();
     List<Role> roles= roleRepository.findAll();
-    roles.forEach(role -> roleDTOS.add(EntityConverter.roleConverterDTO(role)));
+    roles.forEach(role -> roleDTOS.add(RoleMapper.INSTANCE.toDTO(role)));
     return roleDTOS;
     }
     public RoleDTO addRole(RoleDTO roleDTO){
-        Role role= DTOConverter.roleConverter(roleDTO);
+        Role role= RoleMapper.INSTANCE.toEntity(roleDTO);
+        //Role role= DTOConverter.roleConverter(roleDTO);
         roleRepository.save(role);
         return roleDTO;
     }
     public RoleDTO updateRole(RoleDTO roleDTO){
-        Role role = DTOConverter.roleConverter(roleDTO);
+        Role role= RoleMapper.INSTANCE.toEntity(roleDTO);
+        //Role role = DTOConverter.roleConverter(roleDTO);
         roleRepository.saveAndFlush(role);
         return roleDTO;
     }

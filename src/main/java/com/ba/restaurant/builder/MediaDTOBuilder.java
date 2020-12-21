@@ -22,7 +22,7 @@ public class MediaDTOBuilder extends DTOBuilder {
     @Override
     public MediaDTO build(){
         MediaDTO mediaDTO = new MediaDTO();
-        mediaDTO.setMediaId(getId());
+        mediaDTO.setId(getId());
         mediaDTO.setFileContent(this.fileContent);
         mediaDTO.setMediaName(this.mediaName);
         return mediaDTO;

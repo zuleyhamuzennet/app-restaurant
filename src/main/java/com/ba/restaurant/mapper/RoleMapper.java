@@ -1,0 +1,18 @@
+package com.ba.restaurant.mapper;
+
+import com.ba.restaurant.dto.RoleDTO;
+import com.ba.restaurant.entity.Role;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+import java.util.List;
+
+
+@Mapper
+public interface RoleMapper {
+    RoleMapper INSTANCE= Mappers.getMapper(RoleMapper.class);
+    Role toEntity(RoleDTO roleDTO);
+    RoleDTO toDTO(Role role);
+    //List<Role> toEntities(RoleDTO roleDTO);
+    //List<RoleDTO> toDTOS(Role role);
+}

@@ -1,12 +1,14 @@
 package com.ba.restaurant.dto;
 
 import com.ba.restaurant.entity.Role;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 public class UserDTO {
     private Long id;
     private String username;

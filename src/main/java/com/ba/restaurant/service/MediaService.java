@@ -1,8 +1,8 @@
 package com.ba.restaurant.service;
 
-import com.ba.restaurant.converter.EntityConverter;
 import com.ba.restaurant.dto.MediaDTO;
 import com.ba.restaurant.entity.Media;
+import com.ba.restaurant.mapper.MediaMapper;
 import com.ba.restaurant.repository.MediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +33,8 @@ public class MediaService {
     public List<MediaDTO> getAllMedia(){
         List<MediaDTO> mediaDTOS= new ArrayList<>();
         List<Media> mediaList=mediaRepository.findAll();
-        mediaList.forEach(media -> mediaDTOS.add(EntityConverter.mediaConverterDTO(media)));
+        mediaList.forEach(media -> mediaDTOS.add(MediaMapper.INSTANCE.toDTO(media)));
+        //mediaList.forEach(media -> mediaDTOS.add(EntityConverter.mediaConverterDTO(media)));
         return mediaDTOS;
     }
 

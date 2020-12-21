@@ -1,10 +1,15 @@
 package com.ba.restaurant.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="table_category")
 public class TableCategory {
     @Id
@@ -14,51 +19,4 @@ public class TableCategory {
     private String tableCategoryName;
     private Long count;
 
-
-    public TableCategory() {
-
-    }
-
-    public TableCategory(Long id, String tableCategoryDesc, String tableCategoryName, Long count) {
-        this.id = id;
-        this.tableCategoryDesc = tableCategoryDesc;
-        this.tableCategoryName = tableCategoryName;
-        this.count = count;
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getCount() {
-        return count;
-    }
-
-    public void setCount(Long count) {
-        this.count = count;
-    }
-
-    public String getTableCategoryName() {
-        return tableCategoryName;
-    }
-
-    public void setTableCategoryName(String tableCategoryName) {
-        this.tableCategoryName = tableCategoryName;
-    }
-
-
-    public String getTableCategoryDesc() {
-        return tableCategoryDesc;
-    }
-
-    public void setTableCategoryDesc(String tableCategoryDesc) {
-        this.tableCategoryDesc = tableCategoryDesc;
-    }
 }

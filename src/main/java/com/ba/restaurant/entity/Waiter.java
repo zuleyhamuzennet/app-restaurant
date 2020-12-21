@@ -1,9 +1,14 @@
 package com.ba.restaurant.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Waiter {
     @Id
@@ -18,55 +23,4 @@ public class Waiter {
     @OneToOne
     private Media media;
 
-    public Waiter() {
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Long phone) {
-        this.phone = phone;
-    }
-
-    public Media getMedia() {
-        return media;
-    }
-
-    public void setMedia(Media media) {
-        this.media = media;
-    }
-
-    public String getWaiterMail() {
-        return waiterMail;
-    }
-
-    public void setWaiterMail(String waiterMail) {
-        this.waiterMail = waiterMail;
-    }
-
-
-    public String getWaiterName() {
-        return waiterName;
-    }
-
-    public void setWaiterName(String waiterName) {
-        this.waiterName = waiterName;
-    }
 }

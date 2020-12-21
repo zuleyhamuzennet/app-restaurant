@@ -33,7 +33,7 @@ public class EntityConverter {
     public static MediaDTO mediaConverterDTO(Media media){
         MediaDTO mediaDTO= new MediaDTO();
         mediaDTO.setFileContent(media.getFileContent());
-        mediaDTO.setMediaId(media.getId());
+        mediaDTO.setId(media.getId());
         mediaDTO.setMediaName(media.getMediaName());
         return mediaDTO;
     }

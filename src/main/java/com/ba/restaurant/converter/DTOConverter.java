@@ -62,7 +62,7 @@ public class DTOConverter {
         Media media= new Media();
         media.setMediaName(mediaDTO.getMediaName());
         media.setFileContent(mediaDTO.getFileContent());
-        media.setId(mediaDTO.getMediaId());
+        media.setId(mediaDTO.getId());
         return media;
     }
     public static List<Cart> cartConverter(List<CartDTO> cartDTO){

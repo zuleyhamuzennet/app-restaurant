@@ -52,6 +52,7 @@ class ProductList extends Component {
         const {username, password} = this.context;
         Service.saleButton(Carts, username, password).then(res => {
             this.props.history.push('/products');
+
         });
         if (localStorage.getItem(`${this.state.tableCategoryId}+${this.state.tableCartId}`) !== null) {
             localStorage.removeItem(`${this.state.tableCategoryId}+${this.state.tableCartId}`);
