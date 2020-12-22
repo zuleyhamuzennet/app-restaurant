@@ -65,6 +65,11 @@
             <column name="media_name" value="waiterS"></column>
             <column name="file_content" valueBlobFile="waiterS.jpg"></column>
         </insert>
+        <insert tableName="media">
+            <column name="id" value="13"></column>
+            <column name="media_name" value="food"></column>
+            <column name="file_content" valueBlobFile="pizza222.png"></column>
+        </insert>
 
     </changeSet>
 

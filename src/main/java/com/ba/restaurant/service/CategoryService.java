@@ -8,6 +8,7 @@ import com.ba.restaurant.entity.Category;
 import com.ba.restaurant.entity.Media;
 import com.ba.restaurant.entity.Product;
 import com.ba.restaurant.mapper.CategoryMapper;
+import com.ba.restaurant.mapper.ProductMapper;
 import com.ba.restaurant.repository.CategoryRepository;
 import com.ba.restaurant.repository.MediaRepository;
 import com.ba.restaurant.repository.ProductRepository;
@@ -41,8 +42,7 @@ public class CategoryService {
    public List<ProductDTO> getProductsCategoryById(Long id){
         Optional<Category> category= categoryRepository.findById(id);
         List<ProductDTO> productDTOS= new ArrayList<>();
-      // category.get().getProducts().forEach(product -> productDTOS.add(CategoryMapper.INSTANCE.);
-        category.get().getProducts().forEach(product -> productDTOS.add(EntityConverter.productConverterDTO(product)) );
+        category.get().getProducts().forEach(product -> productDTOS.add(ProductMapper.INSTANCE.toDTO(product)));
         return  productDTOS;
     }
 
@@ -50,7 +50,6 @@ public class CategoryService {
         Optional<Category>  category= categoryRepository.findById(id);
         CategoryDTO categoryDTO= new CategoryDTO();
         categoryDTO= CategoryMapper.INSTANCE.toDTO(category.get());
-       // categoryDTO= EntityConverter.categoryConverterDTO(category.get());
         return categoryDTO;
     }
     public List<CategoryDTO> listAllCategory(){

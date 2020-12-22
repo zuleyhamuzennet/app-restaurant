@@ -24,19 +24,34 @@ public class ProductService {
 
     @Autowired
     CategoryRepository categoryRepository;
-    @Autowired
-    CategoryService categoryService;
 
+     public ProductDTO addProduct(ProductDTO productDTO) {
 
-    public ProductDTO addProduct(ProductDTO productDTO) {
+         Product product = ProductMapper.INSTANCE.toEntity(productDTO);
+         for (int i = 0; i < productDTO.getCategoryListId().size(); i++) {
+             Optional<Category> category = categoryRepository.findById(productDTO.getCategoryListId().get(i));
+             category.get().getProducts().add(product);
+         }
+         productRepository.save(product);
+         return productDTO;
+     }
+   /* public ProductDTO addProduct(ProductDTO productDTO) {
 
-        Product product = DTOConverter.productConverter(productDTO);
-        for (int i = 0; i < productDTO.getCategoryListId().size(); i++) {
-            Optional<Category> category = categoryRepository.findById(productDTO.getCategoryListId().get(i));
-            category.get().getProducts().add(product);
-        }
+        Product product = ProductMapper.INSTANCE.toEntity(productDTO);
+        List<Category> categories = categoryRepository.findAllById(productDTO.getCategoryListId());
+        product.setCategories(categories);
         productRepository.save(product);
         return productDTO;
+    }*/
+
+    public ProductDTO updateProduct(ProductDTO productDTO) {
+
+        Product product = ProductMapper.INSTANCE.toEntity(productDTO);
+        List<Category> categoryList = categoryRepository.findAllById(productDTO.getCategoryListId());
+        product.setCategories(categoryList);
+        productRepository.saveAndFlush(product);
+        return productDTO;
+
     }
 
     public ProductDTO getProductById(Long id) {
@@ -45,19 +60,6 @@ public class ProductService {
         return productDTO;
     }
 
-    public ProductDTO updateProduct(ProductDTO productDTO) {
-
-        Product product = DTOConverter.productConverter(productDTO);
-        List<Category> categoryList = categoryRepository.findAllById(productDTO.getCategoryListId());
-        product.setCategories(categoryList);
-       /* for (int i = 0; i < productDTO.getCategoryListId().size(); i++) {
-            Optional<Category> category = categoryRepository.findById(productDTO.getCategoryListId().get(i));
-            category.get().getProducts().add(product);
-        }*/
-        productRepository.saveAndFlush(product);
-        return productDTO;
-
-    }
 
     public List<ProductDTO> listAllProduct() {
         List<ProductDTO> productDTOS = new ArrayList<>();

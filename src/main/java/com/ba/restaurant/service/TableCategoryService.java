@@ -23,7 +23,6 @@ public class TableCategoryService {
     public TableCategoryDTO addTableCategory(TableCategoryDTO tableCategoryDTO){
 
         TableCategory tableCategory= TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO);
-        //TableCategory tableCategory= DTOConverter.tableCategoryConverter(tableCategoryDTO);
         tableCategoryRepository.save(tableCategory);
         return tableCategoryDTO;
     }

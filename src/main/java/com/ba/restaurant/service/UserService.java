@@ -5,6 +5,7 @@ import com.ba.restaurant.converter.EntityConverter;
 import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.dto.UserDTO;
 import com.ba.restaurant.entity.*;
+import com.ba.restaurant.mapper.UserMapper;
 import com.ba.restaurant.repository.RoleRepository;
 import com.ba.restaurant.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class UserService {
 
     public UserDTO addUser(UserDTO userDTO) {
 
-        User user = DTOConverter.userConverter(userDTO);
+        User user = UserMapper.INSTANCE.toEntity(userDTO);
 
         List<Role> roles = roleRepository.findAllById(userDTO.getUserListId());
         user.setPassword(encoder.encode(userDTO.getPassword()));
@@ -38,7 +39,7 @@ public class UserService {
     }
 
     public UserDTO updateUser(UserDTO userDTO) {
-        User user = DTOConverter.userConverter(userDTO);
+        User user = UserMapper.INSTANCE.toEntity(userDTO);
         List<Role> roles = roleRepository.findAllById(userDTO.getUserListId());
         user.setPassword(encoder.encode(userDTO.getPassword()));
         user.setRoles(roles);
@@ -47,14 +48,14 @@ public class UserService {
     }
     public UserDTO getUserById(Long id){
         User user= usersRepository.findById(id).get();
-        UserDTO userDTO=EntityConverter.userConverterDTO(user);
+        UserDTO userDTO=UserMapper.INSTANCE.toDTO(user);
         return userDTO;
     }
 
     public List<UserDTO> listAllUser() {
         List<UserDTO> userDTOS = new ArrayList<>();
         List<User> users = usersRepository.findAll();
-        users.forEach(user -> userDTOS.add(EntityConverter.userConverterDTO(user)));
+        users.forEach(user -> userDTOS.add(UserMapper.INSTANCE.toDTO(user)));
         return userDTOS;
     }
 
