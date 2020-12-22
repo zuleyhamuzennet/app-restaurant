@@ -2,7 +2,6 @@ package com.ba.restaurant.service;
 
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.RoleDTO;
-import com.ba.restaurant.mapper.RoleMapper;
 import com.ba.restaurant.repository.RoleRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,7 +37,7 @@ public class RoleServiceTest {
     }
     @Test
     public void shouldAddNewRole(){
-        Mockito.when(roleRepository.save(Mockito.any())).thenReturn(RoleMapper.INSTANCE.toEntity(roleDTO));
+        Mockito.when(roleRepository.save(Mockito.any())).thenReturn(DTOConverter.roleConverter(roleDTO));
         RoleDTO res =roleService.addRole(roleDTO);
 
         Assert.assertNotNull(res);
@@ -48,7 +47,7 @@ public class RoleServiceTest {
 
     @Test
     public void shouldUpdateRole(){
-        Mockito.when(roleRepository.saveAndFlush(Mockito.any())).thenReturn(RoleMapper.INSTANCE.toEntity(roleDTO));
+        Mockito.when(roleRepository.saveAndFlush(Mockito.any())).thenReturn(DTOConverter.roleConverter(roleDTO));
         RoleDTO res=roleService.updateRole(roleDTO);
 
         Assert.assertNotNull(res);
@@ -59,7 +58,6 @@ public class RoleServiceTest {
     @Test
     public  void shouldListRole(){
 
-        Mockito.when(roleRepository.findAll()).thenReturn(RoleMapper.INSTANCE.toEntities(roleDTOS));
         List<RoleDTO> res= roleService.listAllRoles();
         Assert.assertNotNull(res);
 

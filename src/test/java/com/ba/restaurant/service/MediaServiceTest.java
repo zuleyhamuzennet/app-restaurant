@@ -29,7 +29,7 @@ public class MediaServiceTest {
 
     private MediaDTO mediaDTO= new MediaDTO();
     private List<Media> mediaList= new ArrayList<>();
-
+    private List<MediaDTO> mediaDTOList= new ArrayList<>();
 
 
         byte [] b ={ (byte)0xe0, 0x4f, (byte)0xd0,

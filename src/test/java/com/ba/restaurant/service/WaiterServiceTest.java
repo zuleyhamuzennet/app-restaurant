@@ -5,8 +5,6 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.WaiterDTO;
 import com.ba.restaurant.builder.WaiterDTOBuilder;
-import com.ba.restaurant.entity.Waiter;
-import com.ba.restaurant.mapper.WaiterMapper;
 import com.ba.restaurant.repository.WaiterRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,17 +41,17 @@ public class WaiterServiceTest {
     }
     @Test
     public void shouldAddNewWaiter(){
-        Mockito.when(waiterRepository.save(Mockito.any())).thenReturn(WaiterMapper.INSTANCE.toEntity(waiterDTO));
+        Mockito.when(waiterRepository.save(Mockito.any())).thenReturn(DTOConverter.waiterConverter(waiterDTO));
         WaiterDTO waiterDTO1= waiterService.addWaiter(waiterDTO);
 
         Assert.assertNotNull(waiterDTO1);
-        Assert.assertEquals(waiterDTO1,waiterDTO);
+        Assert.assertEquals(waiterDTO1.getId(),waiterDTO.getId());
     }
     @Test
     public void shouldUpdateWaiter(){
 
-        Mockito.when(waiterRepository.saveAndFlush(Mockito.any())).thenReturn(WaiterMapper.INSTANCE.toEntity(waiterDTO));
-        WaiterDTO waiterDTO1= waiterService.updateWaiter(waiterDTO);
+        Mockito.when(waiterRepository.saveAndFlush(Mockito.any())).thenReturn(DTOConverter.waiterConverter(waiterDTO));
+        WaiterDTO waiterDTO1= waiterService.addWaiter(waiterDTO);
 
         Assert.assertNotNull(waiterDTO1);
         Assert.assertEquals(waiterDTO1.getId(),waiterDTO.getId());
@@ -62,7 +60,6 @@ public class WaiterServiceTest {
     @Test
     public void shouldListAllWaiters(){
 
-        Mockito.when(waiterRepository.findAll()).thenReturn(WaiterMapper.INSTANCE.toEntities(waiterDTOS));
         List<WaiterDTO> waiterDTOS1= waiterService.listAllWaiter();
         Assert.assertNotNull(waiterDTOS1);
 
@@ -71,7 +68,7 @@ public class WaiterServiceTest {
     @Test
     public void shouldGetWaiterById(){
         Long id=1L;
-        Mockito.when(waiterRepository.findById(id)).thenReturn(Optional.of(WaiterMapper.INSTANCE.toEntity(waiterDTO)));
+        Mockito.when(waiterRepository.findById(id)).thenReturn(Optional.of(DTOConverter.waiterConverter(waiterDTO)));
         WaiterDTO waiterDTO1= waiterService.getWaiterById(id);
         Assert.assertNotNull(waiterDTO1);
         Assert.assertEquals(waiterDTO1.getId(),waiterDTO.getId());

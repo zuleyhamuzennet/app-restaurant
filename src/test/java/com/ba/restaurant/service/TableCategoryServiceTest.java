@@ -3,7 +3,6 @@ package com.ba.restaurant.service;
 import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.TableCategoryDTO;
 import com.ba.restaurant.builder.TableCategoryDTOBuilder;
-import com.ba.restaurant.mapper.TableCategoryMapper;
 import com.ba.restaurant.repository.TableCategoryRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,7 +39,7 @@ public class TableCategoryServiceTest {
 
     @Test
     public void shouldAddNewTableCategory(){
-        Mockito.when(tableCategoryRepository.save(Mockito.any())).thenReturn(TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO));
+        Mockito.when(tableCategoryRepository.save(Mockito.any())).thenReturn(DTOConverter.tableCategoryConverter(tableCategoryDTO));
         TableCategoryDTO tableCategoryDTO1=tableCategoryService.addTableCategory(tableCategoryDTO);
 
         Assert.assertNotNull(tableCategoryDTO1);
@@ -51,7 +50,7 @@ public class TableCategoryServiceTest {
     @Test
     public void shouldUpdateTableCategorr(){
 
-        Mockito.when(tableCategoryRepository.saveAndFlush(Mockito.any())).thenReturn(TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO));
+        Mockito.when(tableCategoryRepository.saveAndFlush(Mockito.any())).thenReturn(DTOConverter.tableCategoryConverter(tableCategoryDTO));
         TableCategoryDTO tableCategoryDTO1=tableCategoryService.updateTableCategory(tableCategoryDTO);
 
         Assert.assertNotNull(tableCategoryDTO1);
@@ -61,7 +60,7 @@ public class TableCategoryServiceTest {
 
     @Test
     public void shouldListTableCategory(){
-Mockito.when(tableCategoryRepository.findAll()).thenReturn(TableCategoryMapper.INSTANCE.toEntities(tableCategoryDTOS));
+
         List<TableCategoryDTO> tableCategoryDTOS2=tableCategoryService.listAllTableCategory();
         Assert.assertNotNull(tableCategoryDTOS2);
 
@@ -70,7 +69,7 @@ Mockito.when(tableCategoryRepository.findAll()).thenReturn(TableCategoryMapper.I
     @Test
     public void shouldDeleteTableCategory(){
         Long id =1L;
-        Mockito.when(tableCategoryRepository.findById(Mockito.any())).thenReturn(Optional.of(TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO)));
+        Mockito.when(tableCategoryRepository.findById(Mockito.any())).thenReturn(Optional.of(DTOConverter.tableCategoryConverter(tableCategoryDTO)));
         Long res = tableCategoryService.deleteByTableCategory(id);
         Assert.assertNotNull(res);
 
@@ -78,7 +77,7 @@ Mockito.when(tableCategoryRepository.findAll()).thenReturn(TableCategoryMapper.I
     @Test
     public void shouldGetTableCategoryById(){
         Long id=1L;
-        Mockito.when(tableCategoryRepository.findById(id)).thenReturn(Optional.of(TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO)));
+        Mockito.when(tableCategoryRepository.findById(id)).thenReturn(Optional.of(DTOConverter.tableCategoryConverter(tableCategoryDTO)));
 
         TableCategoryDTO res=tableCategoryService.getTableCategorytById(id);
         Assert.assertNotNull(res);

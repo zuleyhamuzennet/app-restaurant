@@ -61,7 +61,7 @@ class UpdateCategory extends Component {
         this.setState({mediaId:event.target.value});
         console.log(this.state.mediaId);
 
-        const valueMedia = this.state.mediaList.filter(item => item.id == this.state.mediaId)
+        const valueMedia = this.state.mediaList.filter(item => item.mediaId == this.state.mediaId)
         this.setState({media: valueMedia[0]})
 
     }
@@ -84,8 +84,8 @@ class UpdateCategory extends Component {
 
                                             this.state.mediaList.map(
                                                 media =>
-                                                    <option key={media.id}
-                                                            value={media.id}>{media.mediaName}</option>
+                                                    <option key={media.mediaId}
+                                                            value={media.mediaId}>{media.mediaName}</option>
                                             )
                                         }
                                         </select>

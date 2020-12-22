@@ -1,9 +1,10 @@
 package com.ba.restaurant.service;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
+
+import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.CategoryDTO;
 import com.ba.restaurant.builder.CategoryDTOBuilder;
-import com.ba.restaurant.mapper.CategoryMapper;
 import com.ba.restaurant.repository.CategoryRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,7 +42,7 @@ public class CategoryServiceTest {
 
     @Test
     public void shouldAddNewCategory(){
-        Mockito.when(categoryRepository.save(Mockito.any())).thenReturn(CategoryMapper.INSTANCE.toEntity(categoryDTO));
+        Mockito.when(categoryRepository.save(Mockito.any())).thenReturn(DTOConverter.categoryConverter(categoryDTO));
         CategoryDTO categoryDTO2 =categoryService.addCategory(categoryDTO);
 
         Assert.assertNotNull(categoryDTO2);
@@ -51,7 +52,7 @@ public class CategoryServiceTest {
 
     @Test
     public void shouldUpdateCategory(){
-        Mockito.when(categoryRepository.saveAndFlush(Mockito.any())).thenReturn(CategoryMapper.INSTANCE.toEntity(categoryDTO));
+        Mockito.when(categoryRepository.saveAndFlush(Mockito.any())).thenReturn(DTOConverter.categoryConverter(categoryDTO));
         CategoryDTO categoryDTO2 =categoryService.updateCategory(categoryDTO);
 
         Assert.assertNotNull(categoryDTO2);
@@ -62,7 +63,6 @@ public class CategoryServiceTest {
     @Test
     public  void shouldListCategory(){
 
-        Mockito.when(categoryRepository.findAll()).thenReturn(CategoryMapper.INSTANCE.toEntities(categoryDTOList));
         List<CategoryDTO> categoryDTOList1= categoryService.listAllCategory();
         Assert.assertNotNull(categoryDTOList1);
 
@@ -79,7 +79,7 @@ public class CategoryServiceTest {
     public void shouldFindByCategoryId(){
 
         Long id=2L;
-        Mockito.when(categoryRepository.findById(id)).thenReturn(Optional.of(CategoryMapper.INSTANCE.toEntity(categoryDTO)));
+        Mockito.when(categoryRepository.findById(id)).thenReturn(Optional.of(DTOConverter.categoryConverter(categoryDTO)));
         CategoryDTO categoryDTO1=categoryService.getCategoryById(id);
 
         Assert.assertNotNull(categoryDTO1);

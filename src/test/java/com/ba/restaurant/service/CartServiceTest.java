@@ -1,8 +1,8 @@
 package com.ba.restaurant.service;
 
+import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.CartDTO;
 import com.ba.restaurant.builder.CartDTOBuilder;
-import com.ba.restaurant.mapper.CartMapper;
 import com.ba.restaurant.repository.CartRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,7 +42,7 @@ public class CartServiceTest {
     public void shouldAddNewCart1()
     {
 
-        Mockito.when(cartRepository.saveAll(Mockito.any())).thenReturn(CartMapper.INSTANCE.toEntities(cartDTOS));
+        Mockito.when(cartRepository.saveAll(Mockito.any())).thenReturn(DTOConverter.cartConverter(cartDTOS));
         List<CartDTO> cartDTOS1= cartService.addCart(cartDTOS);
 
         Assert.assertNotNull(cartDTOS1);
@@ -51,7 +51,6 @@ public class CartServiceTest {
 
     @Test
     public void shouldListCart(){
-        Mockito.when(cartRepository.findAll()).thenReturn(CartMapper.INSTANCE.toEntities(cartDTOS));
         List<CartDTO> cartDTOList= cartService.listAllCarts();
         Assert.assertNotNull(cartDTOList);
     }

@@ -53,7 +53,7 @@ class UserUpdate extends Component {
                 });
                 console.log("user:",res.data)
             });
-        RoleService.listAllRole(username,password).then((res)=>{
+        RoleService.listAllRole().then((res)=>{
             this.setState({roles:res.data});
         })
     }
@@ -116,6 +116,8 @@ class UserUpdate extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label> Role </label>
+
+
                                         <div className="checkbox" style={{height: "4rem", overflow: "auto"}}>
                                             {
                                                 this.state.roles.map(
