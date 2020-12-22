@@ -33,7 +33,7 @@ public class WaiterService {
     public WaiterDTO updateWaiter(WaiterDTO waiterDTO){
         Media media= mediaRepository.findById(waiterDTO.getMedia().getId()).get();
         Waiter waiter=WaiterMapper.INSTANCE.toEntity(waiterDTO);
-        waiter.setMedia(media);
+       // waiter.setMedia(media);
         waiterRepository.saveAndFlush(waiter);
         return waiterDTO;
     }
