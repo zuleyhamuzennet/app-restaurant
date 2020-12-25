@@ -17,10 +17,8 @@
     <include relativeToChangelogFile="true" file="/changes/create-role-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-user-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-user-role-table.xml"/>
-    <include relativeToChangelogFile="true" file="/changes/products.sql"/>
-    <include relativeToChangelogFile="true" file="/changes/category-product.sql"/>
-
-
-
+<!--    <include relativeToChangelogFile="true" file="/changes/products.sql"/>-->
+<!--    <include relativeToChangelogFile="true" file="/changes/category-product.sql"/>-->
+    <include relativeToChangelogFile="true" file="/changes/create-customer-table.xml"/>
 
 </databaseChangeLog>

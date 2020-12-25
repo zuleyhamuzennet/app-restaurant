@@ -1,13 +1,11 @@
 package com.ba.restaurant.builder;
-
 import com.ba.restaurant.dto.MediaDTO;
 import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.entity.Category;
-
 import java.util.List;
 
 public class ProductDTOBuilder extends DTOBuilder {
-    private Long id;
+
     private String productName;
     private String description;
     private double price;
@@ -19,26 +17,32 @@ public class ProductDTOBuilder extends DTOBuilder {
         this.setId(id);
         return this;
     }
+
     public ProductDTOBuilder media(MediaDTO media){
         this.media=media;
         return this;
     }
+
     public ProductDTOBuilder productName(String productName){
         this.productName=productName;
         return this;
     }
+
     public ProductDTOBuilder categoryListId(List<Long> categoryListId){
         this.categoryListId=categoryListId;
         return this;
     }
+
     public ProductDTOBuilder categories(List<Category> categories){
         this.categories=categories;
         return this;
     }
+
     public ProductDTOBuilder description(String description){
         this.description=description;
         return this;
     }
+
     public ProductDTOBuilder price(Long price){
         this.price=price;
         return this;
@@ -46,6 +50,7 @@ public class ProductDTOBuilder extends DTOBuilder {
 
     @Override
     public ProductDTO build(){
+
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(getId());
         productDTO.setDescription(this.description);
@@ -55,8 +60,5 @@ public class ProductDTOBuilder extends DTOBuilder {
         productDTO.setCategories(this.categories);
         productDTO.setPrice(this.price);
         return productDTO;
-
     }
-
-
 }

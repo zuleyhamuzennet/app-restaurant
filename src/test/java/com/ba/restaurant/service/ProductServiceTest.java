@@ -1,8 +1,5 @@
 package com.ba.restaurant.service;
 
-import static org.mockito.Mockito.verify;
-
-import com.ba.restaurant.converter.DTOConverter;
 import com.ba.restaurant.dto.CategoryDTO;
 import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.builder.CategoryDTOBuilder;
@@ -45,12 +42,12 @@ public class ProductServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        productDTO = new ProductDTOBuilder().id(1L).media(null).categoryListId(Collections.singletonList(1L)).productName("deneme")
-                .description("desc").price(5L).build();
-        categoryDTO = new CategoryDTOBuilder().categoryId(1L).media(null).catDescription("cate").categoryName("cate").build();
+        productDTO = new ProductDTOBuilder().id(1L).media(null).categoryListId(Collections.singletonList(1L))
+                .productName("deneme").description("desc").price(5L).build();
+        categoryDTO = new CategoryDTOBuilder().categoryId(1L).media(null)
+                .catDescription("cate").categoryName("cate").build();
         productDTOS.add(productDTO);
         categoryRepository.save(CategoryMapper.INSTANCE.toEntity(categoryDTO));
-
     }
 
     @Test
@@ -67,12 +64,10 @@ public class ProductServiceTest {
     @Test
     public void shouldGetProductById() {
         Long id = 1L;
-
         Mockito.when(productRepository.findById(id)).thenReturn(Optional.of(ProductMapper.INSTANCE.toEntity(productDTO)));
         ProductDTO res = productService.getProductById(id);
         Assert.assertNotNull(res);
         Assert.assertEquals(res.getId(), productDTO.getId());
-
     }
 
     @Test
@@ -89,7 +84,7 @@ public class ProductServiceTest {
         Mockito.when(productRepository.findAll()).thenReturn(ProductMapper.INSTANCE.toEntities(productDTOS));
         List<ProductDTO> responses = productService.listAllProduct();
         Assert.assertNotNull(responses);
-        // Assert.assertEquals(responses,productService.listAllProduct().size());
+        Assert.assertEquals(responses, productService.listAllProduct().size());
     }
 
     @Test
@@ -100,5 +95,4 @@ public class ProductServiceTest {
         Assert.assertNotNull(res);
 
     }
-
 }

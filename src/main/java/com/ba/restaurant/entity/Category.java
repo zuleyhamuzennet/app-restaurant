@@ -1,28 +1,25 @@
 package com.ba.restaurant.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@SQLDelete(sql = "UPDATE categories "+ "SET deleted = true " + "WHERE id = ?")
+@Where(clause = "deleted = false")
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "categories")
-public class Category {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
-    private Long categoryId;
+public class Category extends BaseEntity{
 
     private String categoryName;
-
     private String catDescription;
+    private boolean deleted;
 
     @ManyToMany()
     @JoinTable(name = "TBL_CATEGORY_PRODUCT", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))

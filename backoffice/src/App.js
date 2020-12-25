@@ -29,9 +29,12 @@ import UserDetail from "./components/user/UserDetail";
 import TableCategoryUpdate from "./components/tableCategory/TableCategoryUpdate";
 import WaiterUpdate from "./components/waiter/WaiterUpdate";
 import WaiterDetail from "./components/waiter/WaiterDetail";
+import AddCustomer from "./components/customer/AddCustomer";
+import ListCustomers from "./components/customer/ListCustomers";
+import UpdateCustomer from "./components/customer/UpdateCustomer";
+import DetailCustomer from "./components/customer/DetailCustomer";
 const valueProvider={username:'', password:''}
 function App() {
-
 
     return (
 
@@ -65,6 +68,10 @@ function App() {
                             <Route exact path="/update-table-category/:id" component={TableCategoryUpdate}></Route>
                             <Route exact path="/update-waiter/:id" component={WaiterUpdate}></Route>
                             <Route exact path="/detail-waiter/:id" component={WaiterDetail}></Route>
+                            <Route exact path="/add-customer" component={AddCustomer}></Route>
+                            <Route exact path="/list-customers" component={ListCustomers}></Route>
+                            <Route exact path="/update-customer/:id" component={UpdateCustomer}></Route>
+                            <Route exact path="/detail-customer/:id" component={DetailCustomer}></Route>
 
                         </Switch>
                     </div>

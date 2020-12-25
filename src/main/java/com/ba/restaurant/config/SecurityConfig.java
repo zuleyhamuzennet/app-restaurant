@@ -9,36 +9,31 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.sql.DataSource;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider authenticationProvider=  new DaoAuthenticationProvider();
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
- /*   @Override
-    protected void configure(AuthenticationManagerBuilder auth){
-        auth.authenticationProvider(authenticationProvider());
-    }*/
 
     @Override
-    protected void configure(HttpSecurity http)throws Exception{
+    protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("login/**").permitAll();
-
         http.authorizeRequests().antMatchers("h2-console/**").permitAll();
         http.csrf().disable();
         http.headers().frameOptions().disable();
@@ -49,15 +44,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/product/list").access("hasAnyRole('USER','ADMIN')");
 
         http.authorizeRequests().antMatchers("/carts/**").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers("/categories/**").hasAnyRole("USER","ADMIN");
-        http.authorizeRequests().antMatchers("/properties/**").hasAnyRole("USER","ADMIN");
-        http.authorizeRequests().antMatchers("/waiter/**").hasAnyRole("USER","ADMIN");
-        http.authorizeRequests().antMatchers("/table-category/**").hasAnyRole("USER","ADMIN");
-        http.authorizeRequests().antMatchers("/users/**").hasAnyRole("USER","ADMIN");
+        http.authorizeRequests().antMatchers("/categories/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/properties/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/waiter/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/table-category/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/users/**").hasAnyRole("USER", "ADMIN");
+        http.authorizeRequests().antMatchers("/customer/**").hasAnyRole("USER", "ADMIN");
 
-
-       // http.authorizeRequests().antMatchers("/login//**").hasAnyRole("USER","ADMIN");
-       // http.authorizeRequests().antMatchers("/media/**").hasAnyRole("USER","ADMIN");
+        // http.authorizeRequests().antMatchers("/login/**").hasAnyRole("USER","ADMIN");
+        // http.authorizeRequests().antMatchers("/media/**").hasAnyRole("USER","ADMIN");
 
         http.httpBasic();
         http.cors();

@@ -23,5 +23,11 @@
 
 
     </changeSet>
+    <changeSet id="17-11-2020_14:31" author="zuleyha.muzennet">
+
+        <addColumn tableName="waiter">
+            <column name="deleted" type="boolean(1)" defaultValue="FALSE"></column>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

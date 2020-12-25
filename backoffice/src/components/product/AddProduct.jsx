@@ -126,8 +126,8 @@ class AddProduct extends Component {
                                                 {
                                                     this.state.categories.map(
                                                         category=>
-                                                            <div className="row col-md -12" key={category.categoryId}>
-                                                                <label><input type="checkbox" value="" onClick={()=>this.changeMultiSelect(category.categoryId)}/>{category.categoryName}</label>
+                                                            <div className="row col-md -12" key={category.id}>
+                                                                <label><input type="checkbox" value="" onClick={()=>this.changeMultiSelect(category.id)}/>{category.categoryName}</label>
                                                             </div>
                                                     )
                                                 }
@@ -158,7 +158,12 @@ class AddProduct extends Component {
 
                                                     media=>
 
-                                                        <option   key={media.id}  value ={media.id}>{media.mediaName}</option>
+                                                        <option   key={media.id}  value ={media.id}>{media.mediaName}
+                                                            <br/>
+                                                            <img src={'data:image/png;base64,' + media.id.fileContent} width="40" style={{margin: 3}}/>
+                                                        </option>
+
+
                                                 )
                                             }
                                         </select>

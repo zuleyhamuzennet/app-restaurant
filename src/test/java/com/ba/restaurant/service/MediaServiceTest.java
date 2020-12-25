@@ -27,37 +27,32 @@ public class MediaServiceTest {
     @Mock
     MediaRepository mediaRepository;
 
-    private MediaDTO mediaDTO= new MediaDTO();
-    private List<Media> mediaList= new ArrayList<>();
+    private MediaDTO mediaDTO = new MediaDTO();
+    private List<Media> mediaList = new ArrayList<>();
 
-
-
-        byte [] b ={ (byte)0xe0, 0x4f, (byte)0xd0,
-                0x20, (byte)0xea, 0x3a, 0x69, 0x10, (byte)0xa2, (byte)0xd8, 0x08, 0x00, 0x2b,
-                0x30, 0x30, (byte)0x9d };
-        byte[] json =" {\"name\":\"deneme\"}".getBytes(StandardCharsets.UTF_8);
-        MockMultipartFile file = new MockMultipartFile("json", "json", "application/json", json);
-        private Media media=new MediaBuilder().id(1L).mediaName("deneme").fileContent(b).build();
-
+    byte[] b = {(byte) 0xe0, 0x4f, (byte) 0xd0,
+            0x20, (byte) 0xea, 0x3a, 0x69, 0x10, (byte) 0xa2, (byte) 0xd8, 0x08, 0x00, 0x2b,
+            0x30, 0x30, (byte) 0x9d};
+    byte[] json = " {\"name\":\"deneme\"}".getBytes(StandardCharsets.UTF_8);
+    MockMultipartFile file = new MockMultipartFile("json", "json", "application/json", json);
+    private Media media = new MediaBuilder().id(1L).mediaName("deneme").fileContent(b).build();
 
     @Test
-    public  void ShouldListAllMedia(){
+    public void ShouldListAllMedia() {
         mediaList.add(media);
         Mockito.when(mediaRepository.findAll()).thenReturn(mediaList);
-        List<MediaDTO> response=mediaService.getAllMedia();
+        List<MediaDTO> response = mediaService.getAllMedia();
         Assert.assertNotNull(response);
 
     }
+
     @Test
     public void shouldAddMedia() throws IOException {
         mediaList.add(media);
         Mockito.when(mediaRepository.save(Mockito.any())).thenReturn(media);
-        String res= mediaService.addfile(file,"zar.png");
+        String res = mediaService.addfile(file, "zar.png");
         Assert.assertNotNull(res);
     }
-
-
-
 
 
 }

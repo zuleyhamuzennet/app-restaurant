@@ -9,7 +9,9 @@ import java.util.List;
 
 @Mapper
 public interface TableCategoryMapper {
+
     TableCategoryMapper INSTANCE= Mappers.getMapper(TableCategoryMapper.class);
+
     TableCategory toEntity(TableCategoryDTO tableCategoryDTO);
     TableCategoryDTO toDTO(TableCategory tableCategory);
     List<TableCategory> toEntities(List<TableCategoryDTO> tableCategoryDTOS);

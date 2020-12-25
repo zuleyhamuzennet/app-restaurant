@@ -1,15 +1,14 @@
 package com.ba.restaurant.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.util.Date;
-@Data
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartDTO {
-    private  long id;
+public class CartDTO extends BaseDTO{
+
     private long productId;
     private long piece;
     private long price;
@@ -19,8 +18,6 @@ public class CartDTO {
     private long tableCategoryId;
     private long waiterId;
     private Date cartDate;
+    private long customerId;
 
-    public Date getCartDate() {
-        return cartDate;
-    }
 }

@@ -1,21 +1,16 @@
 package com.ba.restaurant.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Cart {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  long id;
-    @Column(name = "prod_id")
+public class Cart extends BaseEntity{
+
     private long productId;
     private long piece;
     private long price;
@@ -24,6 +19,7 @@ public class Cart {
     private long tableCartId;
     private long tableCategoryId;
     private long waiterId;
+    private long customerId;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date cartDate;

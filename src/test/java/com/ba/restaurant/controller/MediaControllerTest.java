@@ -25,28 +25,26 @@ public class MediaControllerTest {
 
     @Mock
     MediaService mediaService;
-
-    private Media media= new Media();
-    private MediaDTO mediaDTO= new MediaDTO();
+    private Media media = new Media();
+    private MediaDTO mediaDTO = new MediaDTO();
 
     @Before
-    public void setUp(){
-        media= new MediaBuilder().id(1L).fileContent(null).mediaName("deneme").build();
-        mediaDTO=new MediaDTOBuilder().id(1L).fileContent(null).mediaName("deneme").build();
+    public void setUp() {
+        media = new MediaBuilder().id(1L).fileContent(null).mediaName("deneme").build();
+        mediaDTO = new MediaDTOBuilder().id(1L).fileContent(null).mediaName("deneme").build();
     }
 
-    public void shouldAddMedia(){
-
-       // Mockito.when(mediaService.addfile(Mockito.)).
-    }
     @Test
-    public  void shouldListMedia(){
-        List<MediaDTO> mediaDTOS= new ArrayList<>();
+    public void shouldAddMedia() {
+        // Mockito.when(mediaService.addfile(Mockito.)).
+    }
+
+    @Test
+    public void shouldListMedia() {
+        List<MediaDTO> mediaDTOS = new ArrayList<>();
         mediaDTOS.add(mediaDTO);
         Mockito.when(mediaService.getAllMedia()).thenReturn(mediaDTOS);
-        List<MediaDTO> res= mediaController.getAllMedia();
-        Assert.assertEquals(res,mediaDTOS);
-
+        List<MediaDTO> res = mediaController.getAllMedia();
+        Assert.assertEquals(res, mediaDTOS);
     }
-
 }

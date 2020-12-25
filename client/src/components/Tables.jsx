@@ -19,6 +19,7 @@ class Table extends Component {
 
         }
 
+        this.goTables = this.goTables.bind(this);
         this.getTableId = this.getTableId.bind(this);
         this.goProduct = this.goProduct.bind(this);
         this.getWaiterId = this.getWaiterId.bind(this);
@@ -57,10 +58,10 @@ class Table extends Component {
                 }
             }
         );
-        localStorage.setItem('tableId', JSON.stringify(this.state.tableId));
-        localStorage.setItem('tableCategoryId', JSON.stringify(this.state.id));
     }
-
+    goTables() {
+        this.props.history.push("/main");
+    }
     render() {
 
         const counts = [];
@@ -96,7 +97,15 @@ class Table extends Component {
 
         return (
             <div>
-                <Header/>
+                <header>
+                    <nav className="navbar navbar-dark bg-dark">
+                        <button className="navbar-toggler" type="button" data-toggle="collapse"
+                                style={{display: 'flex', marginLeft: "auto", marginRight: '20px'}}
+                                aria-label="Toggle navigation" onClick={() => this.goTables()}>
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                    </nav>
+                </header>
                 <div className="social-box">
                     <div className="container">
                         <div className='row'>

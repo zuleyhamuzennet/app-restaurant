@@ -38,5 +38,11 @@
         </rollback>
 
     </changeSet>
+    <changeSet id="17-11-2020_15:31" author="zuleyha.muzennet">
+
+        <addColumn tableName="table_category">
+            <column name="deleted" type="boolean(1)" defaultValue="FALSE"></column>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

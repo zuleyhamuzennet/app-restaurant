@@ -1,51 +1,45 @@
 package com.ba.restaurant.controller;
 
-
 import com.ba.restaurant.dto.UserDTO;
-import com.ba.restaurant.entity.User;
 import com.ba.restaurant.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-
     @Autowired
     UserService userService;
 
     @GetMapping("/list")
-    public List<UserDTO> listAllUsers(){
-        return  userService.listAllUser();
+    public List<UserDTO> listAllUsers() {
+        return userService.listAllUser();
     }
 
-   @PostMapping("/add")
-    public UserDTO addUsers(@RequestBody UserDTO userDTO){
-
+    @PostMapping("/add")
+    public UserDTO addUsers(@RequestBody UserDTO userDTO) {
         userService.addUser(userDTO);
         return userDTO;
     }
+
     @PutMapping("/update/")
-    public UserDTO updateUser(@RequestBody UserDTO userDTO){
+    public UserDTO updateUser(@RequestBody UserDTO userDTO) {
         userService.updateUser(userDTO);
         return userDTO;
     }
-    @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable Long id){
-       return userService.getUserById(id);
 
+    @GetMapping("/{id}")
+    public UserDTO getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
+
     @DeleteMapping("/delete/{id}")
-    public Long deleteUserById(@PathVariable Long id){
+    public Long deleteUserById(@PathVariable Long id) {
         userService.deleteUser(id);
         return id;
     }
-
-
 }

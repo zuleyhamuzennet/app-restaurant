@@ -10,10 +10,10 @@
         <createTable tableName="tbl_category_product">
 
             <column autoIncrement="true" name="category_id" type="int(1)">
-                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_category" references="categories(category_id)"/>
+                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_category" references="categories(id)"/>
             </column>
             <column autoIncrement="true" name="product_id" type="int(1)">
-                <constraints primaryKey="true"  nullable="false" foreignKeyName="fk_product" references="product(product_id)"/>
+                <constraints primaryKey="true"  nullable="false" foreignKeyName="fk_product" references="product(id)"/>
             </column>
         </createTable>
 

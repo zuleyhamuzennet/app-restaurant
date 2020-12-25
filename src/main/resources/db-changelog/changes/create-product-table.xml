@@ -9,7 +9,7 @@
     <changeSet id="08-12-2020_15:41" author="zuleyha.muzennet">
         <createTable tableName="product">
 
-            <column autoIncrement="true" name="product_id" type="int(1)">
+            <column autoIncrement="true" name="id" type="int(1)">
                 <constraints primaryKey="true"/>
             </column>
             <column name="product_name" type="VARCHAR(255)"/>
@@ -25,6 +25,12 @@
             <dropTable tableName="product"/>
         </rollback>
 
+    </changeSet>
+    <changeSet id="17-11-2010_15:31" author="zuleyha.muzennet">
+
+        <addColumn tableName="product">
+            <column name="deleted" type="boolean(1)" defaultValue="FALSE"></column>
+        </addColumn>
     </changeSet>
 
 </databaseChangeLog>

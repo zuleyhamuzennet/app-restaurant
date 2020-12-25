@@ -8,6 +8,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface MediaMapper {
     MediaMapper INSTANCE= Mappers.getMapper(MediaMapper.class);
+
     Media toEntity(MediaDTO mediaDTO);
     MediaDTO toDTO(Media media);
 }

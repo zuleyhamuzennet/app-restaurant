@@ -14,22 +14,26 @@ public class RoleController {
     @Autowired
     RoleService roleService;
 
-
     @GetMapping("/list")
-    public List<RoleDTO> listAllRoles(){
+    public List<RoleDTO> listAllRoles() {
         return roleService.listAllRoles();
     }
 
     @PostMapping("/add")
-    public RoleDTO addRole(@RequestBody RoleDTO roleDTO){
+    public RoleDTO addRole(@RequestBody RoleDTO roleDTO) {
         roleService.addRole(roleDTO);
         return roleDTO;
     }
+
     @PutMapping("/update/")
-    public RoleDTO updateRole(@RequestBody RoleDTO roleDTO){
+    public RoleDTO updateRole(@RequestBody RoleDTO roleDTO) {
         roleService.updateRole(roleDTO);
         return roleDTO;
     }
 
-
+    @DeleteMapping("/delete/")
+    public Long deleteRole(Long id) {
+        roleService.deleteRoleById(id);
+        return null;
+    }
 }

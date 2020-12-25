@@ -1,26 +1,27 @@
 package com.ba.restaurant.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-@Data
+@Getter
+@Setter
+@SQLDelete(sql = "UPDATE waiter "+ "SET deleted = true " + "WHERE id = ?")
+@Where(clause = "deleted = false")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Waiter {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Waiter extends BaseEntity{
+
     private String waiterName;
     private String waiterMail;
     private String address;
     private Long phone;
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Media media;
 
 }

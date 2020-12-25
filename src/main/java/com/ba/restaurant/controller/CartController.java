@@ -16,13 +16,12 @@ public class CartController {
     CartService cartService;
 
     @GetMapping("/list")
-    public List<CartDTO> listAllCarts(){
+    public List<CartDTO> listAllCarts() {
         return cartService.listAllCarts();
     }
 
-
     @PostMapping("/add")
-    public List<CartDTO> addCart(@RequestBody List<CartDTO>cartDTOS){
+    public List<CartDTO> addCart(@RequestBody List<CartDTO> cartDTOS) {
         return cartService.addCart(cartDTOS);
     }
 

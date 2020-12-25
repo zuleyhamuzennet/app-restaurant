@@ -15,35 +15,36 @@ class CategoryList extends Component {
 
         this.state = {
             categories: [],
-            categoryId:''
+            id:''
         }
         this.detailCategory=this.detailCategory.bind(this);
         this.deleteCategory=this.deleteCategory.bind(this);
         this.updateCategory=this.updateCategory.bind(this);
     }
-    updateCategory=(categoryId)=>{
-        console.log("categoryId",categoryId);
+    updateCategory=(id)=>{
+        console.log("id",id);
         this.props.history.push({
-            pathname: `update-category/{categoryId}`,
+            pathname: `update-category/{id}`,
             state:{
-                id:categoryId
+                id:id
             }
         })
     }
 
-    deleteCategory=(categoryId)=>{
+    deleteCategory=(id)=>{
+        console.log("delete :",id);
         const {username,password}=this.context;
-        CategoryService.deleteCategory(categoryId,username,password).then(res=>{
-            this.setState({categories:this.state.categories.filter(category=>category.categoryId!==categoryId)})
+        CategoryService.deleteCategory(id,username,password).then(res=>{
+            this.setState({categories:this.state.categories.filter(category=>category.id!==id)})
         });
     }
 
-    detailCategory=(categoryId,media)=>{
-        console.log("categoryId",categoryId);
+    detailCategory=(id,media)=>{
+        console.log("id",id);
         this.props.history.push({
-            pathname: `category-detail/{categoryId}`,
+            pathname: `category-detail/{id}`,
             state:{
-                id:categoryId,
+                id:id,
                 media:media
             }
         })
@@ -54,6 +55,7 @@ class CategoryList extends Component {
         this.setState({loadingVisible:true})
         CategoryService.listAllCategories(username,password).then((res) => {
             this.setState({categories: res.data,loadingVisible:false});
+            console.log("category:",res.data)
 
         });
     }
@@ -84,7 +86,7 @@ console.log(this.state.categories[0]);
                             this.state.categories.map(
 
                                 category =>
-                                    <tr key={category.categoryId}>
+                                    <tr key={category.id}>
                                         <td>{category.categoryName}</td>
                                         <td>{category.catDescription}</td>
                                         <td><img src={'data:image/png;base64,' + category.media.fileContent} width="40" style={{margin: 3}}/>
@@ -92,13 +94,13 @@ console.log(this.state.categories[0]);
 
 
                                         <td>
-                                            <button onClick={() => this.updateCategory(category.categoryId)}
+                                            <button onClick={() => this.updateCategory(category.id)}
                                                     className="btn btn-success"> Update
                                             </button>
-                                            <button style={{marginLeft: "6px"}} onClick={() => this.deleteCategory(category.categoryId)}
+                                            <button style={{marginLeft: "6px"}} onClick={() => this.deleteCategory(category.id)}
                                                     className="btn btn-outline-info"> Delete
                                             </button>
-                                            <button onClick={() => this.detailCategory(category.categoryId,category.media.fileContent)} style={{marginLeft: "6px"}}
+                                            <button onClick={() => this.detailCategory(category.id,category.media.fileContent)} style={{marginLeft: "6px"}}
                                                   className="btn btn-warning">Detail
                                             </button>
                                         </td>

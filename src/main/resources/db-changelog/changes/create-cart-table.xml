@@ -12,13 +12,14 @@
           <column autoIncrement="true" name="id" type="int(1)">
               <constraints primaryKey="true"/>
           </column>
-          <column name="prod_id" type="int(1)"/>
+          <column name="product_id" type="int(1)"/>
           <column name="piece" type="int(1)"/>
           <column name="price" type="int(1)"/>
           <column name="total" type="int(1)"/>
           <column name="table_cart_id" type="int(1)"/>
           <column name="table_category_id" type="int(1)"/>
           <column name="waiter_id" type="int(1)"/>
+          <column name="customer_id" type="int(1)"/>
           <column name="product_name" type="VARCHAR(255)"/>
           <column defaultValueComputed="CURRENT_TIMESTAMP" name="cart_date" type="TIMESTAMP"/>
       </createTable>

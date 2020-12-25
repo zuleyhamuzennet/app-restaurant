@@ -1,5 +1,4 @@
 package com.ba.restaurant.controller;
-import static org.mockito.Mockito.verify;
 
 import com.ba.restaurant.dto.CategoryDTO;
 import com.ba.restaurant.builder.CategoryDTOBuilder;
@@ -24,54 +23,50 @@ public class CategoryControllerTest {
 
     @Mock
     private CategoryService categoryService;
-
-    private CategoryDTO categoryDTO= new CategoryDTO();
-    private List<CategoryDTO> categoryDTOList= new ArrayList<>();
+    private CategoryDTO categoryDTO = new CategoryDTO();
+    private List<CategoryDTO> categoryDTOList = new ArrayList<>();
 
     @Before
-    public void setUp() throws Exception{
-
-        categoryDTO= new CategoryDTOBuilder().catDescription("deneme").categoryName("deneme").categoryId(2L).build();
+    public void setUp() throws Exception {
+        categoryDTO = new CategoryDTOBuilder().catDescription("deneme").categoryName("deneme").categoryId(2L).build();
         categoryDTOList.add(categoryDTO);
-
-
     }
+
     @Test
-    public void shouldAddCategory(){
+    public void shouldAddCategory() {
         Mockito.when(categoryService.addCategory(Mockito.any())).thenReturn(categoryDTO);
-        CategoryDTO res= categoryController.addCategory(categoryDTO);
+        CategoryDTO res = categoryController.addCategory(categoryDTO);
         Assert.assertNotNull(res);
-        Assert.assertEquals(res.getCategoryId(),categoryDTO.getCategoryId());
-
-    }
-    @Test
-    public void shouldlistAllCategory(){
-        List<CategoryDTO> res= categoryController.listAllCategories();
-        Assert.assertNotNull(res);
-
+        Assert.assertEquals(res.getId(), categoryDTO.getId());
     }
 
     @Test
-    public void shouldUpdatecategory(){
+    public void shouldlistAllCategory() {
+        List<CategoryDTO> res = categoryController.listAllCategories();
+        Assert.assertNotNull(res);
+    }
+
+    @Test
+    public void shouldUpdatecategory() {
         Mockito.when(categoryService.updateCategory(Mockito.any())).thenReturn(categoryDTO);
-        CategoryDTO res= categoryController.updateCategory(categoryDTO);
+        CategoryDTO res = categoryController.updateCategory(categoryDTO);
         Assert.assertNotNull(res);
-        Assert.assertEquals(res.getCategoryId(),categoryDTO.getCategoryId());
+        Assert.assertEquals(res.getId(), categoryDTO.getId());
     }
 
     @Test
-    public void shouldGetCategoryById(){
-        Long id=2L;
+    public void shouldGetCategoryById() {
+        Long id = 2L;
         Mockito.when(categoryService.getCategoryById(id)).thenReturn(categoryDTO);
-        CategoryDTO res= categoryController.getCategoryById(id);
+        CategoryDTO res = categoryController.getCategoryById(id);
         Assert.assertNotNull(res);
-        Assert.assertEquals(res.getCategoryId(),categoryDTO.getCategoryId());
+        Assert.assertEquals(res.getId(), categoryDTO.getId());
     }
 
     @Test
-    public void shouldDeleteCategoryId(){
-        Long id =2L;
-        String response=categoryController.deleteCategory(id);
+    public void shouldDeleteCategoryId() {
+        Long id = 2L;
+        String response = categoryController.deleteCategory(id);
         Assert.assertNull(response);
     }
 }

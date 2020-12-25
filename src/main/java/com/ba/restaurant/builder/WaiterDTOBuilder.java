@@ -2,43 +2,47 @@ package com.ba.restaurant.builder;
 
 import com.ba.restaurant.dto.MediaDTO;
 import com.ba.restaurant.dto.WaiterDTO;
-import com.ba.restaurant.entity.Media;
 
 public class WaiterDTOBuilder extends DTOBuilder {
-    private Long waiterId;
+
     private String waiterName;
     private String waiterMail;
     private String address;
     private Long phone;
     private MediaDTO media;
 
-    public WaiterDTOBuilder waiterId(Long waiterId){
+    public WaiterDTOBuilder waiterId(Long waiterId) {
         this.setId(waiterId);
         return this;
+    }
 
-    }
-    public WaiterDTOBuilder media(MediaDTO media){
-        this.media=media;
+    public WaiterDTOBuilder media(MediaDTO media) {
+        this.media = media;
         return this;
+    }
 
-    }
-    public WaiterDTOBuilder waiterMail(String waiterMail){
-        this.waiterMail=waiterMail;
+    public WaiterDTOBuilder waiterMail(String waiterMail) {
+        this.waiterMail = waiterMail;
         return this;
     }
-    public WaiterDTOBuilder address(String address){
-        this.address=address;
+
+    public WaiterDTOBuilder address(String address) {
+        this.address = address;
         return this;
     }
-    public WaiterDTOBuilder waiterName(String waiterName){
-        this.waiterName=waiterName;
+
+    public WaiterDTOBuilder waiterName(String waiterName) {
+        this.waiterName = waiterName;
         return this;
     }
-    public WaiterDTOBuilder phone(Long phone){
-        this.phone=phone;
+
+    public WaiterDTOBuilder phone(Long phone) {
+        this.phone = phone;
         return this;
     }
-    public WaiterDTO build(){
+
+    public WaiterDTO build() {
+
         WaiterDTO waiterDTO = new WaiterDTO();
         waiterDTO.setId(getId());
         waiterDTO.setWaiterName(this.waiterName);
@@ -46,9 +50,6 @@ public class WaiterDTOBuilder extends DTOBuilder {
         waiterDTO.setAddress(this.address);
         waiterDTO.setWaiterMail(this.waiterMail);
         waiterDTO.setMedia(this.media);
-
-        return waiterDTO;}
-
-
-
+        return waiterDTO;
     }
+}

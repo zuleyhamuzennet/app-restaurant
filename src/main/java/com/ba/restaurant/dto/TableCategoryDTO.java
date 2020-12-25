@@ -1,17 +1,16 @@
 package com.ba.restaurant.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TableCategoryDTO {
+public class TableCategoryDTO extends BaseDTO{
 
-    private Long id;
     private String tableCategoryDesc;
     private String tableCategoryName;
     private Long count;
+    private boolean deleted;
 
 }

@@ -1,8 +1,5 @@
 package com.ba.restaurant.service;
 
-import com.ba.restaurant.converter.DTOConverter;
-import com.ba.restaurant.converter.EntityConverter;
-import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.dto.UserDTO;
 import com.ba.restaurant.entity.*;
 import com.ba.restaurant.mapper.UserMapper;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserService {
@@ -28,9 +24,7 @@ public class UserService {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public UserDTO addUser(UserDTO userDTO) {
-
         User user = UserMapper.INSTANCE.toEntity(userDTO);
-
         List<Role> roles = roleRepository.findAllById(userDTO.getUserListId());
         user.setPassword(encoder.encode(userDTO.getPassword()));
         user.setRoles(roles);
@@ -46,9 +40,10 @@ public class UserService {
         usersRepository.saveAndFlush(user);
         return userDTO;
     }
-    public UserDTO getUserById(Long id){
-        User user= usersRepository.findById(id).get();
-        UserDTO userDTO=UserMapper.INSTANCE.toDTO(user);
+
+    public UserDTO getUserById(Long id) {
+        User user = usersRepository.findById(id).get();
+        UserDTO userDTO = UserMapper.INSTANCE.toDTO(user);
         return userDTO;
     }
 

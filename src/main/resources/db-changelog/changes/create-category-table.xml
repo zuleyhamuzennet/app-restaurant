@@ -10,7 +10,7 @@
 
         <createTable tableName="categories">
 
-            <column autoIncrement="true" name="category_id" type="int(1)">
+            <column autoIncrement="true" name="id" type="int(1)">
                 <constraints primaryKey="true"/>
             </column>
             <column name="category_name" type="VARCHAR(255)"/>
@@ -25,6 +25,12 @@
             <dropTable tableName="categories"/>
         </rollback>
 
+    </changeSet>
+    <changeSet id="17-11-2020_13:31" author="zuleyha.muzennet">
+
+        <addColumn tableName="categories">
+            <column name="deleted" type="boolean(1)" defaultValue="FALSE"></column>
+        </addColumn>
     </changeSet>
 
 </databaseChangeLog>

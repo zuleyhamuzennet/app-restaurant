@@ -41,6 +41,10 @@ const Header =(props)=> {
         e.preventDefault();
         history.push("/media");
     }
+    const goCustomer=(e)=>{
+        e.preventDefault();
+        history.push("/list-customers");
+    }
     const logout=()=>{
         if (localStorage.getItem('username') !== null) {
             localStorage.removeItem('username');
@@ -67,7 +71,8 @@ const Header =(props)=> {
                         <button style={{backgroundColor:'rgba(40,39,39,0.07)', color:"white",border: "30rem"}} onClick={(e)=>goRole(e)}  className="navbar-brand">Roles</button>
                         <button style={{backgroundColor:'rgba(40,39,39,0.07)', color:"white",border: "30rem"}} onClick={(e)=>goSales(e)} className="navbar-brand">Sales</button>
                         <button style={{backgroundColor:'rgba(40,39,39,0.07)', color:"white",border: "30rem"}} onClick={(e)=>goInfo(e)}className="navbar-brand">Info</button>
-                       <button style={{backgroundColor:'rgba(40,39,39,0.07)', color:"white",border: "30rem"}} onClick={(e)=>goMedia(e)} className="navbar-brand">Media</button>
+                       <button style={{backgroundColor:'rgba(40,39,39,0.07)', color:"white",border: "30rem"}} onClick={(e)=>goCustomer(e)} className="navbar-brand">Customer</button>
+                        <button style={{backgroundColor:'rgba(40,39,39,0.07)', color:"white",border: "30rem"}} onClick={(e)=>goMedia(e)} className="navbar-brand">Media</button>
                        <button className="btn btn-danger" onClick={()=>{logout()}} style={{position:'absolute',right:'5px' ,marginTop:'-18px'}}>Logout</button>
                     </nav>
                 </header>

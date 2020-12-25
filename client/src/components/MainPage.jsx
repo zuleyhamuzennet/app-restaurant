@@ -15,7 +15,7 @@ class MainPage extends Component {
     }
     goProduct=()=>{
         this.props.history.push({
-                pathname: "/products"
+                pathname: "/list-customer"
             }
         );
     }
@@ -67,7 +67,7 @@ class MainPage extends Component {
                             </div>
                         </div>
                         <div style={{marginBottom: "10px"}} className="col-md-4 ">
-                            <div>
+                            <div >
                             <Card style={{height:'150px',
                                 width:'300px'}}
 
@@ -76,7 +76,7 @@ class MainPage extends Component {
                             </Card></div>
                         </div>
                         <div style={{marginBottom: "15px"}} className="col-md-4 ">
-                            <div>
+                            <div onClick={(e)=>this.props.history.push("/list-customer")}>
                             <Card style={{height:'150px',
                                 width:'300px'}}
 

@@ -12,36 +12,35 @@ import java.util.List;
 @RestController
 @RequestMapping("/table-category")
 public class TableCategoryController {
+
     @Autowired
     TableCategoryService tableCategoryService;
 
     @PostMapping("/add")
-    public TableCategoryDTO addTableCategory(@RequestBody TableCategoryDTO tableCategoryDTO){
+    public TableCategoryDTO addTableCategory(@RequestBody TableCategoryDTO tableCategoryDTO) {
         tableCategoryService.addTableCategory(tableCategoryDTO);
         return tableCategoryDTO;
     }
 
     @GetMapping("/list")
-    public List<TableCategoryDTO> listAllTableCategory(){
+    public List<TableCategoryDTO> listAllTableCategory() {
         return tableCategoryService.listAllTableCategory();
     }
 
 
     @PutMapping("/update/")
-    public TableCategoryDTO updateTableCategory(@RequestBody TableCategoryDTO tableCategoryDTO){
+    public TableCategoryDTO updateTableCategory(@RequestBody TableCategoryDTO tableCategoryDTO) {
         tableCategoryService.updateTableCategory(tableCategoryDTO);
         return tableCategoryDTO;
     }
 
     @GetMapping("/{id}")
-    public TableCategoryDTO getTableCategoryById(@PathVariable Long id){
+    public TableCategoryDTO getTableCategoryById(@PathVariable Long id) {
         return tableCategoryService.getTableCategorytById(id);
     }
+
     @DeleteMapping("/delete/{id}")
-    public Long deleteByTableCategoryId(@PathVariable Long id){
+    public Long deleteByTableCategoryId(@PathVariable Long id) {
         return tableCategoryService.deleteByTableCategory(id);
     }
-
-
-
 }

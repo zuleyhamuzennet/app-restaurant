@@ -9,7 +9,7 @@
     <changeSet id="07-12-2220_15:41" author="zuleyha.muzennet">
         <createTable tableName="roles">
 
-            <column autoIncrement="true" name="role_id" type="int(1)">
+            <column autoIncrement="true" name="id" type="int(1)">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(255)"/>
@@ -25,6 +25,12 @@
             <dropTable tableName="roles"/>
         </rollback>
 
+    </changeSet>
+    <changeSet id="17-12-2020_12:31" author="zuleyha.muzennet">
+
+        <addColumn tableName="roles">
+            <column name="deleted" type="boolean(1)" defaultValue="FALSE"></column>
+        </addColumn>
     </changeSet>
 
 </databaseChangeLog>

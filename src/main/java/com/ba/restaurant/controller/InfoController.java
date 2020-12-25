@@ -14,64 +14,51 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/properties")
 public class InfoController {
 
-
-
-    @Value("${"+ ApplicationPropertiesInfo.serverPort +"}")
+    @Value("${" + ApplicationPropertiesInfo.serverPort + "}")
     private String serverPort;
 
-    @Value("${"+ApplicationPropertiesInfo.h2ConsoleEnable+"}")
+    @Value("${" + ApplicationPropertiesInfo.h2ConsoleEnable + "}")
     private String h2ConsoleEnabled;
 
-    @Value("${"+ApplicationPropertiesInfo.dataSourceUrl+"}")
+    @Value("${" + ApplicationPropertiesInfo.dataSourceUrl + "}")
     private String dataSourceUrl;
 
-    @Value("${"+ApplicationPropertiesInfo.jpaShowSql+"}")
+    @Value("${" + ApplicationPropertiesInfo.jpaShowSql + "}")
     private String jpaShowSql;
 
-    @Value("${"+ApplicationPropertiesInfo.jpaHibernateFormatSql+"}")
+    @Value("${" + ApplicationPropertiesInfo.jpaHibernateFormatSql + "}")
     private String jpaHibernateFormatSql;
 
- /*   @Value("${"+ApplicationPropertiesInfo.logLevelHibernateType+"}")
-    private String logLevelHibernateType;*/
-
-    @Value("${"+ApplicationPropertiesInfo.SPRING_PROFILE_ACTIVE+"}")
+    @Value("${" + ApplicationPropertiesInfo.SPRING_PROFILE_ACTIVE + "}")
     private String springProfiles;
 
-
-
-
     @GetMapping("/info")
-    public String getInfo(){
+    public String getInfo() {
 
-        JSONArray jsonArray= new JSONArray();
-        JSONObject jsonObject= new JSONObject();
-        jsonObject.put("key",ApplicationPropertiesInfo.serverPort);
-        jsonObject.put("value",serverPort);
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("key", ApplicationPropertiesInfo.serverPort);
+        jsonObject.put("value", serverPort);
         jsonArray.add(jsonObject);
 
-        JSONObject jsonObject1= new JSONObject();
-        jsonObject1.put("key",ApplicationPropertiesInfo.jpaShowSql);
-        jsonObject1.put("value",jpaShowSql);
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("key", ApplicationPropertiesInfo.jpaShowSql);
+        jsonObject1.put("value", jpaShowSql);
         jsonArray.add(jsonObject1);
 
-        JSONObject jsonObject2= new JSONObject();
-        jsonObject2.put("key",ApplicationPropertiesInfo.jpaHibernateFormatSql);
-        jsonObject2.put("value",jpaHibernateFormatSql);
+        JSONObject jsonObject2 = new JSONObject();
+        jsonObject2.put("key", ApplicationPropertiesInfo.jpaHibernateFormatSql);
+        jsonObject2.put("value", jpaHibernateFormatSql);
         jsonArray.add(jsonObject2);
 
-      /*  JSONObject jsonObject3= new JSONObject();
-        jsonObject3.put("key",ApplicationPropertiesInfo.logLevelHibernateType);
-        jsonObject3.put("value",logLevelHibernateType);
-        jsonArray.add(jsonObject3);*/
-
-        JSONObject jsonObject4= new JSONObject();
-        jsonObject4.put("key",ApplicationPropertiesInfo.dataSourceUrl);
-        jsonObject4.put("value",dataSourceUrl);
+        JSONObject jsonObject4 = new JSONObject();
+        jsonObject4.put("key", ApplicationPropertiesInfo.dataSourceUrl);
+        jsonObject4.put("value", dataSourceUrl);
         jsonArray.add(jsonObject4);
 
-        JSONObject jsonObject5= new JSONObject();
-        jsonObject5.put("key",ApplicationPropertiesInfo.SPRING_PROFILE_ACTIVE);
-        jsonObject5.put("value",springProfiles);
+        JSONObject jsonObject5 = new JSONObject();
+        jsonObject5.put("key", ApplicationPropertiesInfo.SPRING_PROFILE_ACTIVE);
+        jsonObject5.put("value", springProfiles);
         jsonArray.add(jsonObject5);
 
         return jsonArray.toJSONString();

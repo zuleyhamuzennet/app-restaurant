@@ -9,6 +9,8 @@ import Waiters from "./components/Waiters";
 import React,{} from "react";
 
 import {ContextUserProvider} from "./components/ContextUser";
+import CustomerAdd from "./components/CustomerAdd";
+import ListCustomer from "./components/ListCustomer";
 
 
 const valueProvider={username:'', password:''}
@@ -27,6 +29,8 @@ function App() {
                         <Route exact path="/table-category" component={TableCategory}/>
                         <Route exact path="/tables" component={Tables}/>
                         <Route exact path="/waiters" component={Waiters}/>
+                        <Route exact path="/customers" component={CustomerAdd}/>
+                        <Route exact path="/list-customer" component={ListCustomer}/>
 
                     </Switch>
                 </div>

@@ -1,22 +1,24 @@
 package com.ba.restaurant.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@SQLDelete(sql = "UPDATE table_category "+ "SET deleted = true " + "WHERE id = ?")
+@Where(clause = "deleted = false")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="table_category")
-public class TableCategory {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class TableCategory extends BaseEntity{
+
     private String tableCategoryDesc;
     private String tableCategoryName;
     private Long count;
+
 
 }

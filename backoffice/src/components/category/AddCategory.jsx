@@ -14,7 +14,7 @@ class AddCategory extends Component {
         super(props)
 
         this.state = {
-            categoryId: '',
+            id: '',
             categoryName: '',
             catDescription: '',
             mediaList: [],
@@ -28,7 +28,7 @@ class AddCategory extends Component {
         const {username,password}=this.context;
         e.preventDefault();
         let categories = {
-            categoryId: this.state.categoryId,
+            id: this.state.id,
             categoryName: this.state.categoryName,
             catDescription: this.state.catDescription,
             media:this.state.media

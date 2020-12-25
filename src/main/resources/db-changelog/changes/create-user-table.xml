@@ -9,7 +9,7 @@
     <changeSet id="07-12-2220_15:41" author="zuleyha.muzennet">
         <createTable tableName="users">
 
-            <column autoIncrement="true" name="user_id" type="int(1)">
+            <column autoIncrement="true" name="id" type="int(1)">
                 <constraints primaryKey="true"/>
             </column>
             <column name="username" type="VARCHAR(255)"/>
@@ -27,10 +27,13 @@
         <rollback>
             <dropTable tableName="users"/>
         </rollback>
+    </changeSet>
 
+    <changeSet id="17-11-2020_12:31" author="zuleyha.muzennet">
 
-
-
+        <addColumn tableName="users">
+            <column name="deleted" type="boolean(1)" defaultValue="FALSE"></column>
+        </addColumn>
     </changeSet>
 
 </databaseChangeLog>

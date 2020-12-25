@@ -1,9 +1,6 @@
 package com.ba.restaurant.service;
 
-import com.ba.restaurant.converter.DTOConverter;
-import com.ba.restaurant.converter.EntityConverter;
 import com.ba.restaurant.dto.WaiterDTO;
-import com.ba.restaurant.entity.Media;
 import com.ba.restaurant.entity.Waiter;
 import com.ba.restaurant.mapper.WaiterMapper;
 import com.ba.restaurant.repository.MediaRepository;
@@ -20,40 +17,38 @@ public class WaiterService {
 
     @Autowired
     WaiterRepository waiterRepository;
+
     @Autowired
     MediaRepository mediaRepository;
 
-    public WaiterDTO addWaiter(WaiterDTO waiterDTO){
-        Media media= mediaRepository.findById(waiterDTO.getMedia().getId()).get();
-        Waiter waiter= WaiterMapper.INSTANCE.toEntity(waiterDTO);
-       // waiter.setMedia(media);
+    public WaiterDTO addWaiter(WaiterDTO waiterDTO) {
+        Waiter waiter = WaiterMapper.INSTANCE.toEntity(waiterDTO);
         waiterRepository.save(waiter);
         return waiterDTO;
     }
-    public WaiterDTO updateWaiter(WaiterDTO waiterDTO){
-        Media media= mediaRepository.findById(waiterDTO.getMedia().getId()).get();
-        Waiter waiter=WaiterMapper.INSTANCE.toEntity(waiterDTO);
-       // waiter.setMedia(media);
+
+    public WaiterDTO updateWaiter(WaiterDTO waiterDTO) {
+        Waiter waiter = WaiterMapper.INSTANCE.toEntity(waiterDTO);
         waiterRepository.saveAndFlush(waiter);
         return waiterDTO;
     }
-    public List<WaiterDTO> listAllWaiter(){
-        List<WaiterDTO> waiterDTOS=new ArrayList<>();
-        List<Waiter> waiters=waiterRepository.findAll();
-        waiters.forEach(waiter -> waiterDTOS.add(WaiterMapper.INSTANCE.toDTO(waiter)));
 
+    public List<WaiterDTO> listAllWaiter() {
+        List<WaiterDTO> waiterDTOS = new ArrayList<>();
+        List<Waiter> waiters = waiterRepository.findAll();
+        waiters.forEach(waiter -> waiterDTOS.add(WaiterMapper.INSTANCE.toDTO(waiter)));
         return waiterDTOS;
     }
-    public WaiterDTO getWaiterById(Long id){
-        Optional<Waiter> waiter= waiterRepository.findById(id);
-        WaiterDTO waiterDTO=new WaiterDTO();
-        waiterDTO=WaiterMapper.INSTANCE.toDTO(waiter.get());
+
+    public WaiterDTO getWaiterById(Long id) {
+        Optional<Waiter> waiter = waiterRepository.findById(id);
+        WaiterDTO waiterDTO = new WaiterDTO();
+        waiterDTO = WaiterMapper.INSTANCE.toDTO(waiter.get());
         return waiterDTO;
     }
 
-    public String deleteWaiterById(Long id){
+    public String deleteWaiterById(Long id) {
         waiterRepository.deleteById(id);
-
         return null;
     }
 }

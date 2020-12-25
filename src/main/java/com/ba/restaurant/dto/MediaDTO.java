@@ -1,18 +1,14 @@
 package com.ba.restaurant.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MediaDTO {
-
-    private long id;
+public class MediaDTO extends BaseDTO {
 
     private String mediaName;
-
     private byte[] fileContent;
 
 }

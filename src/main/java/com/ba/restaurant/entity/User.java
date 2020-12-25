@@ -1,23 +1,23 @@
 package com.ba.restaurant.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@SQLDelete(sql = "UPDATE USERS "+ "SET deleted = true " + "WHERE id = ?")
+@Where(clause = "deleted = false")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "USERS")
-public class User{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
+public class User extends BaseEntity{
+
     private String email;
     private String username;
     private String password;

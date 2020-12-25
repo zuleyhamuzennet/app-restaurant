@@ -16,11 +16,11 @@ class ProductSales extends Component {
     }
 
     componentDidMount() {
-        this.setState({loadingVisible:true})
+        //this.setState({loadingVisible:true})
         const {username,password}=this.context;
         ProductService.getSales(username,password).then(response=>{
             this.setState({
-                orderProducts: response.data,loadingVisible:false
+                orderProducts: response.data//,loadingVisible:false
             });
             console.log("order-product", response.data);
             this.render();
@@ -50,6 +50,7 @@ class ProductSales extends Component {
                             <th>Table-Category</th>
                             <th>Table</th>
                             <th>Waiter</th>
+                            <th>Customer</th>
 
                         </tr>
                         </thead>
@@ -67,8 +68,9 @@ class ProductSales extends Component {
                                         <td>{products.price}</td>
                                         <td>{products.total}</td>
                                         <td>{products.tableCategoryId}</td>
-                                        <td>Table :{products.tableCartId}</td>
-                                        <td>{products.waiterName}</td>
+                                        <td>{products.tableCartId}</td>
+                                        <td>{products.waiterId}</td>
+                                        <td>{products.customerId}</td>
                                     </tr>
                             )
                         }

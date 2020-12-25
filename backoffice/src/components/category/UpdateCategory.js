@@ -11,7 +11,7 @@ class UpdateCategory extends Component {
         super(props);
 
         this.state = {
-            categoryId: this.props.history.location.state?.id,
+            id: this.props.history.location.state?.id,
             categoryName: '',
             catDescription: '',
             mediaList: [],
@@ -24,10 +24,10 @@ class UpdateCategory extends Component {
 
     componentDidMount() {
         const {username, password} = this.context;
-        CategoryService.getCategoryById(this.state.categoryId, username, password).then((res) => {
+        CategoryService.getCategoryById(this.state.id, username, password).then((res) => {
 
             this.setState({
-                categoryId: res.data.categoryId,
+                id: res.data.id,
                 categoryName: res.data.categoryName,
                 catDescription: res.data.catDescription,
 
@@ -42,7 +42,7 @@ class UpdateCategory extends Component {
 
         const {username, password} = this.context;
         let category = {
-            categoryId: this.state.categoryId,
+            id: this.state.id,
             categoryName: this.state.categoryName,
             catDescription :this.state.catDescription,
             media:this.state.media

@@ -10,10 +10,10 @@
         <createTable tableName="tbl_user_roles">
 
             <column autoIncrement="true" name="user_id" type="int(1)">
-                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_user" references="users(user_id)"/>
+                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_user" references="users(id)"/>
             </column>
             <column autoIncrement="true" name="role_id" type="int(1)">
-                <constraints primaryKey="true"  nullable="false" foreignKeyName="fk_role" references="roles(role_id)"/>
+                <constraints primaryKey="true"  nullable="false" foreignKeyName="fk_role" references="roles(id)"/>
             </column>
 
         </createTable>

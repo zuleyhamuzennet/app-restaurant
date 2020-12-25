@@ -25,30 +25,28 @@ public class CartControllerTest {
     @Mock
     CartService cartService;
 
-    private CartDTO cartDTO= new CartDTO();
-    private List<CartDTO> cartDTOS= new ArrayList<>();
-    private Date date=  new Date();
-
+    private CartDTO cartDTO = new CartDTO();
+    private List<CartDTO> cartDTOS = new ArrayList<>();
+    private Date date = new Date();
 
     @Before
-    public void setUp() throws Exception{
-
-      cartDTO= new CartDTOBuilder().tableCategoryId(1L).productName("deneme").productId(1L).waiterId(1L).total(5L).price(4L).piece(1L).tableCartId(3L).id(1L).cartDate(date).build();
+    public void setUp() throws Exception {
+        cartDTO = new CartDTOBuilder().tableCategoryId(1L).productName("deneme").productId(1L).waiterId(1L)
+                .total(5L).price(4L).piece(1L).tableCartId(3L).id(1L).cartDate(date).build();
         cartDTOS.add(cartDTO);
-
     }
 
-
     @Test
-    public void shouldAddCart(){
+    public void shouldAddCart() {
         Mockito.when(cartService.addCart(Mockito.any())).thenReturn(cartDTOS);
-        List<CartDTO> res= cartController.addCart(cartDTOS);
+        List<CartDTO> res = cartController.addCart(cartDTOS);
         Assert.assertNotNull(res);
-        Assert.assertEquals(res.get(0).getId(),cartDTOS.get(0).getId());
+        Assert.assertEquals(res.get(0).getId(), cartDTOS.get(0).getId());
     }
+
     @Test
-    public void shouldListAllCart(){
-        List<CartDTO> cartDTOList= cartController.listAllCarts();
+    public void shouldListAllCart() {
+        List<CartDTO> cartDTOList = cartController.listAllCarts();
         Assert.assertNotNull(cartDTOList);
     }
 

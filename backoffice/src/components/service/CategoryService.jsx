@@ -6,11 +6,7 @@ class CategoryService {
 
     addCategory(category, username, password) {
         return axios.post(CATEGORY_API_BASE_URL + 'add', category, {
-            /* auth:{
 
-                 username:localStorage.getItem("username"),
-                 password:localStorage.getItem("password")
-             }*/
             auth: {
                 username: username,
                 password: password
@@ -65,11 +61,6 @@ class CategoryService {
 
     deleteCategory(id, username, password) {
         return axios.delete(CATEGORY_API_BASE_URL + 'delete/' + id, {
-            /*auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
             auth: {
 
                 username: username,

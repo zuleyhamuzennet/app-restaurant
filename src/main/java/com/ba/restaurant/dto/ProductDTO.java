@@ -1,18 +1,16 @@
 package com.ba.restaurant.dto;
 
 import com.ba.restaurant.entity.Category;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDTO {
+public class ProductDTO extends BaseDTO {
 
-    private Long id;
     private String productName;
     private String description;
     private double price;
