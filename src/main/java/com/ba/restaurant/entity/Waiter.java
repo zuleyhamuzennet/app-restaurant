@@ -15,7 +15,9 @@ import javax.persistence.*;
 @Entity
 public class Waiter extends BaseEntity{
 
+    @Column(name="waiter_name")
     private String waiterName;
+    @Column(name = "waiter_mail")
     private String waiterMail;
     private String address;
     private Long phone;

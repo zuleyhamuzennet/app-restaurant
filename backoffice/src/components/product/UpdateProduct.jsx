@@ -5,12 +5,12 @@ import Header from "../Header";
 import {Link} from "react-router-dom";
 import Loading from "../Loading";
 import CategoryService from "../service/CategoryService";
-import axios from "axios";
-import ContextUser from "../ContextUser";
 import MediaService from "../service/MediaService";
+import {AuthContext} from "../../contexts/AuthContext";
 
 class UpdateProduct extends Component {
-    static contextType=ContextUser;
+    static contextType=AuthContext;
+
     constructor(props) {
         super(props)
 
@@ -25,12 +25,12 @@ class UpdateProduct extends Component {
             mediaId:'',
             media:{}
         }
-
     }
     changeMultiSelect(id){
         if(this.state.multiSelect.includes(id)!==true){
             this.state.multiSelect.push(id);
             console.log("multiselect=> ekle",this.state.multiSelect)
+
         }else{
             for(let i = 0; i<this.state.multiSelect.length;i++){
                 if(id === this.state.multiSelect[i]){
@@ -40,11 +40,10 @@ class UpdateProduct extends Component {
             }
         }}
 
-
     componentDidMount() {
-        const {username,password}=this.context;
+        const user = this.context;
         this.setState({loadingVisible:true});
-        ProductService.getProductById(this.state.id,username,password).then((res) => {
+        ProductService.getProductById(this.state.id,user.username,user.password).then((res) => {
 
             this.setState({
                 id: res.data.id,
@@ -54,34 +53,27 @@ class UpdateProduct extends Component {
                 categoryListId:this.state.multiSelect,
                 media:this.state.media,
                 loadingVisible:false
-
             });
         });
 
-        CategoryService.listAllCategories(username,password).then((res) => {
+        CategoryService.listAllCategories(user.username,user.password).then((res) => {
             this.setState({categories: res.data});
         });
-
-        MediaService.listAllMedia(username,password).then((res) => {
+        MediaService.listAllMedia(user.username,user.password).then((res) => {
             this.setState({mediaList: res.data,loadingVisible:false})
-            console.log("res data", res.data);
         })
     }
 
     changeMediaHandler=(event)=>{
         this.setState({mediaId:event.target.value});
         console.log(this.state.mediaId);
-
         const valueMedia = this.state.mediaList.filter(item => item.id == this.state.mediaId)
         this.setState({media: valueMedia[0]})
-
-
     }
 
     updateProduct = (e) => {
         e.preventDefault();
-
-        const {username,password}=this.context;
+        const user = this.context;
         let product = {
             id:this.state.id,
             productName: this.state.productName,
@@ -91,7 +83,7 @@ class UpdateProduct extends Component {
             media:this.state.media
         };
         console.log('Product => ' + JSON.stringify(product));
-        ProductService.updateProduct(product,username,password).then(res => {
+        ProductService.updateProduct(product,user.username,user.password).then(res => {
             this.props.history.push('/list')
         });
     }
@@ -109,8 +101,6 @@ class UpdateProduct extends Component {
                                 <form>
                                     <div className="form-group">
                                         <label> Category </label>
-
-
                                         <div className="checkbox" style={{height:"4rem",overflow:"auto"}}>
                                             {
                                                 this.state.categories.map(
@@ -121,9 +111,7 @@ class UpdateProduct extends Component {
                                                 )
                                             }
                                         </div>
-
                                     </div>
-
                                     <div className="form-group">
                                         <label> Product Name </label>
                                         <input placeholder="Product Name" name="productName" className="form-control"
@@ -143,16 +131,12 @@ class UpdateProduct extends Component {
                                         <label> Media </label>
                                         <select className="selectpicker form-control" onChange={this.changeMediaHandler}>
                                             {
-
                                                 this.state.mediaList.map(
-
                                                     media=>
-
                                                         <option   key={media.id}  value ={media.id}>{media.mediaName}</option>
                                                 )
                                             }
                                         </select>
-
                                     </div>
                                     <button className="btn btn-success" onClick={this.updateProduct}> Update</button>
                                     <Link to="/list" className="btn btn-danger"

@@ -9,11 +9,6 @@ class Service{
     listProductsByCategoryId(id,username,password){
 
         return axios.get(CATEGORY_API_BASE_URL+"list/"+id,{
-         /*   auth:{
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
-
              auth:{
               username:password,
               password:username
@@ -24,18 +19,12 @@ class Service{
     listAllCategory(username,password){
 
         return axios.get(CATEGORY_API_BASE_URL+"list",{
-           /* auth:{
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
-
              auth:{
               username:password,
               password:username
           }
 
         })
-
     }
     listAllTableCategory(username,password){
 
@@ -46,19 +35,10 @@ class Service{
             }
         })
 
-
-
-
     }
 
     listTableByCategory(id,username,password){
         return axios.get("http://localhost:8080/table-category/"+id,{
-            /*auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
-
              auth:{
               username:password,
               password:username
@@ -69,40 +49,22 @@ class Service{
 
     listProductByCategory(id,username,password){
         return axios.get(PRODUCT_API_BASE_URL+id,{
-          /*  auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
-
              auth:{
               username:password,
               password:username
           }
-
         })
     }
     listAllWaiters(username,password){
         return axios.get("http://localhost:8080/waiter/list",{
-           /* auth:{
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }
-          */
              auth:{
               username:password,
               password:username
           }
-
         })
     }
     getWaiterById(id,username,password){
         return axios.get("http://localhost:8080/waiter/"+id,{
-         /*   auth:{
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
-
              auth:{
               username:password,
               password:username
@@ -113,17 +75,19 @@ class Service{
 
     saleButton(Carts,username,password){
         return axios.post("http://localhost:8080/carts/add",Carts,{
-           /* auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
-
              auth:{
               username:password,
               password:username
           }
 
+        })
+    }
+    listAllMedia(username,password){
+        return axios.get("http://localhost:8080/media/list" ,{
+            auth:{
+                username:username,
+                password:password
+            }
         })
     }
 

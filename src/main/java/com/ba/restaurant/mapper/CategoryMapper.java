@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel="spring")
 public interface CategoryMapper {
 
     CategoryMapper INSTANCE= Mappers.getMapper(CategoryMapper.class);
@@ -15,5 +15,6 @@ public interface CategoryMapper {
     Category toEntity(CategoryDTO categoryDTO);
     CategoryDTO toDTO(Category category);
     List<Category> toEntities(List<CategoryDTO> categoryDTOS);
+    List<CategoryDTO> toDTOS(List<Category> categories);
 
 }

@@ -2,6 +2,7 @@ package com.ba.restaurant.controller;
 
 import com.ba.restaurant.builder.WaiterDTOBuilder;
 import com.ba.restaurant.dto.WaiterDTO;
+import com.ba.restaurant.exception.BusinessRuleException;
 import com.ba.restaurant.service.WaiterService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,6 +42,11 @@ public class WaiterControllerTest {
         Assert.assertEquals(res.getId(), waiterDTO.getId());
     }
 
+    @Test(expected = BusinessRuleException.class)
+    public void shouldUpdateWaiterIdNot() {
+        waiterController.updateWaiter(null);
+    }
+
     @Test
     public void shouldUpdateWaiter() {
         Mockito.when(waiterService.updateWaiter(Mockito.any())).thenReturn(waiterDTO);
@@ -64,10 +70,19 @@ public class WaiterControllerTest {
         Assert.assertEquals(res.getId(), waiterDTO.getId());
     }
 
+    @Test(expected = BusinessRuleException.class)
+    public void shouldGetWaiterIdNot() {
+        waiterController.getWaiterByID(null);
+    }
+
     @Test
-    public void shoouldDeleteWaiterById() {
+    public void shouldDeleteWaiterById() {
         Long id = 1L;
         Long response = waiterController.deleteWaiterById(id);
         Assert.assertNull(response);
+    }
+    @Test(expected = BusinessRuleException.class)
+    public void shouldDeleteWaiterIdNot() {
+        waiterController.deleteWaiterById(null);
     }
 }

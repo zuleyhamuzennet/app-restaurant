@@ -16,9 +16,14 @@ import javax.persistence.*;
 @Table(name="table_category")
 public class TableCategory extends BaseEntity{
 
+    @Column(name = "table_category_desc")
     private String tableCategoryDesc;
+    @Column(name = "table_category_name")
     private String tableCategoryName;
     private Long count;
+
+    @ManyToOne
+    private Media media;
 
 
 }

@@ -3,10 +3,11 @@ import Header from "../Header";
 import RoleService from "../service/RoleService";
 import UserService from "../service/UserService";
 import {Link} from "react-router-dom";
-import ContextUser from "../ContextUser";
+import {AuthContext} from "../../contexts/AuthContext";
 
 class UserUpdate extends Component {
-    static contextType=ContextUser;
+    static contextType = AuthContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -15,69 +16,56 @@ class UserUpdate extends Component {
             password: '',
             email: '',
             roles: [],
-            multiRole:[],
-
+            multiRole: [],
         }
-
-        this.changeMultiSelect= this.changeMultiSelect.bind(this);
-        this.updateUser = this.updateUser.bind(this);
+        this.changeMultiSelect = this.changeMultiSelect.bind(this);
     }
 
-    changeMultiSelect(id){
-        console.log("role id:",id);
-       if(this.state.multiRole.includes(id)!==true){
-
+    changeMultiSelect(id) {
+        console.log("role id:", id);
+        if (this.state.multiRole.includes(id) !== true) {
             this.state.multiRole.push(id);
-
-        }
-        else{
-            for(let i=0; i <this.state.multiRole.length; i++){
-                if(id === this.state.multiRole[i]){
-                    this.state.multiRole.splice(i,1);
+        } else {
+            for (let i = 0; i < this.state.multiRole.length; i++) {
+                if (id === this.state.multiRole[i]) {
+                    this.state.multiRole.splice(i, 1);
                 }
             }
         }
     }
 
     componentDidMount() {
-        const {username, password} = this.context;
-
-        UserService.getPersonById(this.state.id, username, password)
+        const user = this.context;
+        UserService.getPersonById(this.state.id, user.username, user.password)
             .then((res) => {
                 this.setState({
-                    id:res.data.id,
+                    id: res.data.id,
                     username: res.data.username,
                     password: res.data.password,
                     email: res.data.email,
-                    multiSelect:res.data.userListId
+                    multiSelect: res.data.userListId
                 });
-                console.log("user:",res.data)
             });
-        RoleService.listAllRole(username,password).then((res)=>{
-            this.setState({roles:res.data});
+        RoleService.listAllRole(user.username, user.password).then((res) => {
+            this.setState({roles: res.data});
         })
     }
 
     updateUser = (e) => {
-
-        const {username, password} = this.context;
+        const user = this.context;
         e.preventDefault();
         let person = {
-            id:this.state.id,
+            id: this.state.id,
             username: this.state.username,
             password: this.state.password,
             email: this.state.email,
-            userListId:this.state.multiRole
+            userListId: this.state.multiRole
         };
-
-        console.log('person =>' + JSON.stringify(person));
-        UserService.updatePerson(person, username, password)
+        UserService.updatePerson(person, user.username, user.password)
             .then(response => {
                 this.props.history.push('/listuser');
             })
-
     }
-
 
     render() {
         return (
@@ -96,7 +84,6 @@ class UserUpdate extends Component {
                                                value={this.state.username} onChange={(e) => {
                                             this.setState({username: e.target.value})
                                         }}/>
-
                                     </div>
                                     <div className="form-group">
                                         <label>Password</label>
@@ -104,7 +91,6 @@ class UserUpdate extends Component {
                                                value={this.state.password} onChange={(e) => {
                                             this.setState({password: e.target.value})
                                         }}/>
-
                                     </div>
                                     <div className="form-group">
                                         <label>E-Mail</label>
@@ -112,7 +98,6 @@ class UserUpdate extends Component {
                                                value={this.state.email} onChange={(e) => {
                                             this.setState({email: e.target.value})
                                         }}/>
-
                                     </div>
                                     <div className="form-group">
                                         <label> Role </label>
@@ -128,12 +113,10 @@ class UserUpdate extends Component {
                                                 )
                                             }
                                         </div>
-
                                     </div>
-
                                     <button className="btn btn-success" onClick={this.updateUser}>Save</button>
                                     <Link to="/list" className="btn btn-danger"
-                                            style={{marginLeft: "10px"}}>Cancel
+                                          style={{marginLeft: "10px"}}>Cancel
                                     </Link>
                                 </form>
                             </div>

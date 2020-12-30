@@ -1,4 +1,4 @@
-import {Table} from "react-bootstrap";
+import {Table, Navbar,Form, Button, FormControl} from "react-bootstrap";
 import ContextUser from "./ContextUser";
 import {useEffect, useContext, useState} from "react";
 import {useHistory} from "react-router-dom";
@@ -11,9 +11,8 @@ const ListCustomer = (props) => {
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(8);
     const [total, setTotal] = useState(0);
+    const [searchValue, setSearchValue] = useState();
     const history = useHistory();
-
-
     const [custumer, setCustumer] = useState([]);
 
     const getPageId = async (i) => {
@@ -23,17 +22,20 @@ const ListCustomer = (props) => {
         const res = await CustomerService.listAllCustomer(username, password, page, size);
         setCustumer(res.data.content);
         setTotal(res.data.totalElements);
+        console.log("data :", res.data);
+    }
 
+    const GetByCustomerName=async (e)=>{
+        const res= await CustomerService.getCustomerByName(username,password,page,size,searchValue);
+        setCustumer(res.data.content);
+        setTotal(res.data.totalElements);
         console.log("data :", res.data);
 
     }
-    const editCustomer=(id)=>{
 
-    }
-    const deleteCustomer=(id)=>{
-        CustomerService.deleteCustomer(id, username, password);
-        //setCustumer(customer.filter(item=> item.id !== id));
-
+    const changeHandler = (e) => {
+        setSearchValue(e.target.value);
+        console.log("search", searchValue);
     }
 
     useEffect(() => {
@@ -56,14 +58,22 @@ const ListCustomer = (props) => {
         )
     }
 
-
     return (
         <div>
             <Header/>
+
             <div className="container">
-                <div className="col-sm-12 mt-2">
+                <div className="col-sm-12 mt-4">
 
                     <dic className="card">
+                        <Navbar bg="light" expand="lg">
+                            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+                                <Form inline>
+                                    <FormControl type="text" placeholder="Search" className="mr-sm-2" value={searchValue} onChange={(e) => changeHandler(e)}/>
+                                    <Button className="btn-outline-primary" variant="outline-success" onClick={(e)=>GetByCustomerName(e)}>Search</Button>
+                                </Form>
+                        </Navbar>
 
                         <div>
                             <h2 className="text-center card-body mt-2 ">Customer List</h2>
@@ -71,24 +81,23 @@ const ListCustomer = (props) => {
                             <Table bordered hover striped variant="dark">
                                 <thead>
                                 <tr>
-
+                                    <th>Image</th>
                                     <th>Customer Name</th>
                                     <th>Phone</th>
                                     <th>Address</th>
                                     <th>Actions</th>
-
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {
-
                                     custumer.map(
                                         cust =>
                                             <tr key={cust.id}>
+                                                <td><img src={'data:image/png;base64,' + cust.media.fileContent} width="50" style={{margin: 3}}/>
+                                                </td>
                                                 <td>{cust.name}</td>
                                                 <td>{cust.phone}</td>
                                                 <td>{cust.address}</td>
-
 
                                                 <td>
                                                     <button onClick={(e) => selectCustomer(cust.id)}
@@ -130,7 +139,6 @@ const ListCustomer = (props) => {
             </div>
         </div>
     );
-
 
 }
 export default ListCustomer;

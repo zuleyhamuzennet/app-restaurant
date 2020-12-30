@@ -27,25 +27,26 @@ public class TableCategoryServiceTest {
     private TableCategoryRepository tableCategoryRepository;
     private TableCategoryDTO tableCategoryDTO = new TableCategoryDTO();
     private List<TableCategoryDTO> tableCategoryDTOS = new ArrayList<>();
+    String locale=null;
 
     @Before
     public void setUp() throws Exception {
-        tableCategoryDTO = new TableCategoryDTOBuilder().id(1L).tableCategoryDesc("deneme").tableCategoryName("name").count(2L).build();
+        tableCategoryDTO = new TableCategoryDTOBuilder().id(1L).media(null).tableCategoryDesc("deneme").tableCategoryName("name").count(2L).build();
         tableCategoryDTOS.add(tableCategoryDTO);
     }
 
     @Test
     public void shouldAddNewTableCategory() {
         Mockito.when(tableCategoryRepository.save(Mockito.any())).thenReturn(TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO));
-        TableCategoryDTO tableCategoryDTO1 = tableCategoryService.addTableCategory(tableCategoryDTO);
+        TableCategoryDTO tableCategoryDTO1 = tableCategoryService.addTableCategory(tableCategoryDTO,locale);
         Assert.assertNotNull(tableCategoryDTO1);
         Assert.assertEquals(tableCategoryDTO1.getId(), tableCategoryDTO.getId());
     }
 
     @Test
-    public void shouldUpdateTableCategorr() {
+    public void shouldUpdateTableCategory() {
         Mockito.when(tableCategoryRepository.saveAndFlush(Mockito.any())).thenReturn(TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO));
-        TableCategoryDTO tableCategoryDTO1 = tableCategoryService.updateTableCategory(tableCategoryDTO);
+        TableCategoryDTO tableCategoryDTO1 = tableCategoryService.updateTableCategory(tableCategoryDTO,locale);
         Assert.assertNotNull(tableCategoryDTO1);
         Assert.assertEquals(tableCategoryDTO1.getId(), tableCategoryDTO.getId());
     }
@@ -61,7 +62,7 @@ public class TableCategoryServiceTest {
     public void shouldDeleteTableCategory() {
         Long id = 1L;
         Mockito.when(tableCategoryRepository.findById(Mockito.any())).thenReturn(Optional.of(TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO)));
-        Long res = tableCategoryService.deleteByTableCategory(id);
+        Long res = tableCategoryService.deleteByTableCategory(id,locale);
         Assert.assertNotNull(res);
     }
 
@@ -69,7 +70,7 @@ public class TableCategoryServiceTest {
     public void shouldGetTableCategoryById() {
         Long id = 1L;
         Mockito.when(tableCategoryRepository.findById(id)).thenReturn(Optional.of(TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO)));
-        TableCategoryDTO res = tableCategoryService.getTableCategorytById(id);
+        TableCategoryDTO res = tableCategoryService.getTableCategorytById(id,locale);
         Assert.assertNotNull(res);
         Assert.assertEquals(res.getId(), tableCategoryDTO.getId());
     }

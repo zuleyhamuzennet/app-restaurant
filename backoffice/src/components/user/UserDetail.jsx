@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import Header from "../Header";
 import UserService from "../service/UserService";
-import ContextUser from "../ContextUser";
+import {AuthContext} from "../../contexts/AuthContext";
 
 class UserDetail extends Component {
-    static contextType=ContextUser;
+    static contextType=AuthContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +17,6 @@ class UserDetail extends Component {
         const {username,password}=this.context;
         UserService.getPersonById(this.state.id,username,password).then((res) => {
             this.setState({user: res.data});
-            console.log("user:", res.data);
         });
     }
 
@@ -49,9 +48,7 @@ class UserDetail extends Component {
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         );
     }

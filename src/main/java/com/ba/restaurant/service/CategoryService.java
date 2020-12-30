@@ -3,6 +3,8 @@ package com.ba.restaurant.service;
 import com.ba.restaurant.dto.CategoryDTO;
 import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.entity.Category;
+import com.ba.restaurant.exception.BusinessMessages;
+import com.ba.restaurant.exception.SystemException;
 import com.ba.restaurant.mapper.CategoryMapper;
 import com.ba.restaurant.mapper.ProductMapper;
 import com.ba.restaurant.repository.CategoryRepository;
@@ -24,44 +26,56 @@ public class CategoryService {
     @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    ProductMapper productMapper;
+
+    @Autowired
+    CategoryMapper categoryMapper;
+
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public CategoryDTO addCategory(CategoryDTO categoryDTO) {
-        Category category = CategoryMapper.INSTANCE.toEntity(categoryDTO);
-        categoryRepository.save(category);
+        if (categoryDTO == null) {
+            throw new SystemException(BusinessMessages.canNotBeAdded);
+        }
+        categoryRepository.save(categoryMapper.toEntity(categoryDTO));
         return categoryDTO;
     }
 
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public CategoryDTO updateCategory(CategoryDTO categoryDTO) {
-        Category category = CategoryMapper.INSTANCE.toEntity(categoryDTO);
-        categoryRepository.saveAndFlush(category);
+        if (categoryDTO == null || categoryDTO.getId() == null) {
+            throw new SystemException(BusinessMessages.canNotBeAdded);
+        }
+        categoryRepository.saveAndFlush(categoryMapper.toEntity(categoryDTO));
         return categoryDTO;
     }
 
     public List<ProductDTO> getProductsCategoryById(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
         List<ProductDTO> productDTOS = new ArrayList<>();
-        category.get().getProducts().forEach(product -> productDTOS.add(ProductMapper.INSTANCE.toDTO(product)));
+        category.get().getProducts().forEach(product -> productDTOS.add(productMapper.toDTO(product)));
         return productDTOS;
     }
 
     public CategoryDTO getCategoryById(Long id) {
+        if (id == null) {
+            throw new SystemException(BusinessMessages.idCanNotfound);
+        }
         Optional<Category> category = categoryRepository.findById(id);
-        CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO = CategoryMapper.INSTANCE.toDTO(category.get());
-        return categoryDTO;
+        return categoryMapper.toDTO(category.get());
     }
 
     @Cacheable(value = "CategoryCache")
     public List<CategoryDTO> listAllCategory() {
-        List<CategoryDTO> categoryDTOList = new ArrayList<>();
         List<Category> categories = categoryRepository.findAll();
-        categories.forEach(category -> categoryDTOList.add(CategoryMapper.INSTANCE.toDTO(category)));
-        return categoryDTOList;
+        return CategoryMapper.INSTANCE.toDTOS(categories);
     }
 
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public String deleteCategory(Long id) {
+        if (id == null) {
+            throw new SystemException(BusinessMessages.idCanNotfound);
+        }
         categoryRepository.deleteById(id);
         return null;
     }

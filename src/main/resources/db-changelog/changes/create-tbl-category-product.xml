@@ -12,7 +12,7 @@
             <column autoIncrement="true" name="category_id" type="int(1)">
                 <constraints primaryKey="true" nullable="false" foreignKeyName="fk_category" references="categories(id)"/>
             </column>
-            <column autoIncrement="true" name="product_id" type="int(1)">
+            <column autoIncrement="true"  name="product_id" type="int(1)">
                 <constraints primaryKey="true"  nullable="false" foreignKeyName="fk_product" references="product(id)"/>
             </column>
         </createTable>

@@ -71,6 +71,16 @@
             <column name="file_content" valueBlobFile="pizza222.png"></column>
         </insert>
 
+        <insert tableName="media">
+            <column name="id" value="14"></column>
+            <column name="media_name" value="restaurant"></column>
+            <column name="file_content" valueBlobFile="restaurant.png"></column>
+        </insert>
+        <insert tableName="media">
+            <column name="id" value="15"></column>
+            <column name="media_name" value="dinner-table"></column>
+            <column name="file_content" valueBlobFile="dinner-table.png"></column>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

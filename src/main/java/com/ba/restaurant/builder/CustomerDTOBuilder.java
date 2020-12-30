@@ -1,11 +1,13 @@
 package com.ba.restaurant.builder;
 import com.ba.restaurant.dto.CustomerDTO;
+import com.ba.restaurant.dto.MediaDTO;
 
 public class CustomerDTOBuilder extends DTOBuilder {
 
     private String name;
     private String address;
     private Long phone;
+    private MediaDTO media;
 
     public CustomerDTOBuilder id(Long id) {
         this.setId(id);
@@ -14,6 +16,10 @@ public class CustomerDTOBuilder extends DTOBuilder {
 
     public CustomerDTOBuilder name(String name) {
         this.name = name;
+        return this;
+    }
+    public CustomerDTOBuilder media(MediaDTO media) {
+        this.media = media;
         return this;
     }
 
@@ -35,6 +41,7 @@ public class CustomerDTOBuilder extends DTOBuilder {
         customerDTO.setAddress(this.address);
         customerDTO.setName(this.name);
         customerDTO.setPhone(this.phone);
+        customerDTO.setMedia(this.media);
         return customerDTO;
 
     }

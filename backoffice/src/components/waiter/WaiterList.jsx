@@ -4,63 +4,58 @@ import {Card, Table} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import WaiterService from "../service/WaiterService";
 import Loading from "../Loading";
-import ContextUser from "../ContextUser";
+import {AuthContext} from "../../contexts/AuthContext";
 
 class WaiterList extends Component {
-    static contextType=ContextUser;
+    static contextType = AuthContext;
+
     constructor(props) {
         super(props);
 
-        this.state={
-            waiters :[]
+        this.state = {
+            waiters: []
         }
-
-        this.deleteWaiter=this.deleteWaiter.bind(this);
     }
-    deleteWaiter(id) {
-        const {username,password}=this.context;
-        WaiterService.deleteWaiter(id,username,password).then(res=>{
-            this.setState({waiters:this.state.waiters.filter(waiter=>waiter.id!==id)})
+
+    deleteWaiter = (id) => {
+        const user = this.context;
+        WaiterService.deleteWaiter(id, user.username, user.password).then(res => {
+            this.setState({waiters: this.state.waiters.filter(waiter => waiter.id !== id)})
         });
-
     }
-    updateWaiter=(id)=>{
+
+    updateWaiter = (id) => {
         this.props.history.push({
-            pathname:`/update-waiter/${id}`,
-            state:{
-                id:id
+            pathname: `/update-waiter/${id}`,
+            state: {
+                id: id
             }
         })
     }
-    detailWaiter=(id,media)=>{
+
+    detailWaiter = (waiter) => {
         this.props.history.push({
-            pathname:`/detail-waiter/${id}`,
-            state:{
-                id:id,
-                media:media
+            pathname: `/detail-waiter/${waiter.id}`,
+            state: {
+                waiters: waiter
             }
         })
     }
 
     componentDidMount() {
-        const {username,password}=this.context;
-        this.setState({loadingVisible:true})
-        WaiterService.listAllWaiter(username,password).then((res) => {
-
-            this.setState({waiters: res.data,loadingVisible: false});
+        const user = this.context;
+        this.setState({loadingVisible: true})
+        WaiterService.listAllWaiter(user.username, user.password).then((res) => {
+            this.setState({waiters: res.data, loadingVisible: false});
         });
-
     }
 
     render() {
-        console.log(this.state.waiters);
         return (
-
             <div>
                 <Header/>
                 <br/>
                 <Card className={"border border-dark bg-dark text-white"}>
-
                     <Card.Body>
                         <h2 className="text-center">Waiter List</h2>
                         <Link to="/waiter-add" className="btn btn-success">Add Waiter</Link>
@@ -72,26 +67,21 @@ class WaiterList extends Component {
                                 <th>Waiter Mail</th>
                                 <th>Phone</th>
                                 <th>Address</th>
-
                                 <th>Actions</th>
-
                             </tr>
                             </thead>
                             <tbody>
                             {
-
                                 this.state.waiters.map(
                                     waiter =>
                                         <tr key={waiter.id}>
-                                            <td><img src={'data:image/png;base64,' + waiter.media.fileContent} width="40" height="40" style={{margin: 3}}/>
+                                            <td><img src={'data:image/png;base64,' + waiter.media.fileContent}
+                                                     width="40" height="40" style={{margin: 3}}/>
                                             </td>
                                             <td>{waiter.waiterName}</td>
                                             <td>{waiter.waiterMail}</td>
                                             <td>{waiter.phone}</td>
                                             <td>{waiter.address}</td>
-
-
-
                                             <td>
                                                 <button onClick={() => this.updateWaiter(waiter.id)}
                                                         className="btn btn-success"> Update
@@ -100,7 +90,7 @@ class WaiterList extends Component {
                                                         onClick={() => this.deleteWaiter(waiter.id)}
                                                         className="btn btn-outline-info"> Delete
                                                 </button>
-                                                <button onClick={() => this.detailWaiter(waiter.id,waiter.media.fileContent)}
+                                                <button onClick={() => this.detailWaiter(waiter)}
                                                         className="btn btn-warning">Detail
                                                 </button>
                                             </td>
@@ -112,10 +102,9 @@ class WaiterList extends Component {
                     </Card.Body>
                 </Card>
                 {
-                    this.state.loadingVisible?
-                        <Loading/>:null
+                    this.state.loadingVisible ?
+                        <Loading/> : null
                 }
-
             </div>
         );
     }

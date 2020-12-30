@@ -2,6 +2,7 @@ package com.ba.restaurant.controller;
 
 import com.ba.restaurant.dto.CategoryDTO;
 import com.ba.restaurant.builder.CategoryDTOBuilder;
+import com.ba.restaurant.exception.BusinessRuleException;
 import com.ba.restaurant.service.CategoryService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,12 +47,22 @@ public class CategoryControllerTest {
         Assert.assertNotNull(res);
     }
 
+    @Test(expected = BusinessRuleException.class)
+    public void shouldUpdateCategoryNot(){
+        CategoryDTO res=categoryController.updateCategory(null);
+    }
+
     @Test
-    public void shouldUpdatecategory() {
+    public void shouldUpdateCategory() {
         Mockito.when(categoryService.updateCategory(Mockito.any())).thenReturn(categoryDTO);
         CategoryDTO res = categoryController.updateCategory(categoryDTO);
         Assert.assertNotNull(res);
         Assert.assertEquals(res.getId(), categoryDTO.getId());
+    }
+
+    @Test(expected = BusinessRuleException.class)
+    public void shouldGetCategoryByIdNot(){
+        CategoryDTO res=categoryController.getCategoryById(null);
     }
 
     @Test
@@ -66,7 +77,7 @@ public class CategoryControllerTest {
     @Test
     public void shouldDeleteCategoryId() {
         Long id = 2L;
-        String response = categoryController.deleteCategory(id);
+        Long response = categoryController.deleteCategory(id);
         Assert.assertNull(response);
     }
 }

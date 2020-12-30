@@ -3,30 +3,30 @@ import Header from "../Header";
 import {Link} from "react-router-dom";
 import Loading from "../Loading";
 import RoleService from "../service/RoleService";
-import ContextUser from "../ContextUser";
+import {AuthContext} from "../../contexts/AuthContext";
 
 class AddRole extends Component {
-    static contextType=ContextUser;
+    static contextType= AuthContext;
     constructor(props) {
         super(props);
         this.state={
             id:'',
             name:''
         }
-        this.saveRole=this.saveRole.bind(this);
     }
+
     saveRole=(e)=>{
         e.preventDefault();
         let roles={
             id:this.state.id,
             name: this.state.name
         };
-        const {username,password}=this.context;
-        RoleService.addRole(roles,username,password).then(res=>{
+        const user = this.context;
+        RoleService.addRole(roles,user.username,user.password).then(res=>{
             this.props.history.push('/list-role');
         });
-
     }
+
     render() {
         return (
             <div >
@@ -34,12 +34,10 @@ class AddRole extends Component {
                 <br/>
                 <div className="container">
                     <div className="row">
-
                         <div className="card col-md-6 offset-md-3 offset-md-3">
                             <h3 className="text-center">Add Role</h3>
                             <div className="card-body" key={this.state.id}>
                                 <form>
-
                                     <div className="form-group">
                                         <label> Role Name </label>
                                         <input placeholder="Role Name" name="role" className="form-control"
@@ -49,11 +47,8 @@ class AddRole extends Component {
                                     <div className="form-group">
                                         <label> Media </label>
                                         <select className="selectpicker form-control" >
-
                                         </select>
-
                                     </div>
-
                                     <button className="btn btn-success" onClick={this.saveRole}>Save</button>
                                     <Link to="/waiters" className="btn btn-danger"
                                           style={{marginLeft: "10px"}}>Cancel

@@ -15,6 +15,10 @@
             <column name="name" type="VARCHAR(255)"/>
             <column name="phone" type="int(1)"/>
             <column name="address" type="VARCHAR(255)"/>
+            <column name="media_id" type="int(1)">
+                <constraints foreignKeyName="fk_media_customer" references="media(id)"/>
+
+            </column>
         </createTable>
 
 

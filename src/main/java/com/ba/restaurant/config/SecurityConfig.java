@@ -35,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("login/**").permitAll();
         http.authorizeRequests().antMatchers("h2-console/**").permitAll();
+       // http.authorizeRequests().antMatchers("3306/**").permitAll();
+        http.authorizeRequests().antMatchers("swagger-ui.html#/**").permitAll();
         http.csrf().disable();
         http.headers().frameOptions().disable();
         http.authorizeRequests().antMatchers("/product/add").access("hasAnyRole('USER','ADMIN')");

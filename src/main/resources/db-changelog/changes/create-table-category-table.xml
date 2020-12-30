@@ -15,22 +15,29 @@
             <column name="table_category_desc" type="VARCHAR(255)"/>
             <column name="table_category_name" type="VARCHAR(255)"/>
             <column name="count" type="int(1)"/>
+            <column name="media_id" type="int(1)">
+                <constraints foreignKeyName="fk_media_table" references="media(id)"/>
+
+            </column>
         </createTable>
 
         <insert tableName="table_category">
             <column name="table_category_desc" value="açık hava"></column>
             <column name="table_category_name" value="Teras"></column>
             <column name="count" valueNumeric='5'></column>
+            <column name="media_id" valueNumeric='14'></column>
         </insert>
         <insert tableName="table_category">
             <column name="table_category_desc" value="kapalı alan"></column>
             <column name="table_category_name" value="Salon"></column>
             <column name="count" valueNumeric='8'></column>
+            <column name="media_id" valueNumeric='15'></column>
         </insert>
         <insert tableName="table_category">
             <column name="table_category_desc" value="arka taraf"></column>
             <column name="table_category_name" value="Bahçe"></column>
             <column name="count" valueNumeric='6'></column>
+            <column name="media_id" valueNumeric='15'></column>
         </insert>
 
         <rollback>

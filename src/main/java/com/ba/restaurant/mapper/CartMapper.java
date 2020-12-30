@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel="spring")
 public interface CartMapper {
 
     CartMapper INSTANCE= Mappers.getMapper(CartMapper.class);
@@ -15,5 +15,6 @@ public interface CartMapper {
     Cart toEntity(CartDTO cartDTO);
     CartDTO toDTO(Cart cart);
     List<Cart> toEntities(List<CartDTO> cartDTOS);
+    List<CartDTO> toDTOs(List<Cart> carts);
 
 }

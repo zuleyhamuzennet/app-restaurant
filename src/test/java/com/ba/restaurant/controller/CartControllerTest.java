@@ -2,6 +2,7 @@ package com.ba.restaurant.controller;
 
 import com.ba.restaurant.dto.CartDTO;
 import com.ba.restaurant.builder.CartDTOBuilder;
+import com.ba.restaurant.exception.BusinessRuleException;
 import com.ba.restaurant.service.CartService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -50,5 +51,9 @@ public class CartControllerTest {
         Assert.assertNotNull(cartDTOList);
     }
 
-
+    @Test(expected = BusinessRuleException.class)
+    public void shouldAddCartNot(){
+        List<CartDTO> res=cartController.addCart(cartDTOS);
+        Assert.assertNotNull(res);
+    }
 }

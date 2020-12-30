@@ -2,78 +2,51 @@ import React, {Component} from 'react';
 import CategoryService from "../service/CategoryService";
 import Header from "../Header";
 import {Link} from "react-router-dom";
-import axios from "axios"
 import Loading from "../Loading";
-import ContextUser from "../ContextUser";
 import MediaService from "../service/MediaService";
-
+import {AuthContext} from "../../contexts/AuthContext";
 
 class AddCategory extends Component {
-    static contextType=ContextUser;
+    static contextType=AuthContext;
     constructor(props) {
         super(props)
-
         this.state = {
-            id: '',
             categoryName: '',
             catDescription: '',
             mediaList: [],
-            mediaId:'',
-            media:{}
+            mediaId: '',
+            media: {}
         }
-        this.saveCategory = this.saveCategory.bind(this);
-        this.getFiles = this.getFiles.bind(this);
     }
+
     saveCategory = (e) => {
-        const {username,password}=this.context;
+        const user = this.context;
         e.preventDefault();
         let categories = {
-            id: this.state.id,
             categoryName: this.state.categoryName,
             catDescription: this.state.catDescription,
-            media:this.state.media
-
+            media: this.state.media
         };
-        console.log('categories => ' + JSON.stringify(categories));
-        CategoryService.addCategory(categories,username,password).then(res => {
+        CategoryService.addCategory(categories, user.username, user.password).then(res => {
             this.props.history.push('/list-category');
         });
     }
-    changeMediaHandler=(event)=>{
-        this.setState({mediaId:event.target.value});
-        console.log(this.state.mediaId);
 
+    changeMediaHandler = (event) => {
+        this.setState({mediaId: event.target.value});
+        console.log(this.state.mediaId);
         const valueMedia = this.state.mediaList.filter(item => item.id == this.state.mediaId)
         this.setState({media: valueMedia[0]})
     }
-    componentDidMount() {
-        this.setState({loadingVisible:true})
-        const {username,password}=this.context;
 
-        MediaService.listAllMedia(username,password).then((res) => {
-            this.setState({mediaList: res.data,loadingVisible:false})
-            console.log("res data", res.data);
+    componentDidMount() {
+        this.setState({loadingVisible: true})
+        const user = this.context;
+
+        MediaService.listAllMedia(user.username, user.password).then((res) => {
+            this.setState({mediaList: res.data, loadingVisible: false})
         })
     }
-
-    getFiles = () => {
-        if (!this.state.mediaList) {
-            return null;
-        }
-
-        let list = [];
-        this.state.mediaList.map(media =>
-            list.push(
-                <label><img  src={'data:image/png;base64,' + media.fileContent} width="150" style={{margin: 3}}/>{media.mediaName}</label>
-            )
-        );
-        return (
-            <ul>
-                {list}
-            </ul>
-        );
-    }
-
 
     render() {
         return (
@@ -81,40 +54,41 @@ class AddCategory extends Component {
                 <Header/>
                 <br/>
                 <div className="container">
-                    <div className="col-sm-12 mt-2">
                         <div className="row">
-                            <div className="card col-sm-6">
+                            <div className="card col-md-6 offset-md-3 offset-md-3">
                                 <h3 className="text-center">Add Category</h3>
                                 <div className="card-body">
                                     <form>
-
                                         <div className="form-group">
                                             <label> Category Name </label>
                                             <input placeholder="Product Name" name="productName"
                                                    className="form-control"
                                                    value={this.state.categoryName}
-                                                   onChange={(e)=>{this.setState({categoryName:e.target.value})}}/>
+                                                   onChange={(e) => {
+                                                       this.setState({categoryName: e.target.value})
+                                                   }}/>
                                         </div>
                                         <div className="form-group">
                                             <label> Description </label>
                                             <input placeholder="Description" name="description" className="form-control"
                                                    value={this.state.catDescription}
-                                                   onChange={(e)=>{this.setState({catDescription:e.target.value})}}/>
+                                                   onChange={(e) => {
+                                                       this.setState({catDescription: e.target.value})
+                                                   }}/>
                                         </div>
                                         <div className="form-group">
                                             <label> Media </label>
-                                            <select className="selectpicker form-control" onChange={this.changeMediaHandler}>
+                                            <select className="selectpicker form-control"
+                                                    onChange={this.changeMediaHandler}>
                                                 {
-
-                                                this.state.mediaList.map(
-
-                                                    media=>
-
-                                                        <option   key={media.id}  value ={media.id}>{media.mediaName}</option>
-                                                )
-                                            }
+                                                    this.state.mediaList.map(
+                                                        media =>
+                                                            <option key={media.id}
+                                                                    value={media.id}>{media.mediaName}
+                                                            </option>
+                                                    )
+                                                }
                                             </select>
-
                                         </div>
                                         <button className="btn btn-success" onClick={this.saveCategory}>Save</button>
                                         <Link to="/list-category" className="btn btn-danger"
@@ -126,20 +100,14 @@ class AddCategory extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="card col-sm-6">
-                                {this.getFiles()}
-                            </div>
                         </div>
-                    </div>
                 </div>
                 {
-                    this.state.loadingVisible?
-                        <Loading/>:null
+                    this.state.loadingVisible ?
+                        <Loading/> : null
                 }
             </div>
         );
     }
 }
-
-
 export default AddCategory;

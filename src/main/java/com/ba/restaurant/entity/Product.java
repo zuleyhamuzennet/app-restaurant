@@ -6,7 +6,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +18,7 @@ import java.util.List;
 @Entity
 public class Product extends BaseEntity {
 
+    @Column(name = "product_name")
     private String productName;
     private String description;
     private double price;

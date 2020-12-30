@@ -7,14 +7,11 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel="spring")
 public interface WaiterMapper {
     WaiterMapper INSTANCE= Mappers.getMapper(WaiterMapper.class);
     Waiter toEntity(WaiterDTO waiterDTO);
-
-
     WaiterDTO toDTO(Waiter waiter);
     List<Waiter> toEntities(List<WaiterDTO> waiterDTOS);
-
-
+    List<WaiterDTO> toDTOs(List<Waiter> waiters);
 }

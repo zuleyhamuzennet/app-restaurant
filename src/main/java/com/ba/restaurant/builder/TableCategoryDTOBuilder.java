@@ -1,5 +1,6 @@
 package com.ba.restaurant.builder;
 
+import com.ba.restaurant.dto.MediaDTO;
 import com.ba.restaurant.dto.TableCategoryDTO;
 
 public class TableCategoryDTOBuilder extends DTOBuilder {
@@ -7,9 +8,15 @@ public class TableCategoryDTOBuilder extends DTOBuilder {
     private String tableCategoryDesc;
     private String tableCategoryName;
     private Long count;
+    private MediaDTO media;
 
     public TableCategoryDTOBuilder id(Long id) {
         this.setId(id);
+        return this;
+    }
+
+    public TableCategoryDTOBuilder media(MediaDTO media) {
+        this.media = media;
         return this;
     }
 
@@ -36,6 +43,7 @@ public class TableCategoryDTOBuilder extends DTOBuilder {
         tableCategoryDTO.setCount(this.count);
         tableCategoryDTO.setTableCategoryDesc(this.tableCategoryDesc);
         tableCategoryDTO.setTableCategoryName(this.tableCategoryName);
+        tableCategoryDTO.setMedia(this.media);
         return tableCategoryDTO;
     }
 }

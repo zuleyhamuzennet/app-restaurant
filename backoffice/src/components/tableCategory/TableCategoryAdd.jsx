@@ -2,41 +2,56 @@ import React, {Component} from 'react';
 import TableCategoryService from "../service/TableCategoryService";
 import Header from "../Header";
 import {Link} from "react-router-dom";
-import ContextUser from "../ContextUser";
+import MediaService from "../service/MediaService";
+import {AuthContext} from "../../contexts/AuthContext";
 
 
 class TableCategoryAdd extends Component {
-    static contextType=ContextUser;
+    static contextType = AuthContext;
+
     constructor(props) {
         super(props)
-
         this.state = {
             id: '',
             tableCategoryName: '',
             tableCategoryDesc: '',
-            count: ''
-
-
+            count: '',
+            mediaList: [],
+            media: {},
+            mediaId: ''
         }
-        this.saveTableCategory = this.saveTableCategory.bind(this);
     }
 
     saveTableCategory = (e) => {
-        const{username,password}=this.context;
+        const user = this.context;
         e.preventDefault();
 
         let tableCategories = {
             id: this.state.id,
             tableCategoryName: this.state.tableCategoryName,
             tableCategoryDesc: this.state.tableCategoryDesc,
+            media: this.state.media,
             count: this.state.count
 
         };
-        console.log('tableCategories => ' + JSON.stringify(tableCategories));
-        TableCategoryService.addTableCategory(tableCategories,username,password).then(res => {
+        TableCategoryService.addTableCategory(tableCategories, user.username, user.password).then(res => {
             this.props.history.push('/table-categories');
         });
+    }
 
+    changeMediaHandler = (e) => {
+        this.setState({mediaId: e.target.value});
+        console.log(this.state.mediaId);
+        const valueMedia = this.state.mediaList.filter(item => item.id == this.state.mediaId)
+        this.setState({media: valueMedia[0]})
+    }
+
+    componentDidMount() {
+        const user = this.context;
+        MediaService.listAllMedia(user.username, user.password).then((res) => {
+                this.setState({mediaList: res.data})
+            }
+        )
     }
 
     render() {
@@ -50,29 +65,45 @@ class TableCategoryAdd extends Component {
                             <h3 className="text-center">Add Table Category</h3>
                             <div className="card-body" key={this.state.id}>
                                 <form>
-
                                     <div className="form-group">
                                         <label> Category Name </label>
                                         <input placeholder="Product Name" name="productName" className="form-control"
                                                value={this.state.tableCategoryName}
-                                               onChange={(e)=>{this.setState({tableCategoryName:e.target.value})}}/>
+                                               onChange={(e) => {
+                                                   this.setState({tableCategoryName: e.target.value})
+                                               }}/>
                                     </div>
                                     <div className="form-group">
                                         <label> Description </label>
                                         <input placeholder="Description" name="description" className="form-control"
                                                value={this.state.tableCategoryDesc}
-                                               onChange={(e)=>{this.setState({tableCategoryDesc:e.target.value})}}/>
+                                               onChange={(e) => {
+                                                   this.setState({tableCategoryDesc: e.target.value})
+                                               }}/>
                                     </div>
                                     <div className="form-group">
                                         <label>Table Number</label>
                                         <input placeholder="Table Number" name="table number" className="form-control"
-                                               value={this.state.count} onChange={(e)=>{this.setState({count:e.target.value})}}/>
-
+                                               value={this.state.count} onChange={(e) => {
+                                            this.setState({count: e.target.value})
+                                        }}/>
                                     </div>
-
+                                    <div className="form-group">
+                                        <label>Media</label>
+                                        <select className="selectpicker form-control"
+                                                onChange={this.changeMediaHandler}>
+                                            {
+                                                this.state.mediaList.map(
+                                                    media =>
+                                                        <option key={media.id}
+                                                                value={media.id}>{media.mediaName}</option>
+                                                )
+                                            }
+                                        </select>
+                                    </div>
                                     <button className="btn btn-success" onClick={this.saveTableCategory}>Save</button>
                                     <Link to="/table-categories" className="btn btn-danger"
-                                            style={{marginLeft: "10px"}}>Cancel
+                                          style={{marginLeft: "10px"}}>Cancel
                                     </Link>
                                 </form>
                             </div>

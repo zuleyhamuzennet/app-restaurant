@@ -3,67 +3,49 @@ import CategoryService from "../service/CategoryService";
 import MediaService from "../service/MediaService";
 import Header from "../Header";
 import {Link} from "react-router-dom";
-import ContextUser from "../ContextUser";
+import {AuthContext} from "../../contexts/AuthContext";
 
 class UpdateCategory extends Component {
-    static contextType=ContextUser;
+    static contextType=AuthContext
     constructor(props) {
         super(props);
 
         this.state = {
-            id: this.props.history.location.state?.id,
-            categoryName: '',
-            catDescription: '',
+            category: this.props.history.location.state?.categories,
+            id:this.props.history.location.state?.categories.id,
+            categoryName: this.props.history.location.state?.categories.categoryName,
+            catDescription: this.props.history.location.state?.categories.catDescription,
             mediaList: [],
             mediaId: '',
             media: {}
         }
-        this.editCategory = this.editCategory.bind(this);
-        this.changeMediaHandler = this.changeMediaHandler.bind(this);
     }
 
     componentDidMount() {
-        const {username, password} = this.context;
-        CategoryService.getCategoryById(this.state.id, username, password).then((res) => {
-
-            this.setState({
-                id: res.data.id,
-                categoryName: res.data.categoryName,
-                catDescription: res.data.catDescription,
-
-            });
-        });
-        MediaService.listAllMedia(username,password).then((res) => {
+        const user = this.context;
+        MediaService.listAllMedia(user.username,user.password).then((res) => {
             this.setState({mediaList: res.data})
         });
     }
 
     editCategory = (e) => {
-
-        const {username, password} = this.context;
+        const user = this.context;
         let category = {
             id: this.state.id,
             categoryName: this.state.categoryName,
             catDescription :this.state.catDescription,
             media:this.state.media
-
-
         };
-        console.log('category => ' + JSON.stringify(category));
-        CategoryService.updateCategory(category, username, password).then(res => {
+        CategoryService.updateCategory(category, user.username, user.password).then(res => {
             this.props.history.push('/list-category')
         });
-
         e.preventDefault();
     }
 
     changeMediaHandler = (event) => {
         this.setState({mediaId:event.target.value});
-        console.log(this.state.mediaId);
-
         const valueMedia = this.state.mediaList.filter(item => item.id == this.state.mediaId)
         this.setState({media: valueMedia[0]})
-
     }
 
     render() {
@@ -81,7 +63,6 @@ class UpdateCategory extends Component {
                                         <label> Category </label>
                                         <select className="selectpicker form-control"
                                                 onChange={this.changeMediaHandler}>{
-
                                             this.state.mediaList.map(
                                                 media =>
                                                     <option key={media.id}
@@ -89,9 +70,7 @@ class UpdateCategory extends Component {
                                             )
                                         }
                                         </select>
-
                                     </div>
-
                                     <div className="form-group">
                                         <label> Category Name </label>
                                         <input placeholder="Category Name" name="categoryName" className="form-control"
@@ -115,8 +94,6 @@ class UpdateCategory extends Component {
                         </div>
                     </div>
                 </div>
-
-
             </div>
         );
     }

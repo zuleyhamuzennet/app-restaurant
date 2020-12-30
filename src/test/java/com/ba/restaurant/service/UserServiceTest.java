@@ -2,6 +2,7 @@ package com.ba.restaurant.service;
 
 import com.ba.restaurant.dto.UserDTO;
 import com.ba.restaurant.entity.Role;
+import com.ba.restaurant.exception.SystemException;
 import com.ba.restaurant.mapper.UserMapper;
 import com.ba.restaurant.repository.RoleRepository;
 import com.ba.restaurant.repository.UsersRepository;
@@ -83,6 +84,10 @@ public class UserServiceTest {
         String res = userService.deleteUser(id);
         Assert.assertNull(res);
 
+    }
+    @Test(expected = SystemException.class)
+    public void shouldDeleteUserByIdNot(){
+        userService.deleteUser(null);
     }
 
 }

@@ -1,9 +1,9 @@
 package com.ba.restaurant.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.ba.restaurant.config.LocaleConfig;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Locale;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @GetMapping("/")
-    public void login(){
-
+    public String login(@RequestHeader("Accept-Language") String locale) {
+        return LocaleConfig.messageSource().getMessage("hello.txt", null, new Locale(locale));
     }
+
 
 }

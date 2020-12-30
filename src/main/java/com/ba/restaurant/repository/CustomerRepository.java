@@ -11,5 +11,5 @@ public interface CustomerRepository extends JpaRepository<Customer,Long> {
     @Override
     Page<Customer> findAll(Pageable pageable);
 
-   //  Page<Customer> findCustomersByNameContains(Pageable pageable);
+    Page<Customer> findAllByNameContains(Pageable pageable, String name);
 }

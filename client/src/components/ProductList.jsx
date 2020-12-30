@@ -69,8 +69,8 @@ class ProductList extends Component {
                     loadingVisible: false
                 });
                 console.log("data :", res.data);
-                for (let i = 0; i < res.data.listProductDTO.length; i++) {
-                    this.state.productList.push(res.data.listProductDTO[i])
+                for (let i = 0; i < res.data.content.length; i++) {
+                    this.state.productList.push(res.data.content[i])
                 }
                 this.setState({productList: this.state.productList});
             })
@@ -94,7 +94,7 @@ class ProductList extends Component {
             }
         }).then((res) => {
             this.setState({
-                productList: res.data.listProductDTO,
+                productList: res.data.content,
                 hasNext: res.data.hasNext,
                 loadingVisible: false
             });
@@ -192,7 +192,7 @@ class ProductList extends Component {
             console.log(res.data);
             this.setState({categories: res.data});
         });
-        this.listProductByCategory(this.state.categories[0].categoryId);
+        this.listProductByCategory(this.state.categories[0].id);
     }
 
     componentDidMount() {
@@ -235,12 +235,12 @@ class ProductList extends Component {
                                         this.state.categories.map(
                                             product =>
 
-                                                <tr key={product.categoryId}>
+                                                <tr key={product.id}>
                                                     <td><img
                                                         src={'data:image/png;base64,' + product.media.fileContent}
                                                         width="40" style={{margin: 3}}/></td>
                                                     <td
-                                                        onClick={() => this.listProductByCategory(product.categoryId)}>
+                                                        onClick={() => this.listProductByCategory(product.id)}>
                                                         {product.categoryName}</td>
 
                                                 </tr>

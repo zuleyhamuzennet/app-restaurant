@@ -6,7 +6,6 @@ class CustomerService {
 
     addCustomer(customer, username, password) {
         return axios.post(CUSTOMER_API_URL, customer, {
-
             auth: {
 
                 username: username,
@@ -22,6 +21,21 @@ class CustomerService {
             params:{
               page:page,
               size:size
+            },
+            auth:{
+
+                username:username,
+                password:password
+            }
+
+        });
+    }
+    getCustomerByName(username, password,page,size,name) {
+        return axios.get(CUSTOMER_API_URL + 'search',{
+            params:{
+                page:page,
+                size:size,
+                name:name
             },
             auth:{
 

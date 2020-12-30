@@ -3,6 +3,8 @@ package com.ba.restaurant.controller;
 import com.ba.restaurant.builder.UserDTOBuilder;
 import com.ba.restaurant.dto.UserDTO;
 import com.ba.restaurant.dto.WaiterDTO;
+import com.ba.restaurant.exception.BusinessRuleException;
+import com.ba.restaurant.exception.SystemException;
 import com.ba.restaurant.mapper.UserMapper;
 import com.ba.restaurant.service.UserService;
 import org.junit.Assert;
@@ -49,6 +51,10 @@ public class UserControllerTest {
         Assert.assertNotNull(res);
         Assert.assertEquals(res.getId(), userDTO.getId());
     }
+    @Test(expected = SystemException.class)
+    public void shouldUpdateNot() {
+        userController.updateUser(null);
+    }
 
     @Test
     public void shouldListAllUsers() {
@@ -61,6 +67,11 @@ public class UserControllerTest {
         Long response = userController.deleteUserById(id);
         Assert.assertNotNull(response);
     }
+    @Test(expected = BusinessRuleException.class)
+    public void shouldDeleteIdNot() {
+        userController.deleteUserById(null);
+    }
+
     @Test
     public void shouldGetUserById() {
         Long id = 1L;
@@ -68,6 +79,10 @@ public class UserControllerTest {
         UserDTO res = userController.getUserById(id);
         Assert.assertNotNull(res);
         Assert.assertEquals(res.getId(), userDTO.getId());
+    }
+    @Test(expected = BusinessRuleException.class)
+    public void shouldGetUserIdNot() {
+        userController.getUserById(null);
     }
 
 }

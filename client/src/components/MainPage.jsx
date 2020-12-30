@@ -53,6 +53,7 @@ class MainPage extends Component {
                                 width:'300px'}}
                             >
                                 <h2 style={{textAlign :"center"}}>Tables</h2>
+
                             </Card>
                             </div>
                         </div>

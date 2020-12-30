@@ -13,7 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +37,12 @@ public class MediaControllerTest {
     }
 
     @Test
-    public void shouldAddMedia() {
-        // Mockito.when(mediaService.addfile(Mockito.)).
+    public void shouldAddMedia() throws IOException {
+        String name = "adv";
+        Mockito.when(mediaService.addfile(Mockito.any(),Mockito.any())).thenReturn("eklendi");
+        MultipartFile multipartFile = null;
+        String res = mediaController.addMedia(multipartFile,name);
+        Assert.assertNotNull(res);
     }
 
     @Test

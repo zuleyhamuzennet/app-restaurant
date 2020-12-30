@@ -4,7 +4,7 @@
         xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
-    <changeSet id="17-12-2020_15:51" author="zuleyha.muzennet">
+    <changeSet id="17-12-2020_16:52" author="zuleyha.muzennet">
 
         <createTable tableName="media">
             <column autoIncrement="true" name="id" type="int(10)">
@@ -13,7 +13,7 @@
             <column name="media_name" type="VARCHAR(255)">
 
             </column>
-            <column name="file_content" type="blob(100000000)"/>
+            <column name="file_content" type="blob(10000000)"/>
         </createTable>
     </changeSet>
 

@@ -1,5 +1,6 @@
 package com.ba.restaurant.dto;
 
+import com.ba.restaurant.entity.Media;
 import lombok.*;
 
 @Getter
@@ -11,6 +12,7 @@ public class TableCategoryDTO extends BaseDTO{
     private String tableCategoryDesc;
     private String tableCategoryName;
     private Long count;
-    private boolean deleted;
+    private MediaDTO media;
+
 
 }

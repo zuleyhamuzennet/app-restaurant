@@ -13,6 +13,7 @@ public class CartDTOBuilder extends DTOBuilder {
     private long tableCategoryId;
     private long waiterId;
     private Date cartDate;
+    private long customerId;
 
     public CartDTOBuilder cartDate(Date cartDate) {
         this.cartDate = cartDate;
@@ -36,6 +37,10 @@ public class CartDTOBuilder extends DTOBuilder {
 
     public CartDTOBuilder price(Long price) {
         this.price = price;
+        return this;
+    }
+    public CartDTOBuilder customerId(Long customerId) {
+        this.customerId = customerId;
         return this;
     }
 
@@ -75,6 +80,8 @@ public class CartDTOBuilder extends DTOBuilder {
         cartDTO.setTableCartId(this.tableCartId);
         cartDTO.setTableCategoryId(this.tableCategoryId);
         cartDTO.setTotal(this.total);
+        cartDTO.setCartDate(this.cartDate);
+        cartDTO.setCustomerId(this.customerId);
 
         return cartDTO;
 

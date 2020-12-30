@@ -1,7 +1,11 @@
 package com.ba.restaurant.controller;
 
 import com.ba.restaurant.builder.ProductDTOBuilder;
+import com.ba.restaurant.dto.CustomerDTO;
 import com.ba.restaurant.dto.ProductDTO;
+import com.ba.restaurant.entity.Product;
+import com.ba.restaurant.exception.BusinessRuleException;
+import com.ba.restaurant.exception.SystemException;
 import com.ba.restaurant.service.ProductService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,6 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +41,6 @@ public class ProductControllerTest {
 
     @Test
     public void shouldAddProduct() {
-        Long id = 1L;
         Mockito.when(productService.addProduct(Mockito.any())).thenReturn(productDTO);
         ProductDTO res = productController.addProduct(productDTO);
         Assert.assertNotNull(res);
@@ -44,7 +49,6 @@ public class ProductControllerTest {
 
     @Test
     public void shoulUpdateProduct() {
-        Long id = 1L;
         Mockito.when(productService.updateProduct(Mockito.any())).thenReturn(productDTO);
         ProductDTO res = productController.updateProduct(productDTO);
         Assert.assertNotNull(res);
@@ -62,14 +66,34 @@ public class ProductControllerTest {
 
     @Test
     public void shouldListAllProduct() {
-        List<ProductDTO> responses = productController.listAllProduct();
-        Assert.assertNotNull(responses);
+        List<ProductDTO> res= productService.listAllProduct();
+        Assert.assertNotNull(res);
+    }
+
+    @Test
+    public void ShouldLoadMore(){
+        Pageable pageable= PageRequest.of(0,8);
+        Slice<ProductDTO> slice=new SliceImpl<ProductDTO>(productDTOS);
+        Assert.assertNotNull(slice);
+    }
+
+    @Test
+    public void shouldSearchPage(){
+        Pageable pageable = PageRequest.of(0, 8);
+        Page<ProductDTO> page=new PageImpl<ProductDTO>(productDTOS);
+        Mockito.when(productService.searchProducts(pageable)).thenReturn(page);
+        Assert.assertNotNull(page);
+    }
+
+    @Test(expected = BusinessRuleException.class)
+    public void shouldDeleteProductIdNot(){
+        productController.deleteProduct(null);
     }
 
     @Test
     public void shouldDeleteProductId() {
         Long id = 1L;
         Long response = productController.deleteProduct(id);
-        Assert.assertNotNull(response);
+        Assert.assertNull(response);
     }
 }

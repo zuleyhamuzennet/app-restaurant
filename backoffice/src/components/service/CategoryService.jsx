@@ -16,11 +16,6 @@ class CategoryService {
 
     updateCategory(category, username, password) {
         return axios.put(CATEGORY_API_BASE_URL + 'update/', category, {
-            /* auth:{
-
-                 username:localStorage.getItem("username"),
-                 password:localStorage.getItem("password")
-             }*/
             auth: {
                 username: username,
                 password: password
@@ -35,21 +30,11 @@ class CategoryService {
                 username: username,
                 password: password
             }
-            /* auth:{
-
-                 username:localStorage.getItem("username"),
-                 password:localStorage.getItem("password")
-             }*/
         });
     }
 
     getCategoryById(id, username, password) {
         return axios.get(CATEGORY_API_BASE_URL + id, {
-            /* auth:{
-
-                 username:localStorage.getItem("username"),
-                 password:localStorage.getItem("password")
-             }*/
             auth: {
 
                 username: username,

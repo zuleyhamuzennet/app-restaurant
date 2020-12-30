@@ -12,9 +12,10 @@ public class Media {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name="media_name")
     private String mediaName;
 
-    @Column(length = 100000000)
+    @Column(name="file_content",length = 10000000)
     private byte[] fileContent;
 
 }

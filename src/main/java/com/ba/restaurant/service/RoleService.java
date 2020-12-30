@@ -2,6 +2,8 @@ package com.ba.restaurant.service;
 
 import com.ba.restaurant.dto.RoleDTO;
 import com.ba.restaurant.entity.Role;
+import com.ba.restaurant.exception.BusinessMessages;
+import com.ba.restaurant.exception.BusinessRuleException;
 import com.ba.restaurant.mapper.RoleMapper;
 import com.ba.restaurant.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,26 +18,36 @@ public class RoleService {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    RoleMapper roleMapper;
+
     public List<RoleDTO> listAllRoles() {
-        List<RoleDTO> roleDTOS = new ArrayList<>();
         List<Role> roles = roleRepository.findAll();
-        roles.forEach(role -> roleDTOS.add(RoleMapper.INSTANCE.toDTO(role)));
-        return roleDTOS;
+        return roleMapper.toDTOs(roles);
     }
 
     public RoleDTO addRole(RoleDTO roleDTO) {
+        if(roleDTO==null){
+            throw new BusinessRuleException(BusinessMessages.canNotBeAdded);
+        }
         Role role = RoleMapper.INSTANCE.toEntity(roleDTO);
         roleRepository.save(role);
         return roleDTO;
     }
 
     public RoleDTO updateRole(RoleDTO roleDTO) {
+        if(roleDTO==null||roleDTO.getId()==null){
+            throw new BusinessRuleException(BusinessMessages.canNotBeUpdated);
+        }
         Role role = RoleMapper.INSTANCE.toEntity(roleDTO);
         roleRepository.saveAndFlush(role);
         return roleDTO;
     }
 
     public String deleteRoleById(Long id) {
+        if(id==null){
+            throw new BusinessRuleException(BusinessMessages.idCanNotfound);
+        }
         roleRepository.deleteById(id);
         return null;
     }

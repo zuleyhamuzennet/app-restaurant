@@ -1,10 +1,10 @@
 package com.ba.restaurant.service;
 
 import com.ba.restaurant.dto.ProductDTO;
-import com.ba.restaurant.dto.ProductSliceWrapperDTO;
-import com.ba.restaurant.dto.ProductWrapperDTO;
 import com.ba.restaurant.entity.Category;
 import com.ba.restaurant.entity.Product;
+import com.ba.restaurant.exception.BusinessMessages;
+import com.ba.restaurant.exception.SystemException;
 import com.ba.restaurant.mapper.ProductMapper;
 import com.ba.restaurant.repository.CategoryRepository;
 import com.ba.restaurant.repository.ProductRepository;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-
 @Service
 public class ProductService {
 
@@ -28,8 +27,14 @@ public class ProductService {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    ProductMapper productMapper;
+
     public ProductDTO addProduct(ProductDTO productDTO) {
-        Product product = ProductMapper.INSTANCE.toEntity(productDTO);
+        if (productDTO == null) {
+            throw new SystemException(BusinessMessages.canNotBeAdded);
+        }
+        Product product = productMapper.toEntity(productDTO);
         for (int i = 0; i < productDTO.getCategoryListId().size(); i++) {
             Optional<Category> category = categoryRepository.findById(productDTO.getCategoryListId().get(i));
             category.get().getProducts().add(product);
@@ -39,59 +44,53 @@ public class ProductService {
     }
 
     public ProductDTO updateProduct(ProductDTO productDTO) {
-        Product product = ProductMapper.INSTANCE.toEntity(productDTO);
+        if (productDTO == null || productDTO.getId() == null) {
+            throw new SystemException(BusinessMessages.canNotBeUpdated);
+        }
+        Product product = productMapper.toEntity(productDTO);
         List<Category> categoryList = categoryRepository.findAllById(productDTO.getCategoryListId());
         product.setCategories(categoryList);
         productRepository.saveAndFlush(product);
         return productDTO;
-
     }
 
     public ProductDTO getProductById(Long id) {
+        if (id == null) {
+            throw new SystemException(BusinessMessages.idCanNotfound);
+        }
         Product product = productRepository.findById(id).get();
-        ProductDTO productDTO = ProductMapper.INSTANCE.toDTO(product);
-        return productDTO;
+        return productMapper.toDTO(product);
     }
 
-    public ProductWrapperDTO searchProducts(Pageable pageable) {
-        Page<Product> productPage = productRepository.findAll(pageable);
-        List<ProductDTO> productDTOS = new ArrayList<>();
-        productPage.getContent().forEach(product -> {
-            ProductDTO productDTO = ProductMapper.INSTANCE.toDTO(product);
-            productDTOS.add(productDTO);
-        });
-        ProductWrapperDTO productWrapperDTO = new ProductWrapperDTO();
-        productWrapperDTO.setListProductDTO(productDTOS);
-        productWrapperDTO.setTotalcount(productPage.getTotalElements());
-
-        return productWrapperDTO;
+    public Page<ProductDTO> searchProducts(Pageable pageable) {
+        if (pageable.isUnpaged()) {
+            throw new SystemException(BusinessMessages.listCanNotFound);
+        }
+        Page<ProductDTO> productPage = productRepository.findAll(pageable).map(productMapper::toDTO);
+        return productPage;
     }
 
-    public ProductSliceWrapperDTO clientSearchProduct(Long id, int page, int size) {
+    public Slice<ProductDTO> clientSearchProduct(Long id, int page, int size) {
+        if (id == null) {
+            throw new SystemException(BusinessMessages.listCanNotFound);
+        }
         Pageable pageable = PageRequest.of(page, size);
-        Slice<Product> productSlice = productRepository.findProductsByCategoriesId(id, pageable);
-        List<Product> products = productSlice.toList();
-        List<ProductDTO> productDTOS = ProductMapper.INSTANCE.toDTOS(products);
-        ProductSliceWrapperDTO productSliceWrapperDTO = new ProductSliceWrapperDTO();
-        productSliceWrapperDTO.setListProductDTO(productDTOS);
-        productSliceWrapperDTO.setHasNext(productSlice.hasNext());
-        return productSliceWrapperDTO;
+        Slice<ProductDTO> productSlice = productRepository.findProductsByCategoriesId(id, pageable).map(productMapper::toDTO);
+        return productSlice;
     }
-
 
     public List<ProductDTO> listAllProduct() {
-        List<ProductDTO> productDTOS = new ArrayList<>();
         List<Product> products = productRepository.findAll();
-        products.forEach(product -> productDTOS.add(ProductMapper.INSTANCE.toDTO(product)));
-        return productDTOS;
+        return productMapper.toDTOS(products);
     }
 
     public String deleteProduct(Long id) {
+        if (id == null) {
+            throw new SystemException(BusinessMessages.idCanNotfound);
+        }
         Optional<Product> product = productRepository.findById(id);
         product.get().getCategories().forEach(category -> category.getProducts().remove(product.get()));
         productRepository.deleteById(id);
         return null;
     }
-
-
 }

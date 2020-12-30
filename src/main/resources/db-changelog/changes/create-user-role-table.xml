@@ -6,13 +6,13 @@
         xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
-    <changeSet id="07-12-2021_15:41" author="zuleyha.muzennet">
+    <changeSet id="07-12-2021_14:41" author="zuleyha.muzennet">
         <createTable tableName="tbl_user_roles">
 
-            <column autoIncrement="true" name="user_id" type="int(1)">
+            <column name="user_id" type="int(1)">
                 <constraints primaryKey="true" nullable="false" foreignKeyName="fk_user" references="users(id)"/>
             </column>
-            <column autoIncrement="true" name="role_id" type="int(1)">
+            <column   name="role_id" type="int(1)">
                 <constraints primaryKey="true"  nullable="false" foreignKeyName="fk_role" references="roles(id)"/>
             </column>
 

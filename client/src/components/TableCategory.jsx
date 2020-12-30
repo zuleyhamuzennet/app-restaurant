@@ -56,12 +56,18 @@ class TableCategory extends Component {
                                         <div className="col-lg-4 col-xs-12 text-center">
                                             <div className="box" style={{backgroundColor: "#a5e387"}}>
 
-                                                <div className="box-btn" key={category.id}>
+                                                <div className="box-btn" key={category.id}  onClick={() => this.listTableByCategory(category.id,category.count)}>
+
                                                     <div><i className="fa fa-behance fa-3x"
                                                                          aria-hidden="true"></i>
                                                         <div className="box-title">
-                                                            <h3 className="box-text1"
-                                                                onClick={() => this.listTableByCategory(category.id,category.count)}>{category.tableCategoryName}</h3>
+                                                            <div className="box-body">
+                                                                <h3>{category.tableCategoryName}</h3>
+                                                                <img style={{height: "150px", width: "200px"}}
+                                                                     className="card-img-top"
+                                                                     src={'data:image/png;base64,' + category.media.fileContent}/>
+                                                            </div>
+
                                                         </div>
                                                         <div className="box-text">
                                                             <span></span>

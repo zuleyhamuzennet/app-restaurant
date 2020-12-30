@@ -1,10 +1,13 @@
 package com.ba.restaurant.controller;
 
 import com.ba.restaurant.dto.WaiterDTO;
+import com.ba.restaurant.exception.BusinessRuleException;
 import com.ba.restaurant.service.WaiterService;
+import com.ba.restaurant.exception.BusinessMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -16,13 +19,16 @@ public class WaiterController {
     WaiterService waiterService;
 
     @PostMapping("/add")
-    public WaiterDTO addWaiter(@RequestBody WaiterDTO waiterDTO) {
+    public WaiterDTO addWaiter(@Valid @RequestBody WaiterDTO waiterDTO) {
         waiterService.addWaiter(waiterDTO);
         return waiterDTO;
     }
 
     @PutMapping("/update/")
-    public WaiterDTO updateWaiter(@RequestBody WaiterDTO waiterDTO) {
+    public WaiterDTO updateWaiter(@Valid @RequestBody WaiterDTO waiterDTO) {
+        if (waiterDTO.getId() == null) {
+            throw new BusinessRuleException(BusinessMessages.parameterCanNotEmpty);
+        }
         waiterService.updateWaiter(waiterDTO);
         return waiterDTO;
     }
@@ -34,11 +40,17 @@ public class WaiterController {
 
     @GetMapping("/{id}")
     public WaiterDTO getWaiterByID(@PathVariable Long id) {
+        if (id == null) {
+            throw new BusinessRuleException(BusinessMessages.idCanNotEmpty);
+        }
         return waiterService.getWaiterById(id);
     }
 
     @DeleteMapping("/{id}")
     public Long deleteWaiterById(@PathVariable Long id) {
+        if (id == null) {
+            throw new BusinessRuleException(BusinessMessages.idCanNotEmpty);
+        }
         waiterService.deleteWaiterById(id);
         return null;
     }

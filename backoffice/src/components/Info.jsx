@@ -1,24 +1,25 @@
 import React, {Component} from 'react';
 import ServiceInfo from './service/ServiceInfo';
 import Header from "./Header";
-import ContextUser from "./ContextUser";
+import {AuthContext} from "../contexts/AuthContext";
 
 class Info extends Component {
-    static contextType=ContextUser;
+    static contextType = AuthContext;
+
     constructor(props) {
         super(props);
-        this.state={
-            info:[],
-            springActive:[]
+        this.state = {
+            info: [],
+            springActive: []
         }
     }
-    componentDidMount() {
-        const {username,password}=this.context;
-        ServiceInfo.infoProperties(username,password).then((res)=>{
-                this.setState({info:res.data})
-            });
-    }
 
+    componentDidMount() {
+        const user = this.context;
+        ServiceInfo.infoProperties(user.username, user.password).then((res) => {
+            this.setState({info: res.data})
+        });
+    }
 
     render() {
         return (
@@ -28,14 +29,12 @@ class Info extends Component {
                 <h2 className="text-center"> Application Properties</h2>
                 <div className="row">
                     <div className="row">
-
                     </div>
                     <table className="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <th>Key</th>
                             <th>Value</th>
-
                         </tr>
                         </thead>
                         <tbody>
@@ -49,14 +48,12 @@ class Info extends Component {
                             )
                         }
                         </tbody>
-
                     </table>
                     <table className="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <th>Key</th>
                             <th>Value</th>
-
                         </tr>
                         </thead>
                         <tbody>
@@ -70,10 +67,7 @@ class Info extends Component {
                             )
                         }
                         </tbody>
-
                     </table>
-
-
                 </div>
             </div>
         );

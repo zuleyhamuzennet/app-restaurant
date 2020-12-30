@@ -1,17 +1,16 @@
 import '../../App.css'
-import React, {Component} from 'react'
+import React, {Component, useState} from 'react'
 import ProductService from "../service/ProductService";
 import {Card, Table} from 'react-bootstrap';
 import Header from "../Header";
 import {Link} from "react-router-dom";
-import ContextUser from "../ContextUser";
 import Loading from "../Loading";
 import axios from 'axios'
+import {AuthContext} from "../../contexts/AuthContext";
 
 class ProductList extends Component {
 
-    static contextType = ContextUser;
-
+    static contextType = AuthContext;
     constructor(props) {
         super(props)
 
@@ -22,16 +21,10 @@ class ProductList extends Component {
             total:0
 
         }
-        this.deleteProduct = this.deleteProduct.bind(this);
-        this.getFiles = this.getFiles.bind(this);
-        this.fiterCategory = this.fiterCategory.bind(this);
-        this.getPageId=this.getPageId.bind(this);
     }
     getPageId=(i)=>{
-     this.setState({page:i})
-        console.log("page",this.state.page)
-
-        const {username, password} = this.context;
+        this.setState({page:i})
+        const user = this.context;
         this.setState({loadingVisible: true})
 
         axios.get("http://localhost:8080/product/search",{
@@ -40,13 +33,13 @@ class ProductList extends Component {
                 size:this.state.size
             },
             auth:{
-                username:username,
-                password:password
+                username:user.username,
+                password:user.password
             }
         }).then((res) => {
             this.setState({
-                products: res.data.listProductDTO,loadingVisible:false,
-                total:res.data.totalcount
+                products: res.data.content,loadingVisible:false,
+                total:res.data.totalElements
             });
             console.log("data :", res.data);
         })
@@ -54,75 +47,28 @@ class ProductList extends Component {
     }
 
     deleteProduct = (id) => {
-        const {username, password} = this.context;
-        console.log("contex", this.context);
-        console.log("silId=>", id);
-        ProductService.deleteProduct(id, username, password).then(res => {
+        const user = this.context;
+        ProductService.deleteProduct(id, user.username, user.password).then(res => {
             this.setState({products: this.state.products.filter(product => product.id !== id), loadingVisible: false});
         });
     }
 
-    detailProduct = (id, media) => {
+    detailProduct = (product) => {
         this.props.history.push({
-            pathname: `/detail/${id}`,
+            pathname: `/detail/${product.id}`,
             state: {
-                id: id,
-                media: media
+                products:product
             }
         })
     }
-    getFiles = () => {
-        if (!this.state.mediaList) {
-            return null;
-        }
-
-        let list = [];
-        this.state.mediaList.map(media =>
-            list.push(
-                <label><img src={'data:image/png;base64,' + media.fileContent} width="150"
-                            style={{margin: 3}}/>{media.mediaName}</label>
-            )
-        );
-        return (
-            <ul>
-                {list}
-            </ul>
-        );
-    }
 
     updateProduct = (id) => {
-
         this.props.history.push({
             pathname: `/update/${id}`,
             state: {
                 id: id
             }
         })
-    }
-
-    componentDidMount() {
-        const {username, password} = this.context;
-        this.setState({loadingVisible: true})
-        this.getPageId();
-
-        axios.get("http://localhost:8080/product/search",{
-            params:{
-                page: this.state.page,
-                size:this.state.size
-            },
-            auth:{
-                username:username,
-                password:password
-            }
-        }).then((res) => {
-            this.setState({
-                products: res.data.listProductDTO,
-                total:res.data.totalcount,
-                loadingVisible:false
-            });
-            console.log("data :", res.data);
-        })
-
     }
 
     fiterCategory = (categoryId) => {
@@ -133,8 +79,32 @@ class ProductList extends Component {
         this.render();
     }
 
-    render() {
+    componentDidMount() {
+        const user = this.context;
 
+        this.setState({loadingVisible: true})
+        this.getPageId();
+
+        axios.get("http://localhost:8080/product/search",{
+            params:{
+                page: this.state.page,
+                size:this.state.size
+            },
+            auth:{
+                username:user.username,
+                password:user.password
+            }
+        }).then((res) => {
+            this.setState({
+                products: res.data.content,
+                total:res.data.totalElements,
+                loadingVisible:false
+            });
+            console.log("data :", res.data);
+        })
+    }
+
+    render() {
        const count=[];
        for(let i=0; i<= this.state.total/this.state.size; i++){
            count.push(
@@ -194,7 +164,7 @@ class ProductList extends Component {
                                                     className="btn btn-outline-info"> Delete
                                             </button>
                                             <button style={{marginLeft: "6px"}}
-                                                    onClick={() => this.detailProduct(product.id, product.media.fileContent)}
+                                                    onClick={() => this.detailProduct(product)}
                                                     className="btn btn-warning">Detail
                                             </button>
                                         </td>
@@ -232,5 +202,6 @@ class ProductList extends Component {
         );
     }
 }
+
 
 export default ProductList;

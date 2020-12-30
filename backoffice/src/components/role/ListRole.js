@@ -4,22 +4,21 @@ import Header from "../Header";
 import {Card, Table} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import Loading from "../Loading";
-import ContextUser from "../ContextUser";
+import {AuthContext} from "../../contexts/AuthContext";
 
 class ListRole extends Component {
-    static contextType=ContextUser;
-    constructor(props) {
+    static contextType=AuthContext;
 
+    constructor(props) {
         super(props)
         this.state={
             roles:[]
         }
     }
     componentDidMount() {
-        const {username,password}=this.context;
-        RoleService.listAllRole(username,password).then((res)=>{
+        const user = this.context;
+        RoleService.listAllRole(user.username,user.password).then((res)=>{
             this.setState({roles:res.data});
-            console.log("roles:", res.data);
         })
     }
 
@@ -29,7 +28,6 @@ class ListRole extends Component {
                 <Header/>
                 <br/>
                 <Card className={"border border-dark bg-dark text-white"}>
-
                     <Card.Body>
                         <h2 className="text-center">Role List</h2>
                         <Link to="/add-role" className="btn btn-success">Add Role</Link>
@@ -38,7 +36,6 @@ class ListRole extends Component {
                             <tr>
                                 <th>Role Name</th>
                                 <th>Actions</th>
-
                             </tr>
                             </thead>
                             <tbody>
@@ -47,8 +44,6 @@ class ListRole extends Component {
                                     role =>
                                         <tr key={role.id}>
                                             <td>{role.name}</td>
-
-
                                             <td>
                                                 <button onClick={() => this.updateWaiter(role.id)}
                                                         className="btn btn-success"> Update
@@ -72,7 +67,6 @@ class ListRole extends Component {
                     this.state.loadingVisible?
                         <Loading/>:null
                 }
-
             </div>
         );
     }

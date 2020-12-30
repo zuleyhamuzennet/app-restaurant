@@ -3,91 +3,82 @@ import React, {Component} from 'react'
 import {Card, Table} from 'react-bootstrap';
 import Header from "../Header";
 import {Link} from "react-router-dom";
-import ContextUser from "../ContextUser";
+import ReactToExcel from "react-html-table-to-excel";
 import Loading from "../Loading";
 import CustomerService from "../service/CustomerService";
+import {AuthContext} from "../../contexts/AuthContext";
 
 class ListCustomers extends Component {
-
-    static contextType = ContextUser;
+    static contextType = AuthContext
 
     constructor(props) {
         super(props)
-
         this.state = {
             customers: [],
-            page:0,
-            size:10,
-            total:0
-
+            page: 0,
+            size: 10,
+            total: 0
         }
-        this.deleteCustomer = this.deleteCustomer.bind(this);
-        this.getPageId=this.getPageId.bind(this);
     }
-    getPageId=(i)=>{
-        this.setState({page:i})
-        console.log("page",this.state.page)
 
-        const {username, password} = this.context;
+    getPageId = (i) => {
+        this.setState({page: i})
+        const user = this.context;
         this.setState({loadingVisible: true})
 
-        CustomerService.listAllCustomer(username,password,this.state.page,this.state.size).then((res) => {
+        CustomerService.listAllCustomer(user.username, user.password, this.state.page, this.state.size).then((res) => {
             this.setState({
-                customers: res.data.content,loadingVisible:false,
-                total:res.data.totalElements
+                customers: res.data.content, loadingVisible: false,
+                total: res.data.totalElements
             });
-            console.log("data :", res.data);
         })
-
     }
 
     deleteCustomer = (id) => {
-        const {username, password} = this.context;
-        CustomerService.deleteCustomer(id, username, password).then(res => {
-            this.setState({customers: this.state.customers.filter(item=> item.id !== id), loadingVisible: false});
+        const user = this.context;
+        CustomerService.deleteCustomer(id, user.username, user.password).then(res => {
+            this.setState({customers: this.state.customers.filter(item => item.id !== id), loadingVisible: false});
         });
     }
 
-    detailCustomer = (id) => {
+    detailCustomer = (customer) => {
         this.props.history.push({
-            pathname: `/detail-customer/${id}`,
+            pathname: `/detail-customer/${customer.id}`,
             state: {
-                id: id
+                customers: customer
             }
         })
     }
 
-    updateCustomer = (id) => {
-
+    updateCustomer = (customer) => {
         this.props.history.push({
-            pathname: `/update-customer/${id}`,
+            pathname: `/update-customer/${customer.id}`,
             state: {
-                id: id
+                customers: customer
             }
         })
     }
 
     componentDidMount() {
-        const {username, password} = this.context;
+        const user = this.context;
         this.setState({loadingVisible: true})
         this.getPageId();
-
-        CustomerService.listAllCustomer(username,password,this.state.page,this.state.size)
+        CustomerService.listAllCustomer(user.username, user.password, this.state.page, this.state.size)
             .then((res) => {
-            this.setState({
-                products: res.data.content,
-                total:res.data.totalElements,
-                loadingVisible:false
-            });
-        })
+                this.setState({
+                    products: res.data.content,
+                    total: res.data.totalElements,
+                    loadingVisible: false
+                });
+            })
     }
 
     render() {
-
-        const count=[];
-        for(let i=0; i<= this.state.total/this.state.size; i++){
+        const count = [];
+        for (let i = 0; i <= this.state.total / this.state.size; i++) {
             count.push(
-                <li  className="page-item" key={i} onClick={() => this.getPageId(i)}><a className="page-link" href="#">{i}</a></li>
+                <li className="page-item" key={i} onClick={() => this.getPageId(i)}><a className="page-link"
+                                                                                       href="#">{i}</a></li>
             )
         }
         return (
@@ -98,30 +89,37 @@ class ListCustomers extends Component {
                     <h2 className="text-center">Customer List</h2>
                     <Card.Body>
                         <Link to="/add-customer" className="btn btn-success">Add Customer</Link>
-                        <Table bordered hover striped variant="dark">
+                        <ReactToExcel style={{position:'absolute',right:'5px' ,marginTop:'-18px'}}
+                            id="table-to-xls"
+                            className="btn"
+                            table="table-to-xls"
+                            filename="excelFile"
+                            sheet="sheet 1"
+                            buttonText="Download as XLS"
+                        />
+                        <Table bordered hover striped variant="dark" id="table-to-xls">
                             <thead>
                             <tr>
-
                                 <th>Name</th>
                                 <th>Address</th>
                                 <th>Phone</th>
+                                <th>Media</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
 
                             {this.state.customers.map(
                                 customer =>
-
                                     <tbody key={customer.id}>
-
                                     <tr>
-
                                         <td>{customer.name}</td>
                                         <td>{customer.address}</td>
                                         <td>{customer.phone}</td>
-
+                                        <td><img src={'data:image/png;base64,' + customer.media.fileContent} width="40"
+                                                 style={{margin: 3}}/>
+                                        </td>
                                         <td>
-                                            <button onClick={() => this.updateCustomer(customer.id)}
+                                            <button onClick={() => this.updateCustomer(customer)}
                                                     className="btn btn-success"> Edit
                                             </button>
                                             <button style={{marginLeft: "6px"}}
@@ -129,20 +127,19 @@ class ListCustomers extends Component {
                                                     className="btn btn-outline-info"> Delete
                                             </button>
                                             <button style={{marginLeft: "6px"}}
-                                                    onClick={() => this.detailCustomer(customer.id)}
+                                                    onClick={() => this.detailCustomer(customer)}
                                                     className="btn btn-warning">Detail
                                             </button>
                                         </td>
-
                                     </tr>
                                     </tbody>
                             )
                             }
-
                         </Table>
-                        <nav aria-label="Page navigation example" style={{position:'absolute',right:'28rem', marginTop:'-12px'}}>
-                            <ul className="pagination" >
-                                <li className="page-item" >
+                        <nav aria-label="Page navigation example"
+                             style={{position: 'absolute', right: '28rem', marginTop: '-12px'}}>
+                            <ul className="pagination">
+                                <li className="page-item">
                                     <a className="page-link" href="#" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                         <span className="sr-only">Previous</span>

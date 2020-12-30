@@ -5,6 +5,7 @@ import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.builder.CategoryDTOBuilder;
 import com.ba.restaurant.builder.ProductDTOBuilder;
 import com.ba.restaurant.entity.Category;
+import com.ba.restaurant.exception.SystemException;
 import com.ba.restaurant.mapper.CategoryMapper;
 import com.ba.restaurant.mapper.ProductMapper;
 import com.ba.restaurant.repository.CategoryRepository;
@@ -17,11 +18,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.nullable;
+import static org.mockito.Mockito.verify;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -47,18 +55,22 @@ public class ProductServiceTest {
         categoryDTO = new CategoryDTOBuilder().categoryId(1L).media(null)
                 .catDescription("cate").categoryName("cate").build();
         productDTOS.add(productDTO);
+
         categoryRepository.save(CategoryMapper.INSTANCE.toEntity(categoryDTO));
     }
 
     @Test
     public void shouldAddProduct() {
-
         Mockito.when(categoryRepository.findById(Mockito.any())).thenReturn(Optional.of(CategoryMapper.INSTANCE.toEntity(categoryDTO)));
         Mockito.when(productRepository.save(Mockito.any())).thenReturn(ProductMapper.INSTANCE.toEntity(productDTO));
-
         ProductDTO res = productService.addProduct(productDTO);
         Assert.assertNotNull(res);
-        Assert.assertEquals(res.getId(), productDTO.getId());
+        Assert.assertEquals(res, productDTO);
+    }
+
+    @Test(expected = SystemException.class)
+    public void shouldAddProductNot() {
+        ProductDTO res = productService.addProduct(null);
     }
 
     @Test
@@ -70,6 +82,12 @@ public class ProductServiceTest {
         Assert.assertEquals(res.getId(), productDTO.getId());
     }
 
+    @Test(expected = SystemException.class)
+    public void shouldGetProductNot() {
+       Mockito.when(productService.getProductById(null));
+    }
+
+
     @Test
     public void shouldUpdateProduct() {
         Mockito.when(categoryRepository.findAllById(Mockito.any())).thenReturn(categoryList);
@@ -79,20 +97,25 @@ public class ProductServiceTest {
         Assert.assertEquals(res.getId(), productDTO.getId());
     }
 
+    @Test(expected = SystemException.class)
+    public void shouldUpdateProductNot() {
+        ProductDTO res = productService.updateProduct(null);
+    }
+
     @Test
     public void shouldListAllProduct() {
         Mockito.when(productRepository.findAll()).thenReturn(ProductMapper.INSTANCE.toEntities(productDTOS));
         List<ProductDTO> responses = productService.listAllProduct();
         Assert.assertNotNull(responses);
-        Assert.assertEquals(responses, productService.listAllProduct().size());
+        Assert.assertEquals(responses, productDTOS);
     }
 
     @Test
     public void shouldDeleteProductId() {
         Long id = 1L;
         Mockito.when(productRepository.findById(Mockito.any())).thenReturn(Optional.of(ProductMapper.INSTANCE.toEntity(productDTO)));
-        ProductDTO res = productService.getProductById(id);
-        Assert.assertNotNull(res);
-
+        String res = productService.deleteProduct(id);
+        Assert.assertEquals(null, res);
     }
+
 }
