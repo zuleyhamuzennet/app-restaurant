@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AuthContext} from "../contexts/AuthContext";
+import {AuthContext} from "./contexts/AuthContext";
 
 class Footer extends Component {
     static contextType=AuthContext;

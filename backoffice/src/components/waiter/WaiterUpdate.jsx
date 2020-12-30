@@ -3,7 +3,7 @@ import Header from "../Header";
 import {Link} from "react-router-dom";
 import Loading from "../Loading";
 import WaiterService from "../service/WaiterService";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
 import MediaService from "../service/MediaService";
 
 class WaiterUpdate extends Component {

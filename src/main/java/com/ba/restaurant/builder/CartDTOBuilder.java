@@ -1,19 +1,22 @@
 package com.ba.restaurant.builder;
 import com.ba.restaurant.dto.CartDTO;
+import com.ba.restaurant.entity.Customer;
+import com.ba.restaurant.entity.ItemsOrder;
+import com.ba.restaurant.entity.Waiter;
+
 import java.util.Date;
+import java.util.List;
 
 public class CartDTOBuilder extends DTOBuilder {
 
-    private long productId;
-    private long piece;
-    private long price;
     private long total;
     private String productName;
     private long tableCartId;
     private long tableCategoryId;
-    private long waiterId;
+    private List<Waiter> waiters;
     private Date cartDate;
-    private long customerId;
+    private List<Customer> customers;
+    private List<ItemsOrder> itemOrders;
 
     public CartDTOBuilder cartDate(Date cartDate) {
         this.cartDate = cartDate;
@@ -25,22 +28,18 @@ public class CartDTOBuilder extends DTOBuilder {
         return this;
     }
 
-    public CartDTOBuilder productId(Long productId) {
-        this.productId = productId;
+    public CartDTOBuilder customers(List<Customer> customers) {
+        this.customers = customers;
         return this;
     }
 
-    public CartDTOBuilder piece(Long piece) {
-        this.piece = piece;
+    public CartDTOBuilder waiters(List<Waiter> waiters) {
+        this.waiters = waiters;
         return this;
     }
 
-    public CartDTOBuilder price(Long price) {
-        this.price = price;
-        return this;
-    }
-    public CartDTOBuilder customerId(Long customerId) {
-        this.customerId = customerId;
+    public CartDTOBuilder orderItems(List<ItemsOrder> itemOrders) {
+        this.itemOrders = itemOrders;
         return this;
     }
 
@@ -64,24 +63,17 @@ public class CartDTOBuilder extends DTOBuilder {
         return this;
     }
 
-    public CartDTOBuilder waiterId(Long waiterId) {
-        this.waiterId = waiterId;
-        return this;
-    }
-
     @Override
     public CartDTO build() {
         CartDTO cartDTO = new CartDTO();
         cartDTO.setId(getId());
-        cartDTO.setWaiterId(this.waiterId);
-        cartDTO.setProductId(this.productId);
-        cartDTO.setPiece(this.piece);
-        cartDTO.setPrice(this.price);
         cartDTO.setTableCartId(this.tableCartId);
         cartDTO.setTableCategoryId(this.tableCategoryId);
         cartDTO.setTotal(this.total);
         cartDTO.setCartDate(this.cartDate);
-        cartDTO.setCustomerId(this.customerId);
+        cartDTO.setCustomers(this.customers);
+        cartDTO.setWaiters(this.waiters);
+        cartDTO.setItemOrders(this.itemOrders);
 
         return cartDTO;
 

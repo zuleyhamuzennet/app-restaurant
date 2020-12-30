@@ -5,7 +5,8 @@ import Header from "../Header";
 import {Link} from "react-router-dom";
 import Loading from "../Loading";
 import MediaService from "../service/MediaService";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
+import {Formik} from "formik"
 
 class AddProduct extends Component {
     static contextType = AuthContext;

@@ -4,7 +4,7 @@ import ProductService from "../service/ProductService";
 import Header from "../Header";
 import '../../App.css';
 import Loading from "../Loading";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
 
 class ProductSales extends Component {
     static contextType = AuthContext;

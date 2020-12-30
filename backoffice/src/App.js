@@ -30,7 +30,8 @@ import AddCustomer from "./components/customer/AddCustomer";
 import ListCustomers from "./components/customer/ListCustomers";
 import UpdateCustomer from "./components/customer/UpdateCustomer";
 import DetailCustomer from "./components/customer/DetailCustomer";
-import {AuthProvider} from "./contexts/AuthContext";
+import {AuthProvider} from "./components/contexts/AuthContext";
+import Payment from "../../client/src/components/Payment";
 
 function App() {
     return (
@@ -67,6 +68,7 @@ function App() {
                         <Route exact path="/list-customers" component={ListCustomers}></Route>
                         <Route exact path="/update-customer/:id" component={UpdateCustomer}></Route>
                         <Route exact path="/detail-customer/:id" component={DetailCustomer}></Route>
+
 
                     </Switch>
                 </div>

@@ -4,7 +4,7 @@ import WaiterService from "../service/WaiterService";
 import Header from "../Header";
 import axios from "axios";
 import Loading from "../Loading";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
 import MediaService from "../service/MediaService";
 
 class WaiterAdd extends Component {

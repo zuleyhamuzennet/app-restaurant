@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import Loading from "../Loading";
 import CustomerService from "../service/CustomerService";
 import MediaService from "../service/MediaService";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
 
 class AddCustomer extends Component {
     static contextType = AuthContext;

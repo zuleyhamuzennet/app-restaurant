@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Header from "../Header";
 import Loading from "../Loading";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
 
 class CategoryDetail extends Component {
     static contextType = AuthContext;

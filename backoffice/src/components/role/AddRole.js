@@ -3,33 +3,44 @@ import Header from "../Header";
 import {Link} from "react-router-dom";
 import Loading from "../Loading";
 import RoleService from "../service/RoleService";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
+import {Formik} from "formik"
 
 class AddRole extends Component {
-    static contextType= AuthContext;
+    static contextType = AuthContext;
+
     constructor(props) {
         super(props);
-        this.state={
-            id:'',
-            name:''
+        this.state = {
+            formValues: {
+                name: ""
+            },
+            formErrors: {
+                name: ""
+            },
+            formValidity: {
+                name: false
+            },
+            isSubmitting:false
         }
     }
 
-    saveRole=(e)=>{
+    saveRole = (e) => {
         e.preventDefault();
-        let roles={
-            id:this.state.id,
+        let roles = {
+            id: this.state.id,
             name: this.state.name
         };
         const user = this.context;
-        RoleService.addRole(roles,user.username,user.password).then(res=>{
+        RoleService.addRole(roles, user.username, user.password).then(res => {
             this.props.history.push('/list-role');
         });
     }
 
     render() {
+        const { formValues, formErrors, isSubmitting } = this.state;
         return (
-            <div >
+            <div>
                 <Header/>
                 <br/>
                 <div className="container">
@@ -40,13 +51,15 @@ class AddRole extends Component {
                                 <form>
                                     <div className="form-group">
                                         <label> Role Name </label>
-                                        <input placeholder="Role Name" name="role" className="form-control"
-                                               value={this.state.name}
-                                               onChange={(e)=>{this.setState({name:e.target.value})}}/>
+                                        <input placeholder="Role Name" name="role" className={`form-control ${formErrors.name? "is-invalid":""}`}
+                                               value={formValues.name}
+                                               onChange={(e) => {
+                                                   this.setState({name: e.target.value})
+                                               }}/>
                                     </div>
                                     <div className="form-group">
                                         <label> Media </label>
-                                        <select className="selectpicker form-control" >
+                                        <select className="selectpicker form-control">
                                         </select>
                                     </div>
                                     <button className="btn btn-success" onClick={this.saveRole}>Save</button>
@@ -59,8 +72,8 @@ class AddRole extends Component {
                     </div>
                 </div>
                 {
-                    this.state.loadingVisible?
-                        <Loading/>:null
+                    this.state.loadingVisible ?
+                        <Loading/> : null
                 }
             </div>
         );

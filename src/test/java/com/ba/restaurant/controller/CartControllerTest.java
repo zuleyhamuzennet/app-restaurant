@@ -32,9 +32,9 @@ public class CartControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        cartDTO = new CartDTOBuilder().tableCategoryId(1L).productName("deneme").productId(1L).waiterId(1L)
+        /*cartDTO = new CartDTOBuilder().tableCategoryId(1L).productName("deneme").productId(1L).waiterId(1L)
                 .total(5L).price(4L).piece(1L).tableCartId(3L).id(1L).cartDate(date).build();
-        cartDTOS.add(cartDTO);
+        cartDTOS.add(cartDTO);*/
     }
 
     @Test

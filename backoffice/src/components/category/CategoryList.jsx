@@ -5,7 +5,7 @@ import {Card, Table} from 'react-bootstrap';
 import Header from "../Header";
 import {Link} from "react-router-dom";
 import Loading from "../Loading";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
 
 class CategoryList extends Component {
     static contextType = AuthContext;

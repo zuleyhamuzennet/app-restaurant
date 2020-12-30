@@ -3,7 +3,7 @@ import TableCategoryService from "../service/TableCategoryService";
 import Header from "../Header";
 import {Link} from "react-router-dom";
 import MediaService from "../service/MediaService";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
 
 
 class TableCategoryAdd extends Component {

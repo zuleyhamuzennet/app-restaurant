@@ -3,7 +3,7 @@ import Header from "../Header";
 import {Link} from "react-router-dom";
 import CustomerService from "../service/CustomerService";
 import MediaService from "../service/MediaService";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
 
 class UpdateCustomer extends Component {
     static contextType = AuthContext;

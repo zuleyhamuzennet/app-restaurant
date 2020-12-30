@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import ReactToExcel from "react-html-table-to-excel";
 import Loading from "../Loading";
 import CustomerService from "../service/CustomerService";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
 
 class ListCustomers extends Component {
     static contextType = AuthContext

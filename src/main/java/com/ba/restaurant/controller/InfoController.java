@@ -3,7 +3,9 @@ package com.ba.restaurant.controller;
 import com.ba.restaurant.entity.ApplicationPropertiesInfo;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/properties")
 public class InfoController {
+    @Autowired
+    private ApplicationContext context;
+
+    @GetMapping("/all")
+    public String[] getBeans(){
+        String[] allBeanNames= context.getBeanDefinitionNames();
+        for (String beanName: allBeanNames){
+            System.out.println(beanName);
+        }
+        return allBeanNames;
+    }
 
     @Value("${" + ApplicationPropertiesInfo.serverPort + "}")
     private String serverPort;
@@ -63,5 +76,7 @@ public class InfoController {
 
         return jsonArray.toJSONString();
     }
+
+
 
 }

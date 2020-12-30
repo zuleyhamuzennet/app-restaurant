@@ -32,8 +32,8 @@ public class CartServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        cartDTO = new CartDTOBuilder().id(2l).cartDate(date).tableCartId(1L).customerId(1L).piece(5L).price(2L).total(2L).waiterId(2L).productId(1L).productName("deneme").tableCategoryId(1L).cartDate(null).build();
-        cartDTOS.add(cartDTO);
+     /*   cartDTO = new CartDTOBuilder().id(2l).cartDate(date).tableCartId(1L).customerId(1L).piece(5L).price(2L).total(2L).waiterId(2L).productId(1L).productName("deneme").tableCategoryId(1L).cartDate(null).build();
+        cartDTOS.add(cartDTO);*/
     }
 
     @Test

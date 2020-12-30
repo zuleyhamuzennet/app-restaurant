@@ -13,7 +13,7 @@ import CustomerAdd from "./components/CustomerAdd";
 import ListCustomer from "./components/ListCustomer";
 
 
-const valueProvider={username:'', password:''}
+const valueProvider={username:'admin', password:'admin'}
 function App() {
 
 

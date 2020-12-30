@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Header from "../Header";
 import UserService from "../service/UserService";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
 
 class UserDetail extends Component {
     static contextType=AuthContext;

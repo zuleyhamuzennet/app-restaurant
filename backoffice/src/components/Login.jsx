@@ -3,7 +3,7 @@ import '../App.css';
 import {Button, Input} from 'reactstrap';
 import axios from 'axios';
 import Loading from "./Loading";
-import {AuthContext} from "../../src/contexts/AuthContext";
+import {AuthContext} from "./contexts/AuthContext";
 import {Redirect} from "react-router-dom";
 
 class Login extends Component {

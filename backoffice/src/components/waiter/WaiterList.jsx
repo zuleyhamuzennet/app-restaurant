@@ -4,7 +4,7 @@ import {Card, Table} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import WaiterService from "../service/WaiterService";
 import Loading from "../Loading";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
 
 class WaiterList extends Component {
     static contextType = AuthContext;

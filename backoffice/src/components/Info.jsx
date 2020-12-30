@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import ServiceInfo from './service/ServiceInfo';
 import Header from "./Header";
-import {AuthContext} from "../contexts/AuthContext";
+import {AuthContext} from "./contexts/AuthContext";
+import "../App.css"
+import {Modal} from "react-bootstrap";
 
 class Info extends Component {
     static contextType = AuthContext;
@@ -10,7 +12,8 @@ class Info extends Component {
         super(props);
         this.state = {
             info: [],
-            springActive: []
+            beanList: [],
+            showModal: false
         }
     }
 
@@ -19,6 +22,9 @@ class Info extends Component {
         ServiceInfo.infoProperties(user.username, user.password).then((res) => {
             this.setState({info: res.data})
         });
+        ServiceInfo.getBeans(user.username, user.password).then((res) => {
+            this.setState({beanList: res.data})
+        })
     }
 
     render() {
@@ -27,49 +33,72 @@ class Info extends Component {
                 <Header/>
                 <br/>
                 <h2 className="text-center"> Application Properties</h2>
+                <button className="btn btn-warning" onClick={
+                    () => this.setState({showModal: true})
+                }>Beans
+                </button>
                 <div className="row">
-                    <div className="row">
+                    <div className="col-md-12 ml-4 mr-sm-2">
+                        <table className="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Value</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                this.state.info.map(
+                                    info =>
+                                        <tr key={info.key}>
+                                            <td>{info.value}</td>
+                                            <td>{info.key}</td>
+                                        </tr>
+                                )
+                            }
+                            </tbody>
+                        </table>
+                        <br/>
                     </div>
-                    <table className="table table-striped table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Key</th>
-                            <th>Value</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            this.state.info.map(
-                                info =>
-                                    <tr key={info.key}>
-                                        <td>{info.value}</td>
-                                        <td>{info.key}</td>
-                                    </tr>
-                            )
-                        }
-                        </tbody>
-                    </table>
-                    <table className="table table-striped table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Key</th>
-                            <th>Value</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            this.state.springActive.map(
-                                springActive =>
-                                    <tr key={springActive.key}>
-                                        <td>{springActive.value}</td>
-                                        <td>{springActive.key}</td>
-                                    </tr>
-                            )
-                        }
-                        </tbody>
-                    </table>
+
+                    <Modal show={this.state.showModal} size='lg'>
+                        <Modal.Header>
+                            <h2>Beans</h2>
+                        </Modal.Header>
+                        <Modal.Body className="modal-body">
+
+                            <table className="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    this.state.beanList.map(
+                                        (bean, index) =>
+                                            <tr key={index + 1}>
+                                                <td>{index + 1}</td>
+                                                <td>{bean}</td>
+                                            </tr>
+                                    )
+                                }
+                                </tbody>
+                            </table>
+
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button className="btn btn-danger" onClick={
+                                () => this.setState({showModal: false})
+                            }>Cancel
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
+
             </div>
+
         );
     }
 }

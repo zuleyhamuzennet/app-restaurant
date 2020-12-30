@@ -6,6 +6,7 @@ import '../App.css';
 import Loading from "./Loading";
 import ContextUser from "./ContextUser";
 import axios from "axios"
+import {Modal} from "react-bootstrap";
 
 class ProductList extends Component {
     static contextType = ContextUser;
@@ -13,6 +14,7 @@ class ProductList extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            showModal: false,
             productList: [],
             categories: [],
             waiterId: this.props.history.location.state?.selectWaiterId,
@@ -142,13 +144,6 @@ class ProductList extends Component {
     }
 
     getLocaleStroge() {
-        if (localStorage.getItem(`${this.state.tableCategoryId}+${this.state.tableCartId}`) === null) {
-            if (this.state.customerId!==null) {
-
-
-            }
-        }
-
         if (localStorage.getItem(`${this.state.tableCategoryId}+${this.state.tableCartId}`) !== null) {
             let array = JSON.parse(localStorage.getItem(`${this.state.tableCategoryId}+${this.state.tableCartId}`));
             this.setState({carts: array});
@@ -251,7 +246,6 @@ class ProductList extends Component {
                         </div>
                         <div className=' col-md-6 mt-5'>
                             <div className="col-md-12">
-
                                 <div className="my-custom-scrollbar my-custom-scrollbar-primary" ref={this.myRef}
                                      onScroll={this.onScroll}>
                                     <div className="force-overflow">
@@ -297,7 +291,6 @@ class ProductList extends Component {
                         </div>
                         <div className="cart-scrollbar">
                             <div className=" col-md-3 mt-4 ">
-
                                 <table className="table table-striped table-hover">
                                     <thead>
                                     <tr>
@@ -340,19 +333,40 @@ class ProductList extends Component {
                                 </table>
                             </div>
                         </div>
+
                     </div>
+
                     <div className="row">
                         <div className="col-md-2 "></div>
                         <div className="col-md-6"></div>
                         <div className="col-md-3">
+                            <Modal show={this.state.showModal}>
+                                <Modal.Header>
+                                    <h2>Payment</h2>
+                                </Modal.Header>
+                                <Modal.Body className="modal-body">
+                                    body{console.log("modal",this.state.showModal)}
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <button className="btn btn-danger" onClick={
+                                        () => this.setState({showModal: false})
+                                    }>Cancel
+                                    </button>
+                                </Modal.Footer>
+                            </Modal>
+
                             <tr style={{position: "absolute", right: "10px"}}>
                                 <th></th>
                                 <th></th>
                                 <th>Total</th>
                                 <th>{this.state.totalCart} ₺</th>
                                 <th>
-                                    <button className="btn btn-outline-danger"
-                                            onClick={() => this.saleButton(this.state.carts)}>Payment
+                                    <button className="btn btn-warning"
+                                        /*onClick={() => this.saleButton(this.state.carts)}*/
+                                            onClick={
+                                                () => this.setState({showModal: true})
+                                            }
+                                    >Payment
                                     </button>
                                 </th>
                             </tr>

@@ -5,7 +5,10 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 @Getter
 @Setter
 @SQLDelete(sql = "UPDATE cart "+ "SET deleted = true " + "WHERE id = ?")
@@ -14,32 +17,27 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 public class Cart extends BaseEntity{
-
-    @Column(name = "product_id")
-    private long productId;
-
-    private long piece;
-
-    private long price;
-
     private long total;
 
     @Column(name = "product_name")
     private String productName;
 
-    @Column(name = "table_cart_id")
+    @Column(name = "table_id")
     private long tableCartId;
 
-    @Column(name = "table_category_id")
+    @Column(name = "category_id")
     private long tableCategoryId;
-
-    @Column(name = "waiter_id")
-    private long waiterId;
-
-    @Column(name = "customer_id")
-    private long customerId;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date cartDate;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Waiter> waiters= new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Customer> customers= new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemsOrder> itemOrders = new ArrayList<>();
 
 }

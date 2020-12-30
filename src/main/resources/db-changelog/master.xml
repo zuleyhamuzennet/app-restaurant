@@ -10,15 +10,17 @@
     <include relativeToChangelogFile="true" file="/changes/insert-product-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-category-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/insert-category-table.xml"/>
-    <include relativeToChangelogFile="true" file="/changes/create-cart-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-table-category-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-tbl-category-product.xml"/>
     <include relativeToChangelogFile="true" file="/changes/insert-tbl-category-product.xml"/>
+    <include relativeToChangelogFile="true" file="/changes/create-order-item-table.xml"/>
+    <include relativeToChangelogFile="true" file="/changes/create-customer-table.xml"/>
+    <include relativeToChangelogFile="true" file="/changes/create-cart-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-role-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-user-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-user-role-table.xml"/>
 <!--    <include relativeToChangelogFile="true" file="/changes/products.sql"/>-->
 <!--    <include relativeToChangelogFile="true" file="/changes/category-product.sql"/>-->
-    <include relativeToChangelogFile="true" file="/changes/create-customer-table.xml"/>
+
 
 </databaseChangeLog>

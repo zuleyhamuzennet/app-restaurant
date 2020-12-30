@@ -3,7 +3,7 @@ import CategoryService from "../service/CategoryService";
 import MediaService from "../service/MediaService";
 import Header from "../Header";
 import {Link} from "react-router-dom";
-import {AuthContext} from "../../contexts/AuthContext";
+import {AuthContext} from "../contexts/AuthContext";
 
 class UpdateCategory extends Component {
     static contextType=AuthContext

@@ -1,7 +1,13 @@
 package com.ba.restaurant.dto;
 
+import com.ba.restaurant.entity.Customer;
+import com.ba.restaurant.entity.ItemsOrder;
+import com.ba.restaurant.entity.Waiter;
 import lombok.*;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -9,15 +15,13 @@ import java.util.Date;
 @NoArgsConstructor
 public class CartDTO extends BaseDTO{
 
-    private long productId;
-    private long piece;
-    private long price;
     private long total;
     private String productName;
     private long tableCartId;
     private long tableCategoryId;
-    private long waiterId;
     private Date cartDate;
-    private long customerId;
+    private List<Waiter> waiters= new ArrayList<>();
+    private List<Customer> customers= new ArrayList<>();
+    private List<ItemsOrder> itemOrders = new ArrayList<>();
 
 }
