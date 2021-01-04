@@ -1,7 +1,5 @@
 package com.ba.restaurant.exception;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 public class BusinessMessages {
 
     public static String userNotFound="userNotFound";

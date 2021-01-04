@@ -1,6 +1,5 @@
 package com.ba.restaurant.dto;
 
-import com.ba.restaurant.entity.Media;
 import lombok.*;
 
 @Getter

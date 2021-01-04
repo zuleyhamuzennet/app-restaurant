@@ -32,7 +32,7 @@ public class CategoryService {
     @Autowired
     CategoryMapper categoryMapper;
 
-   // @CacheEvict(value = "CategoryCache", allEntries = true)
+    //@CacheEvict(value = "CategoryCache", allEntries = true)
     public CategoryDTO addCategory(CategoryDTO categoryDTO) {
         if (categoryDTO == null) {
             throw new SystemException(BusinessMessages.canNotBeAdded);
@@ -41,20 +41,13 @@ public class CategoryService {
         return categoryDTO;
     }
 
-   // @CacheEvict(value = "CategoryCache", allEntries = true)
+    //@CacheEvict(value = "CategoryCache", allEntries = true)
     public CategoryDTO updateCategory(CategoryDTO categoryDTO) {
         if (categoryDTO == null || categoryDTO.getId() == null) {
             throw new SystemException(BusinessMessages.canNotBeAdded);
         }
         categoryRepository.saveAndFlush(categoryMapper.toEntity(categoryDTO));
         return categoryDTO;
-    }
-
-    public List<ProductDTO> getProductsCategoryById(Long id) {
-        Optional<Category> category = categoryRepository.findById(id);
-        List<ProductDTO> productDTOS = new ArrayList<>();
-        category.get().getProducts().forEach(product -> productDTOS.add(productMapper.toDTO(product)));
-        return productDTOS;
     }
 
     public CategoryDTO getCategoryById(Long id) {
@@ -71,7 +64,7 @@ public class CategoryService {
         return CategoryMapper.INSTANCE.toDTOS(categories);
     }
 
- //   @CacheEvict(value = "CategoryCache", allEntries = true)
+    //@CacheEvict(value = "CategoryCache", allEntries = true)
     public String deleteCategory(Long id) {
         if (id == null) {
             throw new SystemException(BusinessMessages.idCanNotfound);

@@ -6,7 +6,7 @@
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
     <changeSet id="17-12-2020_16:52" author="zuleyha.muzennet">
 
-        <createTable tableName="media">
+        <createTable tableName="MEDIA">
             <column autoIncrement="true" name="id" type="int(10)">
                 <constraints primaryKey="true"/>
             </column>

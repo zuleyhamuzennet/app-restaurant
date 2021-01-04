@@ -7,13 +7,23 @@ class Service{
 
 
     listProductsByCategoryId(id,username,password){
-
         return axios.get(CATEGORY_API_BASE_URL+"list/"+id,{
              auth:{
               username:password,
               password:username
           }
-
+        });
+    }
+    getScrollProductList(id,username,password,page,size){
+        return axios.get("http://localhost:8080/product/searchC/"+id,{
+            params: {
+                page: page,
+                size: size
+            },
+            auth:{
+                username:password,
+                password:username
+            }
         });
     }
     listAllCategory(username,password){
@@ -23,7 +33,6 @@ class Service{
               username:password,
               password:username
           }
-
         })
     }
     listAllTableCategory(username,password){
@@ -34,7 +43,6 @@ class Service{
                 password:username
             }
         })
-
     }
 
     listTableByCategory(id,username,password){
@@ -73,15 +81,15 @@ class Service{
         });
     }
 
-    saleButton(Carts,username,password){
-        return axios.post("http://localhost:8080/carts/add",Carts,{
+    saleButton(order,username,password){
+        return axios.post("http://localhost:8080/carts/add",order,{
              auth:{
               username:password,
               password:username
           }
-
         })
     }
+
     listAllMedia(username,password){
         return axios.get("http://localhost:8080/media/list" ,{
             auth:{
@@ -90,6 +98,5 @@ class Service{
             }
         })
     }
-
 }
 export default new Service()

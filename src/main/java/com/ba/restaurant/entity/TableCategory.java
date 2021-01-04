@@ -7,13 +7,13 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 
 @Entity
-@SQLDelete(sql = "UPDATE table_category "+ "SET deleted = true " + "WHERE id = ?")
+@SQLDelete(sql = "UPDATE TABLE_CATEGORY "+ "SET deleted = true " + "WHERE id = ?")
 @Where(clause = "deleted = false")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="table_category")
+@Table(name="TABLE_CATEGORY")
 public class TableCategory extends BaseEntity{
 
     @Column(name = "table_category_desc")

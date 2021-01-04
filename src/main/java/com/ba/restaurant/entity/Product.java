@@ -11,11 +11,12 @@ import java.util.List;
 
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE product "+ "SET deleted = true " + "WHERE id = ?")
+@SQLDelete(sql = "UPDATE PRODUCTS "+ "SET deleted = true " + "WHERE id = ?")
 @Where(clause = "deleted = false")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "PRODUCTS")
 public class Product extends BaseEntity {
 
     @Column(name = "product_name")
@@ -27,7 +28,7 @@ public class Product extends BaseEntity {
     @JsonIgnore
     private List<Category> categories= new ArrayList<>();
 
-    @ManyToOne// default eager
+    @ManyToOne
     private Media media;
 
 }

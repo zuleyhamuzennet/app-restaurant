@@ -1,22 +1,17 @@
 package com.ba.restaurant.builder;
 import com.ba.restaurant.dto.CartDTO;
-import com.ba.restaurant.entity.Customer;
-import com.ba.restaurant.entity.ItemsOrder;
-import com.ba.restaurant.entity.Waiter;
-
+import com.ba.restaurant.dto.OrderItemDTO;
 import java.util.Date;
 import java.util.List;
 
 public class CartDTOBuilder extends DTOBuilder {
 
     private long total;
-    private String productName;
-    private long tableCartId;
-    private long tableCategoryId;
-    private List<Waiter> waiters;
+    private String paymentType;
+    private long waiterId;
     private Date cartDate;
-    private List<Customer> customers;
-    private List<ItemsOrder> itemOrders;
+    private long customerId;
+    private List<OrderItemDTO> orderItemDTOList;
 
     public CartDTOBuilder cartDate(Date cartDate) {
         this.cartDate = cartDate;
@@ -28,18 +23,17 @@ public class CartDTOBuilder extends DTOBuilder {
         return this;
     }
 
-    public CartDTOBuilder customers(List<Customer> customers) {
-        this.customers = customers;
+    public CartDTOBuilder customerId(long customerId) {
+        this.customerId = customerId;
+        return this;
+    }
+    public CartDTOBuilder orderItemDTOList(List<OrderItemDTO> orderItemDTOList) {
+        this.orderItemDTOList = orderItemDTOList;
         return this;
     }
 
-    public CartDTOBuilder waiters(List<Waiter> waiters) {
-        this.waiters = waiters;
-        return this;
-    }
-
-    public CartDTOBuilder orderItems(List<ItemsOrder> itemOrders) {
-        this.itemOrders = itemOrders;
+    public CartDTOBuilder waiterId(long waiterId) {
+        this.waiterId = waiterId;
         return this;
     }
 
@@ -48,18 +42,8 @@ public class CartDTOBuilder extends DTOBuilder {
         return this;
     }
 
-    public CartDTOBuilder productName(String productName) {
-        this.productName = productName;
-        return this;
-    }
-
-    public CartDTOBuilder tableCartId(Long tableCartId) {
-        this.tableCartId = tableCartId;
-        return this;
-    }
-
-    public CartDTOBuilder tableCategoryId(Long tableCategoryId) {
-        this.tableCategoryId = tableCategoryId;
+    public CartDTOBuilder paymentType(String paymentType) {
+        this.paymentType = paymentType;
         return this;
     }
 
@@ -67,13 +51,12 @@ public class CartDTOBuilder extends DTOBuilder {
     public CartDTO build() {
         CartDTO cartDTO = new CartDTO();
         cartDTO.setId(getId());
-        cartDTO.setTableCartId(this.tableCartId);
-        cartDTO.setTableCategoryId(this.tableCategoryId);
         cartDTO.setTotal(this.total);
         cartDTO.setCartDate(this.cartDate);
-        cartDTO.setCustomers(this.customers);
-        cartDTO.setWaiters(this.waiters);
-        cartDTO.setItemOrders(this.itemOrders);
+        cartDTO.setCustomerId(this.customerId);
+        cartDTO.setWaiterId(this.waiterId);
+        cartDTO.setPaymentType(this.paymentType);
+        cartDTO.setOrderItemDTOList(this.orderItemDTOList);
 
         return cartDTO;
 

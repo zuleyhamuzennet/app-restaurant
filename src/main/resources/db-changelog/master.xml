@@ -13,14 +13,20 @@
     <include relativeToChangelogFile="true" file="/changes/create-table-category-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-tbl-category-product.xml"/>
     <include relativeToChangelogFile="true" file="/changes/insert-tbl-category-product.xml"/>
-    <include relativeToChangelogFile="true" file="/changes/create-order-item-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-customer-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-cart-table.xml"/>
+    <include relativeToChangelogFile="true" file="/changes/create-order-item-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-role-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-user-table.xml"/>
     <include relativeToChangelogFile="true" file="/changes/create-user-role-table.xml"/>
-<!--    <include relativeToChangelogFile="true" file="/changes/products.sql"/>-->
-<!--    <include relativeToChangelogFile="true" file="/changes/category-product.sql"/>-->
+<!--    <include relativeToChangelogFile="true" file="/changes/products.sql"/>
+   <include relativeToChangelogFile="true" file="/changes/category-product.sql"/>-->
+
+    <changeSet author="zuleyha.muzennet" id="07-10-2020_18:38" runOnChange="true">
+        <sqlFile path="/db-changelog/changes/data.sql" stripComments="true"/>
+        <sqlFile path="/db-changelog/changes/products.sql" stripComments="true"/>
+        <sqlFile path="/db-changelog/changes/category-product.sql" stripComments="true"/>
+    </changeSet>
 
 
 </databaseChangeLog>

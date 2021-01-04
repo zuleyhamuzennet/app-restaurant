@@ -8,23 +8,23 @@
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
     <changeSet id="07-12-2021_15:41" author="zuleyha.muzennet">
 
-        <insert tableName="tbl_category_product">
+        <insert tableName="TBL_CATEGORY_PRODUCT">
             <column name="category_id" value="1"></column>
             <column name="product_id" value="1"></column>
         </insert>
-        <insert tableName="tbl_category_product">
+        <insert tableName="TBL_CATEGORY_PRODUCT">
             <column name="category_id" value="2"></column>
             <column name="product_id" value="2"></column>
         </insert>
-        <insert tableName="tbl_category_product">
+        <insert tableName="TBL_CATEGORY_PRODUCT">
             <column name="category_id" value="4"></column>
             <column name="product_id" value="3"></column>
         </insert>
-        <insert tableName="tbl_category_product">
+        <insert tableName="TBL_CATEGORY_PRODUCT">
             <column name="category_id" value="3"></column>
             <column name="product_id" value="4"></column>
         </insert>
-        <insert tableName="tbl_category_product">
+        <insert tableName="TBL_CATEGORY_PRODUCT">
             <column name="category_id" value="2"></column>
             <column name="product_id" value="5"></column>
         </insert>

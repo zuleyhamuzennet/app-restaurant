@@ -86,16 +86,17 @@ class ListCustomers extends Component {
                 <Header/>
                 <br/>
                 <Card className={"border border-dark bg-dark text-white"}>
-                    <h2 className="text-center">Customer List</h2>
                     <Card.Body>
-                        <Link to="/add-customer" className="btn btn-success">Add Customer</Link>
-                        <ReactToExcel style={{position:'absolute',right:'5px' ,marginTop:'-18px'}}
-                            id="table-to-xls"
-                            className="btn"
-                            table="table-to-xls"
-                            filename="excelFile"
-                            sheet="sheet 1"
-                            buttonText="Download as XLS"
+                        <h2 className="text-center">Customer List</h2>
+                        <Link to="/add-customer" className="btn btn-outline-success">Add Customer</Link>
+                        <ReactToExcel style={{position: 'absolute', right: '5px', marginTop: '-18px'}}
+                                      id="table-to-xls"
+                                      className="btn"
+                                      table="table-to-xls"
+                                      filename="excelFile"
+                                      sheet="sheet 1"
+                                      buttonText="Download as XLS"
+                                      className="btn btn-outline-primary"
                         />
                         <Table bordered hover striped variant="dark" id="table-to-xls">
                             <thead>
@@ -107,7 +108,6 @@ class ListCustomers extends Component {
                                 <th>Actions</th>
                             </tr>
                             </thead>
-
                             {this.state.customers.map(
                                 customer =>
                                     <tbody key={customer.id}>
@@ -120,7 +120,7 @@ class ListCustomers extends Component {
                                         </td>
                                         <td>
                                             <button onClick={() => this.updateCustomer(customer)}
-                                                    className="btn btn-success"> Edit
+                                                    className="btn btn-outline-success"> Edit
                                             </button>
                                             <button style={{marginLeft: "6px"}}
                                                     onClick={() => this.deleteCustomer(customer.id)}
@@ -128,7 +128,7 @@ class ListCustomers extends Component {
                                             </button>
                                             <button style={{marginLeft: "6px"}}
                                                     onClick={() => this.detailCustomer(customer)}
-                                                    className="btn btn-warning">Detail
+                                                    className="btn btn-outline-warning">Detail
                                             </button>
                                         </td>
                                     </tr>

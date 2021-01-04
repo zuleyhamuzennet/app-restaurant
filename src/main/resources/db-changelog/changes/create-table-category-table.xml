@@ -7,8 +7,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
     <changeSet id="17-11-2020_15:41" author="zuleyha.muzennet">
-        <createTable tableName="table_category">
-
+        <createTable tableName="TABLE_CATEGORY">
             <column autoIncrement="true" name="id" type="int(1)">
                 <constraints primaryKey="true"/>
             </column>
@@ -16,24 +15,23 @@
             <column name="table_category_name" type="VARCHAR(255)"/>
             <column name="count" type="int(1)"/>
             <column name="media_id" type="int(1)">
-                <constraints foreignKeyName="fk_media_table" references="media(id)"/>
-
+                <constraints foreignKeyName="fk_media_table" references="MEDIA(id)"/>
             </column>
         </createTable>
 
-        <insert tableName="table_category">
+        <insert tableName="TABLE_CATEGORY">
             <column name="table_category_desc" value="açık hava"></column>
             <column name="table_category_name" value="Teras"></column>
             <column name="count" valueNumeric='5'></column>
             <column name="media_id" valueNumeric='14'></column>
         </insert>
-        <insert tableName="table_category">
+        <insert tableName="TABLE_CATEGORY">
             <column name="table_category_desc" value="kapalı alan"></column>
             <column name="table_category_name" value="Salon"></column>
             <column name="count" valueNumeric='8'></column>
             <column name="media_id" valueNumeric='15'></column>
         </insert>
-        <insert tableName="table_category">
+        <insert tableName="TABLE_CATEGORY">
             <column name="table_category_desc" value="arka taraf"></column>
             <column name="table_category_name" value="Bahçe"></column>
             <column name="count" valueNumeric='6'></column>
@@ -41,13 +39,13 @@
         </insert>
 
         <rollback>
-            <dropTable tableName="table_category"/>
+            <dropTable tableName="TABLE_CATEGORY"/>
         </rollback>
 
     </changeSet>
     <changeSet id="17-11-2020_15:31" author="zuleyha.muzennet">
 
-        <addColumn tableName="table_category">
+        <addColumn tableName="TABLE_CATEGORY">
             <column name="deleted" type="boolean(1)" defaultValue="FALSE"></column>
         </addColumn>
     </changeSet>

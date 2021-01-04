@@ -2,6 +2,7 @@ package com.ba.restaurant.service;
 
 import com.ba.restaurant.builder.CategoryDTOBuilder;
 import com.ba.restaurant.dto.CategoryDTO;
+import com.ba.restaurant.entity.Category;
 import com.ba.restaurant.exception.SystemException;
 import com.ba.restaurant.mapper.CategoryMapper;
 import com.ba.restaurant.repository.CategoryRepository;
@@ -31,6 +32,7 @@ public class CategoryServiceTest {
     private CategoryRepository categoryRepository;
     private CategoryDTO categoryDTO = new CategoryDTO();
     private List<CategoryDTO> categoryDTOList = new ArrayList<>();
+    private Category category= new Category();
 
     @Mock
     CategoryMapper categoryMapper;
@@ -85,7 +87,8 @@ public class CategoryServiceTest {
     @Test
     public void shouldFindByCategoryId() {
         Long id = 1L;
-        Mockito.when(categoryRepository.findById(id)).thenReturn(Optional.of(CategoryMapper.INSTANCE.toEntity(categoryDTO)));
+        Mockito.when(categoryRepository.findById(id)).thenReturn(Optional.of(category));
+        Mockito.when(categoryMapper.toDTO(category)).thenReturn(categoryDTO);
         CategoryDTO categoryDTO1 = categoryService.getCategoryById(id);
         Assert.assertNotNull(categoryDTO1);
         Assert.assertEquals(categoryDTO1.getId(), categoryDTO.getId());

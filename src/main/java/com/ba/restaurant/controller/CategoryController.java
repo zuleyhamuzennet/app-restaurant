@@ -1,7 +1,6 @@
 package com.ba.restaurant.controller;
 
 import com.ba.restaurant.dto.CategoryDTO;
-import com.ba.restaurant.dto.ProductDTO;
 import com.ba.restaurant.exception.BusinessRuleException;
 import com.ba.restaurant.service.CategoryService;
 import com.ba.restaurant.exception.BusinessMessages;
@@ -38,15 +37,6 @@ public class CategoryController {
         categoryService.updateCategory(categoryDTO);
         return categoryDTO;
     }
-
-    @GetMapping("/list/{id}")
-    public List<ProductDTO> getProductsCategoryById(@PathVariable Long id) {
-        if(id== null){
-            throw new BusinessRuleException(BusinessMessages.idCanNotEmpty);
-        }
-        return categoryService.getProductsCategoryById(id);
-    }
-
     @GetMapping("/{id}")
     public CategoryDTO getCategoryById(@PathVariable Long id) {
         if(id== null){

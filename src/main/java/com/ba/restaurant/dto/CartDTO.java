@@ -1,27 +1,23 @@
 package com.ba.restaurant.dto;
 
-import com.ba.restaurant.entity.Customer;
-import com.ba.restaurant.entity.ItemsOrder;
-import com.ba.restaurant.entity.Waiter;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class CartDTO extends BaseDTO{
+public class CartDTO extends BaseDTO {
 
     private long total;
-    private String productName;
-    private long tableCartId;
-    private long tableCategoryId;
+    @NotNull(message = "CVC must have a numeric value")
+    private long cvc;
+    @NotNull(message = "Please choose payment method")
+    private String paymentType;
+    private long waiterId;
+    private long customerId;
     private Date cartDate;
-    private List<Waiter> waiters= new ArrayList<>();
-    private List<Customer> customers= new ArrayList<>();
-    private List<ItemsOrder> itemOrders = new ArrayList<>();
-
+    List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
 }

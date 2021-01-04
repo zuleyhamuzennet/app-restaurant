@@ -9,8 +9,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class ProductDTO extends BaseDTO {
 
     @NotNull(message = "Name must have a value")

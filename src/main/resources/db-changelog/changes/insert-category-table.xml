@@ -9,22 +9,22 @@
     <changeSet id="07-10-2020_15:21" author="zuleyha.muzennet">
 
 
-        <insert tableName="categories">
+        <insert tableName="CATEGORIES">
             <column name="category_name" value="Ana Yemek"></column>
             <column name="cat_description" value="etli,sıcak"></column>
             <column name="media_id" valueNumeric='1'></column>
         </insert>
-        <insert tableName="categories">
+        <insert tableName="CATEGORIES">
             <column name="category_name" value="Tatlı"></column>
             <column name="cat_description" value="soğuk"></column>
             <column name="media_id" valueNumeric='5'></column>
         </insert>
-        <insert tableName="categories">
+        <insert tableName="CATEGORIES">
             <column name="category_name" value="Pizza"></column>
             <column name="cat_description" value="hepsi"></column>
             <column name="media_id" valueNumeric='6'></column>
         </insert>
-        <insert tableName="categories">
+        <insert tableName="CATEGORIES">
             <column name="category_name" value="İçecekler"></column>
             <column name="cat_description" value="hepsi"></column>
             <column name="media_id" valueNumeric='11'></column>

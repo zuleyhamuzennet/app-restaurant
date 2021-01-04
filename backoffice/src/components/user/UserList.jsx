@@ -71,34 +71,7 @@ class UserList extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {
-                                this.state.persons.map(
-                                    user =>
-                                        <tr>
-                                            <td><a href="#">
-                                                {user.roles.map(
-                                                    role =>
-                                                        role.name + " ")}
-                                            </a>
-                                            </td>
-                                            <td>{user.username}</td>
-                                            <td>{user.email}</td>
-                                            <td>{user.password}</td>
-                                            <td>
-                                                <button onClick={() => this.updateUser(user.id)}
-                                                        className="btn btn-success"> Update
-                                                </button>
-                                                <button style={{marginLeft: "6px"}}
-                                                        onClick={() => this.deletePerson(user.id)}
-                                                        className="btn btn-outline-info"> Delete
-                                                </button>
-                                                <button style={{marginLeft: "6px"}} className="btn btn-warning"
-                                                        onClick={() => this.detailUser(user.id)}>Detail
-                                                </button>
-                                            </td>
-                                        </tr>
-                                )
-                            }
+                            {this.userListMap()}
                             </tbody>
                         </Table>
                     </Card.Body>
@@ -109,6 +82,39 @@ class UserList extends Component {
                 }
             </div>
         );
+    }
+
+    userListMap() {
+        return <>
+            {
+                this.state.persons.map(
+                    user =>
+                        <tr>
+                            <td><a href="#">
+                                {user.roles.map(
+                                    role =>
+                                        role.name + " ")}
+                            </a>
+                            </td>
+                            <td>{user.username}</td>
+                            <td>{user.email}</td>
+                            <td>{user.password}</td>
+                            <td>
+                                <button onClick={() => this.updateUser(user.id)}
+                                        className="btn btn-success"> Update
+                                </button>
+                                <button style={{marginLeft: "6px"}}
+                                        onClick={() => this.deletePerson(user.id)}
+                                        className="btn btn-outline-info"> Delete
+                                </button>
+                                <button style={{marginLeft: "6px"}} className="btn btn-warning"
+                                        onClick={() => this.detailUser(user.id)}>Detail
+                                </button>
+                            </td>
+                        </tr>
+                )
+            }
+        </>;
     }
 }
 

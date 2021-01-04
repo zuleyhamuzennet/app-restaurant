@@ -87,19 +87,7 @@ class CustomerAdd extends Component {
                                                    this.setState({phone: e.target.value})
                                                }}/>
                                     </div>
-                                    <div className="form-group">
-                                        <label> Media </label>
-                                        <select className="selectpicker form-control"
-                                                onChange={this.changeMediaHandler}>
-                                            {
-                                                this.state.mediaList.map(
-                                                    media =>
-                                                        <option key={media.id}
-                                                                value={media.id}>{media.mediaName}</option>
-                                                )
-                                            }
-                                        </select>
-                                    </div>
+                                    {this.getMediaMap()}
                                     <button className="btn btn-success" onClick={this.saveCustomer}>Save</button>
                                     <Link to="/list-customers" className="btn btn-danger"
                                           style={{marginLeft: "10px"}}>Cancel
@@ -115,6 +103,22 @@ class CustomerAdd extends Component {
                 }
             </div>
         );
+    }
+
+    getMediaMap() {
+        return <div className="form-group">
+            <label> Media </label>
+            <select className="selectpicker form-control"
+                    onChange={this.changeMediaHandler}>
+                {
+                    this.state.mediaList.map(
+                        media =>
+                            <option key={media.id}
+                                    value={media.id}>{media.mediaName}</option>
+                    )
+                }
+            </select>
+        </div>;
     }
 }
 export default CustomerAdd;

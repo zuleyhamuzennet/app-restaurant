@@ -1,10 +1,7 @@
 package com.ba.restaurant.service;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
-
-import com.ba.restaurant.dto.WaiterDTO;
 import com.ba.restaurant.builder.WaiterDTOBuilder;
+import com.ba.restaurant.dto.WaiterDTO;
 import com.ba.restaurant.entity.Waiter;
 import com.ba.restaurant.mapper.WaiterMapper;
 import com.ba.restaurant.repository.WaiterRepository;
@@ -21,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
+
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class WaiterServiceTest {
 
@@ -31,19 +31,28 @@ public class WaiterServiceTest {
     WaiterRepository waiterRepository;
     private WaiterDTO waiterDTO = new WaiterDTO();
     private List<WaiterDTO> waiterDTOS = new ArrayList<>();
-    Waiter waiter= new Waiter();
+    private Waiter waiter= new Waiter();
+
+    @Mock
+    private WaiterMapper waiterMapper;
 
     @Before
     public void setUp() throws Exception {
         waiterDTO = new WaiterDTOBuilder().waiterId(1L).waiterMail("aa").waiterName("zuleyha").address("aa")
                 .phone(2L).media(null).build();
         waiterDTOS.add(waiterDTO);
-        waiter=WaiterMapper.INSTANCE.toEntity(waiterDTO);
+        waiter.setId(1L);
+        waiter.setMedia(null);
+        waiter.setPhone(5L);
+        waiter.setAddress("kk");
+        waiter.setWaiterName("ww");
+        waiter.setWaiterMail("ss");
     }
 
     @Test
     public void shouldAddNewWaiter() {
-        Mockito.when(waiterRepository.save(Mockito.any())).thenReturn(waiter);
+        Mockito.when(waiterRepository.save(waiter)).thenReturn(waiter);
+        Mockito.when(waiterMapper.toEntity(waiterDTO)).thenReturn(waiter);
         WaiterDTO res = waiterService.addWaiter(waiterDTO);
         Assert.assertNotNull(res);
         Assert.assertEquals(res.getId(), waiterDTO.getId());

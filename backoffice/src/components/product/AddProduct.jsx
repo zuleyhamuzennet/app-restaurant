@@ -6,7 +6,6 @@ import {Link} from "react-router-dom";
 import Loading from "../Loading";
 import MediaService from "../service/MediaService";
 import {AuthContext} from "../contexts/AuthContext";
-import {Formik} from "formik"
 
 class AddProduct extends Component {
     static contextType = AuthContext;
@@ -23,7 +22,6 @@ class AddProduct extends Component {
             mediaId: '',
             media: {},
         }
-        this.changeMultiSelect = this.changeMultiSelect.bind(this);
     }
 
     saveProduct = (e) => {
@@ -54,19 +52,16 @@ class AddProduct extends Component {
         });
         MediaService.listAllMedia(user.username, user.password).then((res) => {
             this.setState({mediaList: res.data, loadingVisible: false})
-            console.log("res data", res.data);
         })
     }
 
-    changeMultiSelect(id) {
+    changeMultiSelect=(id)=> {
         if (this.state.multiSelect.includes(id) !== true) {
             this.state.multiSelect.push(id);
-            console.log("multiselect=> ekle", this.state.multiSelect)
         } else {
             for (let i = 0; i < this.state.multiSelect.length; i++) {
                 if (id === this.state.multiSelect[i]) {
                     this.state.multiSelect.splice(i, 1);
-                    console.log("multiselect= sil", this.state.multiSelect)
                 }
             }
         }
@@ -83,26 +78,15 @@ class AddProduct extends Component {
                             <h3 className="text-center">Add Product</h3>
                             <div className="card-body">
                                 <form>
-                                    <div className="form-group">
-                                        <label> Category </label>
-                                        <div className="checkbox" style={{height: "4rem", overflow: "auto"}}>
-                                            {
-                                                this.state.categories.map(
-                                                    category =>
-                                                        <div className="row col-md -12" key={category.id}>
-                                                            <label><input type="checkbox" value=""
-                                                                          onClick={() => this.changeMultiSelect(category.id)}/>{category.categoryName}
-                                                            </label>
-                                                        </div>
-                                                )
-                                            }
-                                        </div>
-                                    </div>
+
+                                    {this.getCategoriesMap()}
+
                                     <div className="form-group">
                                         <label> Product Name </label>
                                         <input placeholder="Product Name" name="productName" className="form-control"
                                                value={this.state.productName} onChange={(event) => {
-                                            this.setState({productName: event.target.value})
+                                            this.setState(
+                                                {productName: event.target.value})
                                         }}/>
                                     </div>
                                     <div className="form-group">
@@ -119,21 +103,9 @@ class AddProduct extends Component {
                                             this.setState({price: e.target.value})
                                         }}/>
                                     </div>
-                                    <div className="form-group">
-                                        <label> Media </label>
-                                        <select id="option" className="selectpicker form-control"
-                                                onChange={this.changeMediaHandler}>
-                                            {
-                                                this.state.mediaList.map(
-                                                    media =>
 
-                                                        <option key={media.id} value={media.id}>{media.mediaName}
-                                                        </option>
-                                                )
-                                            }
-                                        </select>
+                                    {this.getMediaMap()}
 
-                                    </div>
                                     <button type="button" className="btn btn-primary" data-toggle="modal"
                                             data-target="#exampleModal">
                                         show
@@ -154,7 +126,6 @@ class AddProduct extends Component {
                                                 </button>
                                             </div>
                                             <div className="modal-body">
-
                                                 <img src={'data:image/png;base64,' + this.state.mediaId.fileContent}
                                                      width="40"
                                                      style={{margin: 3}}/>
@@ -173,6 +144,41 @@ class AddProduct extends Component {
                 }
             </div>
         );
+    }
+
+    getMediaMap() {
+        return <div className="form-group">
+            <label> Media </label>
+            <select id="option" className="selectpicker form-control"
+                    onChange={this.changeMediaHandler}>
+                {
+                    this.state.mediaList.map(
+                        media =>
+
+                            <option key={media.id} value={media.id}>{media.mediaName}
+                            </option>
+                    )
+                }
+            </select>
+        </div>;
+    }
+
+    getCategoriesMap() {
+        return <div className="form-group">
+            <label> Category </label>
+            <div className="checkbox" style={{height: "4rem", overflow: "auto"}}>
+                {
+                    this.state.categories.map(
+                        category =>
+                            <div className="row col-md -12" key={category.id}>
+                                <label><input type="checkbox" value=""
+                                              onClick={() => this.changeMultiSelect(category.id)}/>{category.categoryName}
+                                </label>
+                            </div>
+                    )
+                }
+            </div>
+        </div>;
     }
 }
 

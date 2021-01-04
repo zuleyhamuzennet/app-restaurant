@@ -47,14 +47,20 @@ public class CustomerServiceTest {
     String locale= "en";
 
     public void setUp() {
-        customerDTO = new CustomerDTOBuilder().address("ss").name("ff").phone(5L).id(1L).build();
+        customerDTO = new CustomerDTOBuilder().address("ss").media(null).name("ff").phone(5L).id(1L).build();
         customerDTOS.add(customerDTO);
-
+        customer.setPhone(5L);
+        customer.setAddress("ss");
+        customer.setName("ff");
+        customer.setId(1L);
+        customer.setMedia(null);
+        customers.add(customer);
     }
 
     @Test
     public void shouldAddCustomer() {
-        Mockito.when(customerRepository.save(Mockito.any())).thenReturn(CustomerMapper.INSTANCE.toEntity(customerDTO));
+        Mockito.when(customerRepository.save(customer)).thenReturn(customer);
+        Mockito.when(customerMapper.toEntity(customerDTO)).thenReturn(customer);
         CustomerDTO res = customerService.addCustomer(customerDTO,locale);
         Assert.assertNotNull(res);
         Assert.assertEquals(res.getId(), customerDTO.getId());
@@ -62,7 +68,8 @@ public class CustomerServiceTest {
 
    @Test
     public void shouldEditCustomer() {
-       Mockito.when(customerRepository.findById(any())).thenReturn(Optional.of(customer));
+        Long id= 1L;
+       Mockito.when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
         Mockito.when(customerRepository.save(any())).thenReturn(customer);
         CustomerDTO res = customerService.updateCustomer(customerDTO,locale);
         Assert.assertNotNull(res);
@@ -80,7 +87,8 @@ public class CustomerServiceTest {
     @Test
     public void shouldGetCustomerById() {
        Long id = 1L;
-        Mockito.when(customerRepository.findById(id)).thenReturn(Optional.of(Optional.of(CustomerMapper.INSTANCE.toEntity(customerDTO)).get()));
+        Mockito.when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
+        Mockito.when(customerMapper.toDTO(customer)).thenReturn(customerDTO);
         CustomerDTO res = customerService.getCustomerById(id);
         Assert.assertNotNull(res);
         Assert.assertEquals(res.getId(), customerDTO.getId());
@@ -103,14 +111,14 @@ public class CustomerServiceTest {
     }
 
     @Test(expected = BusinessRuleException.class)
-    public void shouldgetNameNot(){
+    public void shouldGetNameNot(){
        customerService.getCustomerByName(Pageable.unpaged(),"s",locale);
     }
 
     @Test(expected = BusinessRuleException.class)
     public void shouldUpdateNot(){
-        customerDTO.setName(null);
-       Mockito.when(customerRepository.save(any())).thenReturn(customerDTO);
+        customerDTO.setId(null);
+       Mockito.when(customerRepository.save(customer)).thenReturn(customer);
        customerService.updateCustomer(customerDTO,locale);
     }
 }

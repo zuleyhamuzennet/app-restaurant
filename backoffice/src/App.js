@@ -31,7 +31,6 @@ import ListCustomers from "./components/customer/ListCustomers";
 import UpdateCustomer from "./components/customer/UpdateCustomer";
 import DetailCustomer from "./components/customer/DetailCustomer";
 import {AuthProvider} from "./components/contexts/AuthContext";
-import Payment from "../../client/src/components/Payment";
 
 function App() {
     return (

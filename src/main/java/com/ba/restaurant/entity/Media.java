@@ -7,8 +7,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "MEDIA")
 public class Media {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -17,5 +17,4 @@ public class Media {
 
     @Column(name="file_content",length = 10000000)
     private byte[] fileContent;
-
 }

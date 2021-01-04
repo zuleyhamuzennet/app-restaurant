@@ -3,6 +3,7 @@ package com.ba.restaurant.controller;
 import com.ba.restaurant.dto.CategoryDTO;
 import com.ba.restaurant.builder.CategoryDTOBuilder;
 import com.ba.restaurant.exception.BusinessRuleException;
+import com.ba.restaurant.exception.SystemException;
 import com.ba.restaurant.service.CategoryService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,11 +46,6 @@ public class CategoryControllerTest {
     public void shouldlistAllCategory() {
         List<CategoryDTO> res = categoryController.listAllCategories();
         Assert.assertNotNull(res);
-    }
-
-    @Test(expected = BusinessRuleException.class)
-    public void shouldUpdateCategoryNot(){
-        CategoryDTO res=categoryController.updateCategory(null);
     }
 
     @Test

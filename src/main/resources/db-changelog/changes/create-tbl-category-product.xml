@@ -7,13 +7,13 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
     <changeSet id="07-12-2021_15:41" author="zuleyha.muzennet">
-        <createTable tableName="tbl_category_product">
+        <createTable tableName="TBL_CATEGORY_PRODUCT">
 
-            <column autoIncrement="true" name="category_id" type="int(1)">
-                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_category" references="categories(id)"/>
+            <column  name="category_id" type="int(1)">
+                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_category" references="CATEGORIES(id)"/>
             </column>
-            <column autoIncrement="true"  name="product_id" type="int(1)">
-                <constraints primaryKey="true"  nullable="false" foreignKeyName="fk_product" references="product(id)"/>
+            <column  name="product_id" type="int(1)">
+                <constraints primaryKey="true"  nullable="false" foreignKeyName="fk_product" references="PRODUCTS(id)"/>
             </column>
         </createTable>
 

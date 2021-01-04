@@ -38,6 +38,7 @@ class TableCategoryUpdate extends Component {
             this.props.history.push("/table-categories");
         })
     }
+
     changeMediaHandler = (e) => {
         this.setState({mediaId: e.target.value});
         const mediaArray = this.state.mediaList.filter(item => item.id == this.state.mediaId);
@@ -86,19 +87,9 @@ class TableCategoryUpdate extends Component {
                                             this.setState({count: e.target.value})
                                         }}/>
                                     </div>
-                                    <div className="form-group">
-                                        <label>Media</label>
-                                        <select className="selectpicker form-control"
-                                                onChange={this.changeMediaHandler}>
-                                            {
-                                                this.state.mediaList.map(
-                                                    media =>
-                                                        <option key={media.id}
-                                                                value={media.id}>{media.mediaName}</option>
-                                                )
-                                            }
-                                        </select>
-                                    </div>
+
+                                    {this.mediaMap()}
+
                                     <button className="btn btn-success" onClick={this.updateTableCategory}>Save</button>
                                     <Link to="/table-categories" className="btn btn-danger"
                                           style={{marginLeft: "10px"}}>Cancel
@@ -110,6 +101,22 @@ class TableCategoryUpdate extends Component {
                 </div>
             </div>
         );
+    }
+
+    mediaMap() {
+        return <div className="form-group">
+            <label>Media</label>
+            <select className="selectpicker form-control"
+                    onChange={this.changeMediaHandler}>
+                {
+                    this.state.mediaList.map(
+                        media =>
+                            <option key={media.id}
+                                    value={media.id}>{media.mediaName}</option>
+                    )
+                }
+            </select>
+        </div>;
     }
 }
 

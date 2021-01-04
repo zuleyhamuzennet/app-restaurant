@@ -28,6 +28,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         ErrorResponseDTO response=prepareResponseModel(e.getMessage(),request);
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ErrorResponseDTO> handlerException(Exception e,WebRequest request){
         ErrorResponseDTO response= prepareResponseModel(e.getMessage(),request);

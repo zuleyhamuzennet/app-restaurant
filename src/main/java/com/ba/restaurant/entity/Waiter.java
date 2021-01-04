@@ -8,11 +8,12 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE waiter "+ "SET deleted = true " + "WHERE id = ?")
+@SQLDelete(sql = "UPDATE WAITER "+ "SET deleted = true " + "WHERE id = ?")
 @Where(clause = "deleted = false")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "WAITER")
 public class Waiter extends BaseEntity{
 
     @Column(name="waiter_name")

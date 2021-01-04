@@ -7,29 +7,31 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
   <changeSet id="07-12-2020_18:41" author="zuleyha.muzennet">
-      <createTable tableName="cart">
+      <createTable tableName="CART">
           <column autoIncrement="true" name="id" type="int(1)">
               <constraints primaryKey="true"/>
           </column>
           <column name="total" type="int(1)"/>
-          <column name="table_id" type="int(1)"/>
-          <column name="category_id" type="int(1)"/>
-          <column name="product_name" type="VARCHAR(255)"/>
+          <column name="cvc" type="int(1)"/>
+          <column name="payment_type" type="VARCHAR(255)"/>
 
           <column name="waiter_id" type="int(1)">
-              <constraints foreignKeyName="fk_waiter_cart" references="waiter(id)"/>
+              <constraints foreignKeyName="fk_waiter_cart" references="WAITER(id)"/>
           </column>
+
           <column name="customer_id" type="int(1)">
-              <constraints foreignKeyName="fk_customer_cart" references="customer(id)"/>
+              <constraints foreignKeyName="fk_customer_cart" references="CUSTOMER(id)"/>
           </column>
-          <column name="order_item_id" type="int(1)">
-              <constraints foreignKeyName="fk_order_item" references="ORDER_ITEMS(id)"/>
-          </column>
-          <column defaultValueComputed="CURRENT_TIMESTAMP" name="cart_date" type="TIMESTAMP"/>
+
+          <column defaultValueComputed="CURRENT_TIMESTAMP" name="date" type="TIMESTAMP"/>
       </createTable>
       <rollback>
-          <dropTable tableName="cart"/>
+          <dropTable tableName="CART"/>
       </rollback>
-
   </changeSet>
+    <changeSet id="17-11-2020_13:28" author="zuleyha.muzennet">
+        <addColumn tableName="CART">
+            <column name="deleted" type="boolean(1)" defaultValue="FALSE"></column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

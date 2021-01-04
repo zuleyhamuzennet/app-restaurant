@@ -7,14 +7,14 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
     <changeSet id="27-02-2020_15:41" author="zuleyha.muzennet">
-        <insert tableName="waiter">
+        <insert tableName="WAITER">
             <column name="waiter_name" value="zuleyha"></column>
             <column name="waiter_mail" value="zuleyha@gm.com"></column>
             <column name="address" value="xxx yyy zz"></column>
             <column name="phone" value='053455555'></column>
             <column name="media_id" valueNumeric='3'></column>
         </insert>
-        <insert tableName="waiter">
+        <insert tableName="WAITER">
             <column name="waiter_name" value="tolga"></column>
             <column name="waiter_mail" value="tolga@gm.com"></column>
             <column name="address" value="tt yyy zz"></column>

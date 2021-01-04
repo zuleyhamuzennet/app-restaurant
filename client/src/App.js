@@ -7,15 +7,12 @@ import TableCategory from "./components/TableCategory";
 import Tables from "./components/Tables";
 import Waiters from "./components/Waiters";
 import React,{} from "react";
-
 import {ContextUserProvider} from "./components/ContextUser";
 import CustomerAdd from "./components/CustomerAdd";
 import ListCustomer from "./components/ListCustomer";
 
-
 const valueProvider={username:'admin', password:'admin'}
 function App() {
-
 
     return (
         <ContextUserProvider value={valueProvider}>

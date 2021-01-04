@@ -7,7 +7,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
     <changeSet id="07-12-2220_15:41" author="zuleyha.muzennet">
-        <createTable tableName="roles">
+        <createTable tableName="ROLES">
 
             <column autoIncrement="true" name="id" type="int(1)">
                 <constraints primaryKey="true"/>
@@ -15,20 +15,14 @@
             <column name="name" type="VARCHAR(255)"/>
         </createTable>
 
-        <insert tableName="roles">
-            <column name="name" value="ROLE_ADMIN"></column>
-
-        </insert>
-
-
         <rollback>
-            <dropTable tableName="roles"/>
+            <dropTable tableName="ROLES"/>
         </rollback>
 
     </changeSet>
     <changeSet id="17-12-2020_12:31" author="zuleyha.muzennet">
 
-        <addColumn tableName="roles">
+        <addColumn tableName="ROLES">
             <column name="deleted" type="boolean(1)" defaultValue="FALSE"></column>
         </addColumn>
     </changeSet>

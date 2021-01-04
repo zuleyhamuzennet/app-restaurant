@@ -1,6 +1,5 @@
 package com.ba.restaurant.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,16 +8,15 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE customer "+ "SET deleted = true " + "WHERE id = ?")
+@SQLDelete(sql = "UPDATE CUSTOMER "+ "SET deleted = true " + "WHERE id = ?")
 @Where(clause = "deleted = false")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "CUSTOMER")
 public class Customer extends BaseEntity {
 
     private String name;

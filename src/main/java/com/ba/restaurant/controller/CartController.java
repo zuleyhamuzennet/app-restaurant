@@ -1,12 +1,11 @@
 package com.ba.restaurant.controller;
 
 import com.ba.restaurant.dto.CartDTO;
-import com.ba.restaurant.exception.BusinessMessages;
-import com.ba.restaurant.exception.BusinessRuleException;
 import com.ba.restaurant.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,11 +22,8 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public List<CartDTO> addCart(@RequestBody List<CartDTO> cartDTOS) {
-        if(cartDTOS.isEmpty()){
-            throw new BusinessRuleException(BusinessMessages.parameterCanNotEmpty);
-        }
-        return cartService.addCart(cartDTOS);
+    public CartDTO addCart(@Valid @RequestBody CartDTO cartDTO) {
+        return cartService.add(cartDTO);
     }
 }
 

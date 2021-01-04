@@ -11,11 +11,6 @@ class ProductService{
                 username:username,
                 password:password
             }
-            /*auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
         })
     }
 
@@ -25,11 +20,6 @@ class ProductService{
                 username:username,
                 password:password
             }
-            /*auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
         });
     }
 
@@ -39,22 +29,11 @@ class ProductService{
            username:username,
            password:password
        }
-            /*auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
         });
     }
 
     updateProduct(product,username,password){
         return axios.put(PRODUCT_API_BASE_URL+'update/',product,{
-
-           /* auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
               auth:{
            username:username,
            password:password
@@ -64,11 +43,6 @@ class ProductService{
 
     deleteProduct(id,username,password){
         return axios.delete(PRODUCT_API_BASE_URL+'delete/'+id,{
-           /* auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
             auth:{
 
                 username:username,
@@ -77,13 +51,9 @@ class ProductService{
         });
     }
 
+
     getSales(username,password){
         return axios.get("http://localhost:8080/carts/list",{
-           /* auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
                    auth:{
 
                 username:username,
@@ -95,11 +65,6 @@ class ProductService{
 
     getCategoryById(id,username,password){
         return axios.get("http://localhost:8080/categories/" + id,{
-           /* auth:{
-
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            }*/
             auth:{
 
                 username:username,
@@ -107,9 +72,18 @@ class ProductService{
             }
         });
     }
+    getPageProductList(username,password,page,size){
 
-
-
-
+        return axios.get(PRODUCT_API_BASE_URL+"search/",{
+            params: {
+                page: page,
+                size: size
+            },
+            auth:{
+                username:password,
+                password:username
+            }
+        });
+    }
 }
 export default new ProductService()

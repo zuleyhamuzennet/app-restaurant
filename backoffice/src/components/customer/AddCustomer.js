@@ -19,7 +19,6 @@ class AddCustomer extends Component {
             media: {},
             mediaId: ''
         }
-        this.saveCustomer = this.saveCustomer.bind(this);
     }
 
     saveCustomer = (e) => {

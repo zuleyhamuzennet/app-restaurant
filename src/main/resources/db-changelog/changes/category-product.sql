@@ -1,4 +1,3 @@
-
 insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (6, 3);
 insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (7, 4);
 insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (8, 1);
@@ -51,19 +50,4 @@ insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (54, 2);
 insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (55, 2);
 insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (56, 4);
 insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (57, 1);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (58, 3);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (59, 3);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (60, 1);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (61, 4);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (62, 2);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (63, 3);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (64, 1);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (65, 3);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (66, 4);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (67, 1);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (68, 2);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (69, 3);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (70, 2);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (71, 1);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (72, 4);
-insert into TBL_CATEGORY_PRODUCT (product_id, category_id) values (73, 2);
+

@@ -43,32 +43,11 @@ class ProductSales extends Component {
                                 <th>Product Piece</th>
                                 <th>Product Price</th>
                                 <th>Total Price</th>
-                                <th>Table-Category</th>
-                                <th>Table</th>
                                 <th>Waiter</th>
                                 <th>Customer</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            {
-                                this.state.orderProducts.map(
-                                    products =>
-                                        <tr key={products.id}>
-                                            <td>{products.id}</td>
-                                            <td>{products.cartDate}</td>
-                                            <td>{products.productName}</td>
-                                            <td>{products.productId}</td>
-                                            <td>{products.piece}</td>
-                                            <td>{products.price}</td>
-                                            <td>{products.total}</td>
-                                            <td>{products.tableCategoryId}</td>
-                                            <td>{products.tableCartId}</td>
-                                            <td>{products.waiterId}</td>
-                                            <td>{products.customerId}</td>
-                                        </tr>
-                                )
-                            }
-                            </tbody>
+                            {this.getProductSales()}
                         </Table>
                     </Card.Body>
                 </Card>
@@ -78,6 +57,27 @@ class ProductSales extends Component {
                 }
             </div>
         );
+    }
+
+    getProductSales() {
+        return <tbody>
+        {
+            this.state.orderProducts.map(
+                products =>
+                    <tr key={products.id}>
+                        <td>{products.id}</td>
+                        <td>{products.cartDate}</td>
+                        <td>{products.productName}</td>
+                        <td>{products.productId}</td>
+                        <td>{products.piece}</td>
+                        <td>{products.price}</td>
+                        <td>{products.total}</td>
+                        <td>{products.waiterId}</td>
+                        <td>{products.customerId}</td>
+                    </tr>
+            )
+        }
+        </tbody>;
     }
 }
 

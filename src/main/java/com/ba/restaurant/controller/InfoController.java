@@ -77,6 +77,4 @@ public class InfoController {
         return jsonArray.toJSONString();
     }
 
-
-
 }

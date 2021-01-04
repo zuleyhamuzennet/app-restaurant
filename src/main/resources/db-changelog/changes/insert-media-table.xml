@@ -5,78 +5,78 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
       http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
     <changeSet id="07-01-2020_15:51" author="zuleyha.muzennet">
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="1"></column>
             <column name="media_name" value="Ana Yemek"></column>
             <column name="file_content" valueBlobFile="ana_yemek.jpg"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="2"></column>
             <column name="media_name" value="hünkar_begendi"></column>
             <column name="file_content" valueBlobFile="hünkar_begendi.png"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="3"></column>
             <column name="media_name" value="Waiter"></column>
             <column name="file_content" valueBlobFile="waiter5.jpg"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="4"></column>
             <column name="media_name" value="suffle"></column>
             <column name="file_content" valueBlobFile="suffle.png"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="5"></column>
             <column name="media_name" value="tatli"></column>
             <column name="file_content" valueBlobFile="tatli.png"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="6"></column>
             <column name="media_name" value="pizza"></column>
             <column name="file_content" valueBlobFile="pizza.png"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="7"></column>
             <column name="media_name" value="sucuklu_pizza"></column>
             <column name="file_content" valueBlobFile="sucuklu_pizza.png"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="8"></column>
             <column name="media_name" value="coffee"></column>
             <column name="file_content" valueBlobFile="coffee.png"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="9"></column>
             <column name="media_name" value="fastfood"></column>
             <column name="file_content" valueBlobFile="fastfood.png"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="10"></column>
             <column name="media_name" value="salata"></column>
             <column name="file_content" valueBlobFile="salata.png"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="11"></column>
             <column name="media_name" value="drinks"></column>
             <column name="file_content" valueBlobFile="drinks.png"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="12"></column>
             <column name="media_name" value="waiterS"></column>
             <column name="file_content" valueBlobFile="waiterS.jpg"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="13"></column>
             <column name="media_name" value="food"></column>
             <column name="file_content" valueBlobFile="pizza222.png"></column>
         </insert>
 
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="14"></column>
             <column name="media_name" value="restaurant"></column>
             <column name="file_content" valueBlobFile="restaurant.png"></column>
         </insert>
-        <insert tableName="media">
+        <insert tableName="MEDIA">
             <column name="id" value="15"></column>
             <column name="media_name" value="dinner-table"></column>
             <column name="file_content" valueBlobFile="dinner-table.png"></column>

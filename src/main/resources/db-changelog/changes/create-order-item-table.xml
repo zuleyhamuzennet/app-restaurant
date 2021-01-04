@@ -13,7 +13,10 @@
             <column name="price" type="int(1)"/>
             <column name="piece" type="int(1)"/>
             <column name="product_id" type="int(10)">
-                <constraints foreignKeyName="fk_order_item_product" references="product(id)"/>
+                <constraints foreignKeyName="fk_order_item_product" references="PRODUCTS(id)"/>
+            </column>
+            <column name="order_id" type="int(10)">
+                <constraints foreignKeyName="fk_order_item_order" references="CART(id)"/>
             </column>
         </createTable>
         <rollback>

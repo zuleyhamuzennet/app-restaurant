@@ -2,6 +2,7 @@ package com.ba.restaurant.service;
 
 import com.ba.restaurant.dto.TableCategoryDTO;
 import com.ba.restaurant.builder.TableCategoryDTOBuilder;
+import com.ba.restaurant.entity.TableCategory;
 import com.ba.restaurant.mapper.TableCategoryMapper;
 import com.ba.restaurant.repository.TableCategoryRepository;
 import org.junit.Assert;
@@ -24,31 +25,46 @@ public class TableCategoryServiceTest {
     private TableCategoryService tableCategoryService;
 
     @Mock
+    TableCategoryMapper tableCategoryMapper;
+
+    @Mock
     private TableCategoryRepository tableCategoryRepository;
     private TableCategoryDTO tableCategoryDTO = new TableCategoryDTO();
     private List<TableCategoryDTO> tableCategoryDTOS = new ArrayList<>();
-    String locale=null;
+    private TableCategory category=new TableCategory();
+    private List<TableCategory> categories= new ArrayList<>();
+    String locale="tr";
 
     @Before
     public void setUp() throws Exception {
+        category.setTableCategoryDesc("deneme");
+        category.setCount(2L);
+        category.setTableCategoryName("name");
+        category.setMedia(null);
+        categories.add(category);
+
         tableCategoryDTO = new TableCategoryDTOBuilder().id(1L).media(null).tableCategoryDesc("deneme").tableCategoryName("name").count(2L).build();
         tableCategoryDTOS.add(tableCategoryDTO);
     }
 
     @Test
     public void shouldAddNewTableCategory() {
-        Mockito.when(tableCategoryRepository.save(Mockito.any())).thenReturn(TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO));
-        TableCategoryDTO tableCategoryDTO1 = tableCategoryService.addTableCategory(tableCategoryDTO,locale);
-        Assert.assertNotNull(tableCategoryDTO1);
-        Assert.assertEquals(tableCategoryDTO1.getId(), tableCategoryDTO.getId());
+
+        Mockito.when(tableCategoryRepository.save(Mockito.any())).thenReturn(category);
+        TableCategoryDTO res = tableCategoryService.addTableCategory(tableCategoryDTO,locale);
+        Assert.assertNotNull(res);
+        Assert.assertEquals(res.getId(), tableCategoryDTO.getId());
     }
 
     @Test
     public void shouldUpdateTableCategory() {
-        Mockito.when(tableCategoryRepository.saveAndFlush(Mockito.any())).thenReturn(TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO));
-        TableCategoryDTO tableCategoryDTO1 = tableCategoryService.updateTableCategory(tableCategoryDTO,locale);
-        Assert.assertNotNull(tableCategoryDTO1);
-        Assert.assertEquals(tableCategoryDTO1.getId(), tableCategoryDTO.getId());
+        TableCategory category1=new TableCategory();
+        Mockito.when(tableCategoryMapper.toEntity(tableCategoryDTO)).thenReturn(category1);
+        Mockito.when(tableCategoryRepository.saveAndFlush(category1)).thenReturn(category);
+
+        TableCategoryDTO res = tableCategoryService.updateTableCategory(tableCategoryDTO,locale);
+        Assert.assertNotNull(res);
+        Assert.assertEquals(res.getId(), tableCategoryDTO.getId());
     }
 
     @Test
@@ -61,15 +77,16 @@ public class TableCategoryServiceTest {
     @Test
     public void shouldDeleteTableCategory() {
         Long id = 1L;
-        Mockito.when(tableCategoryRepository.findById(Mockito.any())).thenReturn(Optional.of(TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO)));
+        Mockito.when(tableCategoryRepository.findById(Mockito.any())).thenReturn(Optional.of(category));
         Long res = tableCategoryService.deleteByTableCategory(id,locale);
-        Assert.assertNotNull(res);
+        Assert.assertNull(res);
     }
 
     @Test
     public void shouldGetTableCategoryById() {
         Long id = 1L;
-        Mockito.when(tableCategoryRepository.findById(id)).thenReturn(Optional.of(TableCategoryMapper.INSTANCE.toEntity(tableCategoryDTO)));
+        Mockito.when(tableCategoryRepository.findById(id)).thenReturn(Optional.of(category));
+        Mockito.when(tableCategoryMapper.toDTO(category)).thenReturn(tableCategoryDTO);
         TableCategoryDTO res = tableCategoryService.getTableCategorytById(id,locale);
         Assert.assertNotNull(res);
         Assert.assertEquals(res.getId(), tableCategoryDTO.getId());
