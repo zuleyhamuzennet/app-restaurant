@@ -34,7 +34,7 @@ public class WaiterService {
     }
 
     public WaiterDTO updateWaiter(WaiterDTO waiterDTO) {
-        if (waiterDTO == null) {
+        if (waiterDTO == null||waiterDTO.getId()==null) {
             throw new SystemException(BusinessMessages.canNotBeUpdated);
         }
         waiterRepository.saveAndFlush(waiterMapper.toEntity(waiterDTO));

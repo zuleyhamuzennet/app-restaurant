@@ -81,6 +81,8 @@
             <column name="media_name" value="dinner-table"></column>
             <column name="file_content" valueBlobFile="dinner-table.png"></column>
         </insert>
+
+
     </changeSet>
 
 </databaseChangeLog>

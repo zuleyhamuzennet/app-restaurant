@@ -25,6 +25,10 @@
     <changeSet author="zuleyha.muzennet" id="07-10-2020_18:38" runOnChange="true">
         <sqlFile path="/db-changelog/changes/data.sql" stripComments="true"/>
         <sqlFile path="/db-changelog/changes/products.sql" stripComments="true"/>
+       <!-- <sqlFile path="/db-changelog/changes/WAITER.sql" stripComments="true"/>-->
+     <!--   <sqlFile path="/db-changelog/changes/CUSTOMER.sql" stripComments="true"/>-->
+       <!-- <sqlFile path="/db-changelog/changes/CART.sql" stripComments="true"/>-->
+    <!--    <sqlFile path="/db-changelog/changes/ORDER_ITEMS.sql" stripComments="true"/>-->
         <sqlFile path="/db-changelog/changes/category-product.sql" stripComments="true"/>
     </changeSet>
 

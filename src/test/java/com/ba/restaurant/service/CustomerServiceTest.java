@@ -69,8 +69,8 @@ public class CustomerServiceTest {
    @Test
     public void shouldEditCustomer() {
         Long id= 1L;
-       Mockito.when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
-        Mockito.when(customerRepository.save(any())).thenReturn(customer);
+        Mockito.when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
+        Mockito.when(customerRepository.save(customer)).thenReturn(customer);
         CustomerDTO res = customerService.updateCustomer(customerDTO,locale);
         Assert.assertNotNull(res);
         Assert.assertEquals(res.getId(), customerDTO.getId());

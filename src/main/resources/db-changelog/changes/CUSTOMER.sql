@@ -1,0 +1,15 @@
+insert into CUSTOMER (id, name, phone, address, media_id) values (1, 'Eunice Hesey', '210 392 3459', 'Texas', 6);
+insert into CUSTOMER (id, name, phone, address, media_id) values (2, 'Sioux Jossum', '979 144 6729', 'Texas', 7);
+insert into CUSTOMER (id, name, phone, address, media_id) values (3, 'Brockie Epilet', '915 868 6632', 'Texas', 8);
+insert into CUSTOMER (id, name, phone, address, media_id) values (4, 'Rhys Boase', '214 544 3653', 'Texas', 9);
+insert into CUSTOMER (id, name, phone, address, media_id) values (5, 'Cherianne Syplus', '915 241 0656', 'Texas', 10);
+insert into CUSTOMER (id, name, phone, address, media_id) values (6, 'Carmon Antonopoulos', '361 329 0624', 'Texas', 11);
+insert into CUSTOMER (id, name, phone, address, media_id) values (7, 'Shelton Oblein', '915 294 2783', 'Texas', 12);
+insert into CUSTOMER (id, name, phone, address, media_id) values (8, 'Swen Gillyatt', '214 668 2665', 'Texas', 13);
+insert into CUSTOMER (id, name, phone, address, media_id) values (9, 'Carrie Hasser', '469 603 4026', 'Texas', 14);
+insert into CUSTOMER (id, name, phone, address, media_id) values (10, 'Creight Haxley', '972 243 9059', 'Texas', 17);
+insert into CUSTOMER (id, name, phone, address, media_id) values (11, 'Clint Pantone', '915 411 5212', 'Texas', 20);
+insert into CUSTOMER (id, name, phone, address, media_id) values (12, 'Kelly McGibbon', '903 489 5360', 'Texas', 15);
+insert into CUSTOMER (id, name, phone, address, media_id) values (13, 'Galvin Sawyer', '936 904 6466', 'Texas', 19);
+insert into CUSTOMER (id, name, phone, address, media_id) values (14, 'Richy Geertz', '281 662 5710', 'Texas', 18);
+insert into CUSTOMER (id, name, phone, address, media_id) values (15, 'Donal Matoshin', '512 246 2002', 'Texas', 16);

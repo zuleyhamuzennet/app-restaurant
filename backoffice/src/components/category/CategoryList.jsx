@@ -49,6 +49,7 @@ class CategoryList extends Component {
         this.setState({loadingVisible: true})
         CategoryService.listAllCategories(user.username, user.password).then((res) => {
             this.setState({categories: res.data, loadingVisible: false});
+            console.log("categori", res.data);
         });
     }
 

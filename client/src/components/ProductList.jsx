@@ -4,6 +4,7 @@ import '../App.css';
 import Loading from "./Loading";
 import ContextUser from "./ContextUser";
 import {Modal} from "react-bootstrap";
+import Cards from 'react-credit-cards';
 
 class ProductList extends Component {
     static contextType = ContextUser;
@@ -33,8 +34,21 @@ class ProductList extends Component {
             idC: '',
             paymentType: '',
             cvc: '',
+            expiry: '',
+            focus: '',
+            name: '',
+            number: '',
         }
         this.myRef = React.createRef();
+    }
+
+    handleInputFocus = (e) => {
+        this.setState({ focus: e.target.name });
+    }
+
+    handleInputChange = (e) => {
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
     }
 
     saleButton() {
@@ -157,22 +171,14 @@ class ProductList extends Component {
         this.loadPage();
         this.onScroll();
         this.getLocaleStroge();
+        console.log("pro",this.state.productList)
     }
 
     render() {
         return (
             <>
-                <header>
-                    <nav className="navbar navbar-dark bg-dark">
-                        <button className="navbar-toggler" type="button" data-toggle="collapse"
-                                style={{display: 'flex', marginLeft: "auto", marginRight: '20px'}}
-                                aria-label="Toggle navigation" onClick={() => this.goTables()}>
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                    </nav>
-                </header>
+                {this.getHeader()}
                 <div className="col-md-12 mx-auto">
-
                     <div className="row">
                         <div className="col-md-2 mt-5 ml-4">
                             <div className="list-group">
@@ -209,47 +215,92 @@ class ProductList extends Component {
                                     </thead>
                                     {this.getCartMap()}
                                 </table>
-                                <form>
-                                    <div className="form-group">
-                                        <label> Payment Type </label>
-                                        <input placeholder="Payment Type" name="paymentType" className="form-control"
-                                               value={this.state.paymentType}
-                                               onChange={(e) => {
-                                                   this.setState({paymentType: e.target.value})
-                                               }}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>CVC </label>
-                                        <input placeholder="CVC" name="cvc" className="form-control"
-                                               value={this.state.cvc}
-                                               onChange={(e) => {
-                                                   this.setState({cvc: e.target.value})
-                                               }}/>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
                     {this.getSaleButton()}
                 </div>
-                {/*     {
+                {
                     this.state.loadingVisible ?
                         <Loading/> : null
-                }*/}
+                }
                 {this.getModal1()}
-
             </>
         );
+    }
+
+    getHeader() {
+        return <header>
+            <nav className="navbar navbar-dark bg-dark">
+                <button className="navbar-toggler" type="button" data-toggle="collapse"
+                        style={{display: 'flex', marginLeft: "auto", marginRight: '20px'}}
+                        aria-label="Toggle navigation" onClick={() => this.goTables()}>
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+            </nav>
+        </header>;
     }
 
     getModal1() {
         return <Modal show={this.state.showModal}>
             <Modal.Header>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Payment</Modal.Title>
             </Modal.Header>
+            <Modal.Body>
+
+                <div id="PaymentForm" >
+                    <Cards
+                        cvc={this.state.cvc}
+                        expiry={this.state.expiry}
+                        focused={this.state.focus}
+                        name={this.state.name}
+                        number={this.state.number}
+                    />
+                    <form>
+                        <div className="form-group">
+                        <input
+                            type="tel"
+                            name="number"
+                            placeholder="Card Number"
+                            onChange={this.handleInputChange}
+                            onFocus={this.handleInputFocus}
+                            className="form-control"
+                        />
+                        </div>
+                        <div className="form-group">
+                            <input type="text"
+                                   name="name"
+                                   placeholder="Name"
+                                   className="form-control"
+                                   onChange={this.handleInputChange}
+                                   onFocus={this.handleInputFocus}/>
+                        </div>
+                        <div className="form-group">
+                            <input type="tel"
+                                   name="expiry"
+                                   placeholder="Valid Thru"
+                                   className="form-control"
+                                   onChange={this.handleInputChange}
+                                   onFocus={this.handleInputFocus}/>
+                            <input type="tel"
+                                   name="cvc"
+                                   placeholder="CVC"
+                                   onChange={this.handleInputChange}
+                                   onFocus={this.handleInputFocus}
+                                   className="form-control"/>
+                        </div>
+                    </form>
+                </div>
+            </Modal.Body>
             <Modal.Footer>
-                <button variant="primary" onClick={() => this.setState({showModal: false})}>
-                    Save Changes
+                <button className="btn btn-outline-warning"
+                        onClick={
+                            () => this.setState({showModal: false})}
+                >Cancel
+                </button>
+                <button className="btn btn-outline-success"
+                    onClick={() => this.saleButton()}
+                >Save Changes
                 </button>
             </Modal.Footer>
         </Modal>;
@@ -267,7 +318,6 @@ class ProductList extends Component {
                     <th>{this.state.totalCart} ₺</th>
                     <th>
                         <button className="btn btn-warning"
-                            /* onClick={() => this.saleButton()}*/
                                 onClick={
                                     () => this.setState({showModal: true})}
                         >Payment

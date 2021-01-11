@@ -3,6 +3,7 @@ package com.ba.restaurant.service;
 import com.ba.restaurant.builder.WaiterDTOBuilder;
 import com.ba.restaurant.dto.WaiterDTO;
 import com.ba.restaurant.entity.Waiter;
+import com.ba.restaurant.exception.SystemException;
 import com.ba.restaurant.mapper.WaiterMapper;
 import com.ba.restaurant.repository.WaiterRepository;
 import org.junit.Assert;
@@ -13,11 +14,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.isNotNull;
+import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
@@ -31,6 +33,7 @@ public class WaiterServiceTest {
     WaiterRepository waiterRepository;
     private WaiterDTO waiterDTO = new WaiterDTO();
     private List<WaiterDTO> waiterDTOS = new ArrayList<>();
+    private List<Waiter> waiters= new ArrayList<>();
     private Waiter waiter= new Waiter();
 
     @Mock
@@ -58,6 +61,16 @@ public class WaiterServiceTest {
         Assert.assertEquals(res.getId(), waiterDTO.getId());
     }
 
+    @Test(expected = SystemException.class)
+    public void NotAdd(){
+        waiterService.addWaiter(null);
+    }
+
+    @Test(expected = SystemException.class)
+    public void NotUpdate(){
+        waiter.setId(null);
+        waiterService.updateWaiter(null);
+    }
     @Test
     public void shouldUpdateWaiter() {
         Mockito.when(waiterRepository.saveAndFlush(Mockito.any())).thenReturn(WaiterMapper.INSTANCE.toEntity(waiterDTO));
@@ -68,24 +81,37 @@ public class WaiterServiceTest {
 
     @Test
     public void shouldListAllWaiters() {
-        Mockito.when(waiterRepository.findAll()).thenReturn(WaiterMapper.INSTANCE.toEntities(waiterDTOS));
-        List<WaiterDTO> waiterDTOS1 = waiterService.listAllWaiter();
-        Assert.assertNotNull(waiterDTOS1);
+        Mockito.when(waiterRepository.findAll()).thenReturn(waiters);
+        Mockito.when(waiterMapper.toDTOs(waiters)).thenReturn(waiterDTOS);
+        List<WaiterDTO> res = waiterService.listAllWaiter();
+        Assert.assertNotNull(res);
+        Assert.assertEquals(res.get(0).getId(), waiterDTOS.get(0).getId());
     }
 
+    @Test(expected = SystemException.class)
+    public void NotGetId(){
+        waiter.setId(null);
+        waiterService.deleteWaiterById(waiter.getId());
+    }
     @Test
     public void shouldGetWaiterById() {
-        Long id = 1L;
-        Mockito.when(waiterRepository.findById(id)).thenReturn( Optional.of(waiter));
-        WaiterDTO waiterDTO1 = waiterService.getWaiterById(id);
+        Mockito.when(waiterRepository.findById(1L)).thenReturn( Optional.of(waiter));
+        Mockito.when(waiterMapper.toDTO(waiter)).thenReturn(waiterDTO);
+        WaiterDTO waiterDTO1 = waiterService.getWaiterById(1L);
         Assert.assertNotNull(waiterDTO1);
         Assert.assertEquals(waiterDTO1.getId(), waiterDTO.getId());
     }
 
     @Test
-    public void shoouldDeleteWaiterById() {
+    public void shouldDeleteWaiterById() {
         Long id = 1L;
         String delete = waiterService.deleteWaiterById(id);
         verify(waiterRepository, times(1)).deleteById(id);
+    }
+
+    @Test(expected = SystemException.class)
+    public void NotDelete(){
+        waiter.setId(null);
+        waiterService.deleteWaiterById(waiter.getId());
     }
 }

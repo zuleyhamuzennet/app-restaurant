@@ -1,0 +1,15 @@
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (1, 'Cullan Scranedge', 'cscranedge0@upenn.edu', 'Texas', '210-282-8017', 1);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (2, 'Lesli Timoney', 'ltimoney1@chronoengine.com', 'Texas', '832-969-7084', 2);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (3, 'Caitrin De La Salle', 'cde2@netlog.com', 'Texas', '915-636-5246', 6);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (4, 'Deonne Filipponi', 'dfilipponi3@fema.gov', 'Texas', '915-914-8884', 9);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (5, 'Maisie Yanov', 'myanov4@ed.gov', 'Texas', '806-672-1803', 11);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (6, 'Wrennie Allinson', 'wallinson5@google.it', 'Texas', '214-740-2615', 4);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (7, 'Corella Pasby', 'cpasby6@fastcompany.com', 'Texas', '806-199-2414', 7);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (8, 'Dolley Steffan', 'dsteffan7@a8.net', 'Texas', '806-479-0846', 14);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (9, 'Filippo Fursse', 'ffursse8@reddit.com', 'Texas', '281-724-5791', 8);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (10, 'Leilah Lambal', 'llambal9@aol.com', 'Texas', '713-832-0077', 15);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (11, 'Catlaina Paget', 'cpageta@plala.or.jp', 'Texas', '254-149-2433', 16);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (12, 'Aarika Henkmann', 'ahenkmannb@netlog.com', 'Texas', '512-518-8911', 13);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (13, 'Sheridan Penhale', 'spenhalec@unblog.fr', 'Texas', '713-496-6810', 20);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (14, 'Ricki Baldini', 'rbaldinid@uiuc.edu', 'Texas', '281-192-4601', 17);
+insert into WAITER (id, waiter_name, waiter_mail, address, phone, media_id) values (15, 'Ranna Gayden', 'rgaydene@homestead.com', 'Texas', '915-248-1212', 19);

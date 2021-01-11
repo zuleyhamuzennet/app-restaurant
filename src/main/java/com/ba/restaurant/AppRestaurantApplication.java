@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.EnableCaching;
 @SpringBootApplication
 public class AppRestaurantApplication {
 
+
     public static void main(String[] args) {
         SpringApplication.run(AppRestaurantApplication.class, args);
     }

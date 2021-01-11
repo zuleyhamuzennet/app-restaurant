@@ -11,8 +11,6 @@ import javax.persistence.*;
 @Where(clause = "deleted = false")
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name="TABLE_CATEGORY")
 public class TableCategory extends BaseEntity{
 

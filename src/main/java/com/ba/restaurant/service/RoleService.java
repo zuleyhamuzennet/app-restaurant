@@ -6,11 +6,15 @@ import com.ba.restaurant.exception.BusinessMessages;
 import com.ba.restaurant.exception.BusinessRuleException;
 import com.ba.restaurant.mapper.RoleMapper;
 import com.ba.restaurant.repository.RoleRepository;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @Service
 public class RoleService {
@@ -51,4 +55,5 @@ public class RoleService {
         roleRepository.deleteById(id);
         return null;
     }
+
 }
